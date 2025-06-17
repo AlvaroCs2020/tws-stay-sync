@@ -18,8 +18,8 @@ class IbDbDataFetcher:
         FROM abby."IbIntegration_data"
         WHERE "STATUS" = 'CREATED'
           AND "SYMBOL_ID" = %s
-          AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-06-01 00:00:00+00:00'
-          AND "DATE_FROM" < TIMESTAMP WITH TIME ZONE '2025-06-10 00:00:00+00:00'
+          AND "DATE_FROM" < TIMESTAMP WITH TIME ZONE '2025-06-01 00:00:00+00:00'
+          AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-05-01 00:00:00+00:00'
           AND "NW_DAY" = False
         ORDER BY "DATE_FROM" DESC
         LIMIT %s;
@@ -84,12 +84,17 @@ class IbDbDataFetcher:
                                 time.sleep(1)
                 self.conn.commit()
                 print(f"Actualización completada con éxito.")
+        except psycopg2.InterfaceError as e:
+            print(f"Error de conexión: {e}")
+            return -1
         except Exception as e:
             self.conn.rollback()
             print(f"Error general al actualizar el DataFrame: {e}")
+            return -1
 
         if failed_ids:
             print("IDs fallidos luego de 2 intentos:", failed_ids)
+        return 0
 # fetcher = IbIntegrationDataFetcher(db_config)
 # df = fetcher.fetch_created_data(limit=5)
 # print(df)

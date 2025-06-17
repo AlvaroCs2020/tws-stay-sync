@@ -29,16 +29,16 @@ def sync():
             app.disconnect()
             print("connection failed")
             return
-        fetcher = IbDbDataFetcher(db_config)
 
-        #fetcher.close()
         #data_slices = [data_to_process_from_db[i:i+STACK_SIZE] for i in range(0, len(data_to_process_from_db), STACK_SIZE)]
         while app.isConnected():
+            fetcher = IbDbDataFetcher(db_config)
             results = []
             start_time = time.time()
             count = 0
             # for index, row in data_to_process_from_db.iterrows():
             data_to_process_from_db = fetcher.fetch_created_data(limit=DB_LIMIT)
+            fetcher.close()
             for index, row in data_to_process_from_db.iterrows():
                 if not app.isConnected():
                     return
@@ -80,9 +80,11 @@ def sync():
                 count = (count + 1) % (STACK_SIZE+1)
                 print(f"progreso {count}/{STACK_SIZE} id {row['ID']} fecha : {row['DATE_FROM']}")
             start_time_db = time.time()
-            #fetcher = IbDbDataFetcher(db_config)
-            #time.sleep(2)
-            fetcher.update_data(data_to_process_from_db)
+            fetcher = IbDbDataFetcher(db_config)
+            time.sleep(1)
+            if fetcher.update_data(data_to_process_from_db) < 0:
+                return
+            fetcher.close()
             end_time_db = time.time()
             print("tardamos  en el update:"+str(end_time_db - start_time_db))
             df_results = pd.DataFrame(results)
