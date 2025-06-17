@@ -18,6 +18,8 @@ class IbDbDataFetcher:
         FROM abby."IbIntegration_data"
         WHERE "STATUS" = 'CREATED'
           AND "SYMBOL_ID" = %s
+          AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-06-01 00:00:00+00:00'
+          AND "DATE_FROM" < TIMESTAMP WITH TIME ZONE '2025-06-10 00:00:00+00:00'
           AND "NW_DAY" = False
         ORDER BY "DATE_FROM" DESC
         LIMIT %s;

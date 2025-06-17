@@ -179,7 +179,6 @@ class TradingApp(EClient, EWrapper):
 
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
-            time.sleep(0.2)
             seconds = max_time.second
             rounded_seconds = (seconds // 5) * 5
             new_start_time_rounded = max_time.replace(second=rounded_seconds, microsecond=0).strftime('%Y%m%d-%H:%M:%S')
