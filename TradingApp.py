@@ -180,7 +180,7 @@ class TradingApp(EClient, EWrapper):
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             seconds = max_time.second
-            rounded_seconds = (seconds // 5) * 5
+            rounded_seconds = seconds -1
             new_start_time_rounded = max_time.replace(second=rounded_seconds, microsecond=0).strftime('%Y%m%d-%H:%M:%S')
             df_temp = self.df_saved_ticks
             df_temp = self.get_historical_data_by_tick(contract_eurusd, new_start_time_rounded, end_time)

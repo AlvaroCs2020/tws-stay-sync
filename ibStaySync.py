@@ -55,10 +55,10 @@ def sync():
                     count_tick = len(df_filtered_1min)
                     updated_at = datetime.now(timezone.utc)
                     nw_day = date_from_db_format.weekday() >= 5
-                    if sum_ask == 0 and app.last_tick_count == 0:  # si me vinieron ticks pero no se termino sumando nada, seguramente no hubo ticks en esa vela
-                        raise KeyError
-                    if sum_ask == 0 and app.last_tick_count != 0:
-                        print("No hay ticks en este intervalo, id: " + str(row['ID']) + ", inicio " + str(row['DATE_FROM']))
+                    # if sum_ask == 0 and app.last_tick_count == 0:  # si me vinieron ticks pero no se termino sumando nada, seguramente no hubo ticks en esa vela
+                    #     raise KeyError
+                    # if sum_ask == 0 and app.last_tick_count != 0:
+                    #     print("No hay ticks en este intervalo, id: " + str(row['ID']) + ", inicio " + str(row['DATE_FROM']))
                     data_to_process_from_db.loc[index, 'SUM_ASK']        = sum_ask
                     data_to_process_from_db.loc[index, 'SUM_BID']        = sum_bid
                     data_to_process_from_db.loc[index, 'DIFFERENCE']     = difference
