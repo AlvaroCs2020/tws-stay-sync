@@ -132,7 +132,7 @@ class TradingApp(EClient, EWrapper):
         df = pd.DataFrame(parsed_list)
         max_time = str( pd.to_datetime(df['Time'].max(), unit='s', utc=True))
         min_time = str( pd.to_datetime(df['Time'].min(), unit='s', utc=True))
-        print("ticks bid ask: " + str(len(ticks)) +" : "+ str(done) + " : " +str(reqId) + f" from {max_time} to {min_time}")
+        print("ticks bid ask: " + str(len(ticks)) +" : "+ str(done) + " : " +str(reqId) + f" from {min_time} to {max_time}")
         self.req_made = True
         self.data = df
 # 20250528-04:15:00

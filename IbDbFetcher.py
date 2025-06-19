@@ -38,7 +38,7 @@ class IbDbDataFetcher:
         query = '''
         SELECT *
         FROM abby."IbIntegration_data"
-        WHERE ("STATUS" = 'CREATED' OR "SUM_ASK" = 0)
+        WHERE ("STATUS" = 'CREATED')
           AND "SYMBOL_ID" = %s
           AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-05-01 00:00:00+00:00'
           AND "NW_DAY" = False
