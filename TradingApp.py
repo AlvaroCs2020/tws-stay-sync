@@ -18,6 +18,7 @@ class TradingApp(EClient, EWrapper):
 
         EClient.__init__(self, self)
         self.last_tick_count = 0
+        self.req_made = False
         self.req_id = random.randint(1, 10000)
         self.df_saved_ticks  = pd.DataFrame(columns=[
             'Time', 'TickAttriBidAsk', 'AskPastHigh', 'PriceBid',
@@ -129,7 +130,7 @@ class TradingApp(EClient, EWrapper):
             parsed_list.append(parsed)
         df = pd.DataFrame(parsed_list)
         #
-
+        self.req_made = True
         self.data = df
 # 20250528-04:15:00
     def get_historical_data_by_tick(self, contract: Contract, start_time : str, end_time : str) -> pd.DataFrame:#"20250528-04:15:00"
@@ -147,6 +148,7 @@ class TradingApp(EClient, EWrapper):
         start_time_dt = pd.to_datetime(start_time, utc=True)
         boolean = True
         count = 0
+        self.req_made = False
         df = self.get_historical_data_by_tick(contract_eurusd, start_time, end_time)
 
         while True:  # Le pegamos a TWS hasta que devuelva algo
@@ -176,7 +178,7 @@ class TradingApp(EClient, EWrapper):
 
         count = 0
         while max_time < pd_end_time and count < 7:
-
+            self.req_made = False
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             seconds = max_time.second

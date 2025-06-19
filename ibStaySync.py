@@ -1,15 +1,14 @@
 import time
 import threading
-from typing import AnyStr
-
-import pandas as pd
-import random
 from datetime import datetime, timezone
+import pandas as pd
+
 from IbDbFetcher import IbDbDataFetcher
-from TradingApp import *
+from TradingApp import TradingApp
+
 STACK_SIZE = 5
 DB_LIMIT = 5
-# DB_LIMIT = 100
+
 db_config = {
     "dbname": "abbyTrader",
     "user": "postgres",
@@ -17,83 +16,91 @@ db_config = {
     "host": "200.58.123.179",
     "port": 6432
 }
+
 def sync():
+    app = TradingApp()
     try:
-        app = TradingApp()
         app.connect("127.0.0.1", 7497, clientId=5)
         threading.Thread(target=app.run, daemon=True).start()
         time.sleep(2)
-        if app.isConnected():
-            print("connected")
-        else:
-            app.disconnect()
-            print("connection failed")
-            return
 
-        #data_slices = [data_to_process_from_db[i:i+STACK_SIZE] for i in range(0, len(data_to_process_from_db), STACK_SIZE)]
+        if not app.isConnected():
+            print("connection failed")
+            app.disconnect()
+            return
+        print("connected")
+
         while app.isConnected():
             fetcher = IbDbDataFetcher(db_config)
-            results = []
-            start_time = time.time()
-            count = 0
-            # for index, row in data_to_process_from_db.iterrows():
             data_to_process_from_db = fetcher.fetch_created_data(limit=DB_LIMIT)
             fetcher.close()
+
+            results = []
+            start_time = time.time()
+
             for index, row in data_to_process_from_db.iterrows():
                 if not app.isConnected():
                     return
-                date_from = row['DATE_FROM'].strftime('%Y%m%d-%H:%M:%S')
-                date_to = row['DATE_TO'].strftime('%Y%m%d-%H:%M:%S')
-                df_filtered_1min = app.get_ticks_per_bar(date_from, date_to)
+
                 try:
+                    date_from = row['DATE_FROM'].strftime('%Y%m%d-%H:%M:%S')
+                    date_to   = row['DATE_TO'].strftime('%Y%m%d-%H:%M:%S')
+
+                    df_filtered_1min = pd.DataFrame()  # vaciamos antes por las dudas
+                    df_filtered_1min = app.get_ticks_per_bar(date_from, date_to)
+
+                    if not app.req_made:
+                        raise KeyError("No se recibió respuesta válida de TWS")
+                    elif app.req_made and app.last_tick_count == 0:
+                        raise KeyError(f"No estan llegando ticks {date_from}")
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
                     sum_bid = df_filtered_1min['SizeBid'].sum()
                     difference = sum_bid - sum_ask
-                    date_from_db_format = pd.to_datetime(date_from, utc=True)
-                    date_to_db_format = pd.to_datetime(date_to, utc=True)
-                    diff_str = app.convert_values_to_str(sum_ask, sum_bid)
                     count_tick = len(df_filtered_1min)
-                    updated_at = datetime.now(timezone.utc)
-                    nw_day = date_from_db_format.weekday() >= 5
-                    # if sum_ask == 0 and app.last_tick_count == 0:  # si me vinieron ticks pero no se termino sumando nada, seguramente no hubo ticks en esa vela
-                    #     raise KeyError
-                    # if sum_ask == 0 and app.last_tick_count != 0:
-                    #     print("No hay ticks en este intervalo, id: " + str(row['ID']) + ", inicio " + str(row['DATE_FROM']))
-                    data_to_process_from_db.loc[index, 'SUM_ASK']        = sum_ask
-                    data_to_process_from_db.loc[index, 'SUM_BID']        = sum_bid
-                    data_to_process_from_db.loc[index, 'DIFFERENCE']     = difference
-                    data_to_process_from_db.loc[index, 'SUM_ASK_STR']    = TradingApp.format_int_to_string(sum_ask)
-                    data_to_process_from_db.loc[index, 'SUM_BID_STR']    = TradingApp.format_int_to_string(sum_bid)
-                    data_to_process_from_db.loc[index, 'DIFFERENCE_STR'] = TradingApp.format_int_to_string(difference)
-                    data_to_process_from_db.loc[index, 'COUNT_TICK']     = count_tick
-                    data_to_process_from_db.loc[index, 'STATUS']         = "SUCCESS"
-                    data_to_process_from_db.loc[index, 'UPDATED_AT']     = updated_at
-                    data_to_process_from_db.loc[index, 'DIFF_LEVEL_ENUM']= diff_str
-                    data_to_process_from_db.loc[index, 'RETRY_COUNT']    = 0
-                    data_to_process_from_db.loc[index, 'DOW']            = date_from_db_format.weekday()
-                    data_to_process_from_db.loc[index, 'NW_DAY']         = nw_day
 
-                except KeyError:
-                    print(f"No se guardo este id: {row['ID']} first tws request {app.last_tick_count} sum ask {sum_ask} ticks {len(df_filtered_1min)}")
-                    data_to_process_from_db = row.drop(index)
+                    diff_str = app.convert_values_to_str(sum_ask, sum_bid)
+                    updated_at = datetime.now(timezone.utc)
+
+                    data_to_process_from_db.loc[index, 'SUM_ASK']         = sum_ask
+                    data_to_process_from_db.loc[index, 'SUM_BID']         = sum_bid
+                    data_to_process_from_db.loc[index, 'DIFFERENCE']      = difference
+                    data_to_process_from_db.loc[index, 'SUM_ASK_STR']     = TradingApp.format_int_to_string(sum_ask)
+                    data_to_process_from_db.loc[index, 'SUM_BID_STR']     = TradingApp.format_int_to_string(sum_bid)
+                    data_to_process_from_db.loc[index, 'DIFFERENCE_STR']  = TradingApp.format_int_to_string(difference)
+                    data_to_process_from_db.loc[index, 'COUNT_TICK']      = count_tick
+                    data_to_process_from_db.loc[index, 'STATUS']          = "SUCCESS"
+                    data_to_process_from_db.loc[index, 'UPDATED_AT']      = updated_at
+                    data_to_process_from_db.loc[index, 'DIFF_LEVEL_ENUM'] = diff_str
+                    data_to_process_from_db.loc[index, 'RETRY_COUNT']     = 0
+
+                except KeyError as e:
+                    print(f"[WARN] {e}, ID: {row['ID']}")
+                    data_to_process_from_db = data_to_process_from_db.drop(index)
                     results.append(str(row['ID']))
-                count = (count + 1) % (STACK_SIZE+1)
-                print(f"progreso {count}/{STACK_SIZE} id {row['ID']} fecha : {row['DATE_FROM']}")
-            start_time_db = time.time()
+                except Exception as e:
+                    print(f"[ERROR] Fallo inesperado en el procesamiento del ID {row['ID']}: {e}")
+                    data_to_process_from_db = data_to_process_from_db.drop(index)
+                    results.append(str(row['ID']))
+
+                print(f"Progreso {index + 1}/{len(data_to_process_from_db)} - ID: {row['ID']} - Fecha: {row['DATE_FROM']}")
+
+            time.sleep(0.5)
             fetcher = IbDbDataFetcher(db_config)
-            time.sleep(1)
-            if fetcher.update_data(data_to_process_from_db) < 0:
-                return
+            db_start = time.time()
+            fetcher.update_data(data_to_process_from_db)
             fetcher.close()
-            end_time_db = time.time()
-            print("tardamos  en el update:"+str(end_time_db - start_time_db))
-            df_results = pd.DataFrame(results)
-            end_time = time.time()
-            print("No se puedieron obtener: " + str(len(results)))
-            print("tardamos  en hacer todo:"+str(end_time - start_time))
-            print(results)
+            db_end = time.time()
+
+            print("Tiempo en update DB:", db_end - db_start)
+            print("No se pudieron obtener:", len(results), results)
+            print("Tiempo total del ciclo:", time.time() - start_time)
+
         app.disconnect()
+
     except KeyboardInterrupt:
+        print("\n[INFO] Interrupción por teclado. Cerrando conexión.")
         app.disconnect()
         exit(-2)
-
+    except Exception as e:
+        print(f"[ERROR] Excepción general: {e}")
+        app.disconnect()
