@@ -5,7 +5,7 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-
+SYMBOL_ID = 3
 STACK_SIZE = 5
 DB_LIMIT = 5
 
@@ -18,11 +18,20 @@ db_config = {
 }
 
 def sync():
-    app = TradingApp()
     try:
+        fetcher = IbDbDataFetcher(db_config)
+        symbol_data = fetcher.fetch_symbol_data(str(SYMBOL_ID))
+        symbol   = str(symbol_data.at[0, 'SYMBOL'])
+        sec_type = str(symbol_data.at[0, 'SEC_TYPE'])
+        exchange = str(symbol_data.at[0, 'EXCHANGE'])
+        currency = str(symbol_data.at[0, 'CURRENCY'])
+        print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
+        fetcher.close()
+
+        app = TradingApp(symbol, sec_type, currency, exchange)
         app.connect("127.0.0.1", 7497, clientId=5)
         threading.Thread(target=app.run, daemon=True).start()
-        time.sleep(2)
+        time.sleep(3)
 
         if not app.isConnected():
             print("connection failed")
@@ -32,7 +41,7 @@ def sync():
 
         while app.isConnected():
             fetcher = IbDbDataFetcher(db_config)
-            data_to_process_from_db = fetcher.fetch_created_data(limit=DB_LIMIT)
+            data_to_process_from_db = fetcher.fetch_created_data(symbol_id=SYMBOL_ID,limit=DB_LIMIT)
             fetcher.close()
 
             results = []

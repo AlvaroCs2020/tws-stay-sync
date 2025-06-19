@@ -14,8 +14,11 @@ from ibapi.common import *
 from enum import Enum
 class TradingApp(EClient, EWrapper):
 
-    def __init__(self) -> None:
-
+    def __init__(self, symbol, sec_type, currency, exchange) -> None:
+        self.symbol   = symbol  # 'EUR'
+        self.sec_type = sec_type
+        self.exchange = exchange
+        self.currency = currency
         EClient.__init__(self, self)
         self.last_tick_count = 0
         self.req_made = False
@@ -87,18 +90,17 @@ class TradingApp(EClient, EWrapper):
         contract.exchange = "SMART"
         contract.currency = "USD"
         return contract
-    @staticmethod
-    def get_forex_contract(pair: str) -> Contract:
+    def get_forex_contract(self) -> Contract:
         """
         Devuelve un contrato de tipo CASH para operar en Forex.
 
         Ejemplo: pair='EURUSD'
         """
         contract = Contract()
-        contract.symbol = 'EUR'  # 'EUR'
-        contract.secType = "CASH"
-        contract.exchange = "IDEALPRO"
-        contract.currency = 'USD'  # 'USD'
+        contract.symbol = self.symbol  # 'EUR'
+        contract.secType = self.sec_type
+        contract.exchange = self.exchange
+        contract.currency = self.currency
         return contract
 
     def place_order(self, contract: Contract, action: str, order_type: str, quantity: int) -> None:
@@ -112,7 +114,6 @@ class TradingApp(EClient, EWrapper):
         self.nextOrderId += 1
         print("Order placed")
     def historicalTicksBidAsk(self, reqId: int, ticks: ListOfHistoricalTickBidAsk, done: bool):
-        print("ticks bid ask: " + str(len(ticks)) +" : "+ str(done) + " : " +str(reqId))
 
         parsed_list = []
         for tick in ticks:
@@ -129,7 +130,9 @@ class TradingApp(EClient, EWrapper):
                         parsed[key] = value  # por si hay strings
             parsed_list.append(parsed)
         df = pd.DataFrame(parsed_list)
-        #
+        max_time = str( pd.to_datetime(df['Time'].max(), unit='s', utc=True))
+        min_time = str( pd.to_datetime(df['Time'].min(), unit='s', utc=True))
+        print("ticks bid ask: " + str(len(ticks)) +" : "+ str(done) + " : " +str(reqId) + f" from {max_time} to {min_time}")
         self.req_made = True
         self.data = df
 # 20250528-04:15:00
@@ -142,7 +145,7 @@ class TradingApp(EClient, EWrapper):
         return self.data
 
     def get_ticks_per_bar(self, start_time : str, end_time : str):
-        contract_eurusd = self.get_forex_contract("EURUSD")
+        contract_eurusd = self.get_forex_contract()
         stop_time = end_time
         stop_time_dt = pd.to_datetime(stop_time, utc=True)
         start_time_dt = pd.to_datetime(start_time, utc=True)

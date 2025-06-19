@@ -1,5 +1,6 @@
 import subprocess
 import time
+import sys
 from ibStaySync import sync
 def main():
     while True:

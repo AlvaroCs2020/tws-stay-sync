@@ -33,7 +33,7 @@ class IbDbDataFetcher:
                     time.sleep(self.retry_wait)
             raise Exception("No se pudo restablecer la conexión a la base de datos.")
 
-    def fetch_created_data(self, symbol_id=1, limit=10):
+    def fetch_created_data(self, symbol_id, limit=10):
         self.ensure_connection()
         query = '''
         SELECT *
@@ -54,6 +54,19 @@ class IbDbDataFetcher:
         except Exception as e:
             print(f"[ERROR] fetch_created_data: {e}")
             return pd.DataFrame()
+
+    def fetch_symbol_data(self, symbol_id=1):
+        query = f''' 
+                SELECT *
+                FROM abby."IbIntegration_symbols"
+                WHERE "ID" = %s
+                LIMIT 1;
+                '''
+        with self.conn.cursor() as cur:
+            cur.execute(query, symbol_id)
+            rows = cur.fetchall()
+            colnames = [desc[0] for desc in cur.description]
+        return pd.DataFrame(rows, columns=colnames)
 
     def update_data(self, df):
         self.ensure_connection()
