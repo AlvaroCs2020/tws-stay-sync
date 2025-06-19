@@ -5,7 +5,7 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-SYMBOL_ID = 3
+SYMBOL_ID = 1
 STACK_SIZE = 5
 DB_LIMIT = 5
 
@@ -92,7 +92,7 @@ def sync():
                     data_to_process_from_db = data_to_process_from_db.drop(index)
                     results.append(str(row['ID']))
 
-                print(f"Progreso {index + 1}/{len(data_to_process_from_db)} - ID: {row['ID']} - Fecha: {row['DATE_FROM']}")
+                print(f"Progreso {index + 1}/{DB_LIMIT} - ID: {row['ID']} - Fecha: {row['DATE_FROM']}")
 
             time.sleep(0.5)
             fetcher = IbDbDataFetcher(db_config)
