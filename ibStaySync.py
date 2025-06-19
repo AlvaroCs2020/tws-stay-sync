@@ -18,6 +18,7 @@ db_config = {
 }
 
 def sync():
+    app = None  # Inicializamos app para que exista incluso si hay error antes
     try:
         fetcher = IbDbDataFetcher(db_config)
         symbol_data = fetcher.fetch_symbol_data(str(SYMBOL_ID))
@@ -113,3 +114,6 @@ def sync():
     except Exception as e:
         print(f"[ERROR] Excepción general: {e}")
         app.disconnect()
+    finally:
+        if app and app.isConnected():
+            app.disconnect()
