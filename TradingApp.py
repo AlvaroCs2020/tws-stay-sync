@@ -169,6 +169,10 @@ class TradingApp(EClient, EWrapper):
             print("Volvio a pasar el error de verga este")
             return self.df_empty
         #te clavas 2 segundos
+        if(len(df) < 500):
+            print("[WARN] Muy pocos ticks vamos a esperar 20segs se saltara esta barra para intentarla luego]")
+            return self.df_empty
+
         pd_end_time=pd.to_datetime(end_time, utc=True)
 
         not_done = max_time < pd_end_time

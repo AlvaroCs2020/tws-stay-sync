@@ -5,7 +5,8 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-SYMBOL_ID = 7
+#SYMBOL_IDS = [7, 3]  # por ejemplo
+SYMBOL_IDS = 7
 STACK_SIZE = 5
 DB_LIMIT = 5
 
@@ -20,6 +21,7 @@ db_config = {
 def sync():
     app = None  # Inicializamos app para que exista incluso si hay error antes
     try:
+        #Obtenemos los detalles del contrato, por
         fetcher = IbDbDataFetcher(db_config)
         symbol_data = fetcher.fetch_symbol_data(str(SYMBOL_ID))
         symbol   = str(symbol_data.at[0, 'SYMBOL'])
