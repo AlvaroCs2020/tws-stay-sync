@@ -23,11 +23,11 @@ class TradingApp(EClient, EWrapper):
         self.last_tick_count = 0
         self.req_made = False
         self.req_id = random.randint(1, 10000)
-        self.df_saved_ticks  = pd.DataFrame(columns=[
+        self.df_empty  = pd.DataFrame(columns=[
             'Time', 'TickAttriBidAsk', 'AskPastHigh', 'PriceBid',
             'PriceAsk', 'SizeBid', 'SizeAsk', 'TimeFormatted'
         ])
-        self.data = self.df_saved_ticks
+        self.data = self.df_empty
         self.nextOrderId: Optional[int] = None
 
     def error(self, reqId: int, errorCode: int, errorString: str) -> None:
@@ -154,20 +154,20 @@ class TradingApp(EClient, EWrapper):
         self.req_made = False
         df = self.get_historical_data_by_tick(contract_eurusd, start_time, end_time)
 
-        while True:  # Le pegamos a TWS hasta que devuelva algo
-            count+=1
-            if len(df) > 0 or count > 4:
-                break
-            df = self.get_historical_data_by_tick(contract_eurusd, start_time, end_time)
+        # while True:  # Le pegamos a TWS hasta que devuelva algo
+        #     count+=1
+        #     if len(df) > 0 or count > 4:
+        #         break
+        #     df = self.get_historical_data_by_tick(contract_eurusd, start_time, end_time)
         self.last_tick_count = len(df)
         if len(df) == 0: #Si no anduvo, lo marcamos
-            return self.df_saved_ticks
+            return self.df_empty
         try:
             df['TimeFormatted'] = pd.to_datetime(df['Time'], unit='s', utc=True)
             max_time = df['TimeFormatted'].max()
         except KeyError:
             print("Volvio a pasar el error de verga este")
-            return self.df_saved_ticks
+            return self.df_empty
         #te clavas 2 segundos
         pd_end_time=pd.to_datetime(end_time, utc=True)
 
@@ -187,15 +187,15 @@ class TradingApp(EClient, EWrapper):
             seconds = max_time.second
             rounded_seconds = seconds
             new_start_time_rounded = max_time.replace(second=rounded_seconds, microsecond=0).strftime('%Y%m%d-%H:%M:%S')
-            df_temp = self.df_saved_ticks
+            df_temp = self.df_empty
             df_temp = self.get_historical_data_by_tick(contract_eurusd, new_start_time_rounded, end_time)
 
-            while True:  # Le pegamos a TWS hasta que devuelva algo
-                count += 1
-                if len(df_temp) > 0 or count > 4:
-                    count = 0
-                    break
-                df_temp = self.get_historical_data_by_tick(contract_eurusd, new_start_time_rounded, end_time)
+            # while True:  # Le pegamos a TWS hasta que devuelva algo
+            #     count += 1
+            #     if len(df_temp) > 0 or count > 4:
+            #         count = 0
+            #         break
+            #     df_temp = self.get_historical_data_by_tick(contract_eurusd, new_start_time_rounded, end_time)
 
             try:
                 df_temp['TimeFormatted'] = pd.to_datetime(df_temp['Time'], unit='s', utc=True)
@@ -209,9 +209,9 @@ class TradingApp(EClient, EWrapper):
                 list_of_chunks.append(df_temp)
             except KeyError:
                 print("Volvia a pasar el error de verga este " + str(count))
-                return self.df_saved_ticks
+                return self.df_empty
         if not_done:
-            return self.df_saved_ticks
+            return self.df_empty
         df_filtered_1min = pd.concat(list_of_chunks, ignore_index=True)
         df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] < stop_time_dt]
         df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] >= start_time_dt]

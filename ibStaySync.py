@@ -5,7 +5,7 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-SYMBOL_ID = 1
+SYMBOL_ID = 7
 STACK_SIZE = 5
 DB_LIMIT = 5
 
