@@ -164,7 +164,8 @@ class TradingApp(EClient, EWrapper):
             return self.df_empty
         #te clavas 2 segundos
         if(len(df) < 500):
-            print("[WARN] Muy pocos ticks vamos a esperar 20segs se saltara esta barra para intentarla luego]")
+            print("[WARN] Muy pocos ticks se saltara esta barra para intentarla luego]")
+            self.req_made = False
             return self.df_empty
 
         pd_end_time=pd.to_datetime(end_time, utc=True)
