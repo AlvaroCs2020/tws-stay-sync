@@ -5,10 +5,10 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-#SYMBOL_IDS = [7, 3]  # por ejemplo
-SYMBOL_IDS = 7
+SYMBOL_IDS = [7, 1]  # por ejemplo
+
 STACK_SIZE = 5
-DB_LIMIT = 5
+DB_LIMIT = 3
 
 db_config = {
     "dbname": "abbyTrader",
@@ -21,17 +21,32 @@ db_config = {
 def sync():
     app = None  # Inicializamos app para que exista incluso si hay error antes
     try:
-        #Obtenemos los detalles del contrato, por
+        # #Obtenemos los detalles del contrato, por
+        # fetcher = IbDbDataFetcher(db_config)
+        # symbol_data = fetcher.fetch_symbol_data(str(SYMBOL_ID))
+        # symbol   = str(symbol_data.at[0, 'SYMBOL'])
+        # sec_type = str(symbol_data.at[0, 'SEC_TYPE'])
+        # exchange = str(symbol_data.at[0, 'EXCHANGE'])
+        # currency = str(symbol_data.at[0, 'CURRENCY'])
+        # print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
+        # fetcher.close()
+        # Diccionario con la info de cada symbol
+        contract_info_by_id = {}
+
         fetcher = IbDbDataFetcher(db_config)
-        symbol_data = fetcher.fetch_symbol_data(str(SYMBOL_ID))
-        symbol   = str(symbol_data.at[0, 'SYMBOL'])
-        sec_type = str(symbol_data.at[0, 'SEC_TYPE'])
-        exchange = str(symbol_data.at[0, 'EXCHANGE'])
-        currency = str(symbol_data.at[0, 'CURRENCY'])
-        print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
+        for sym_id in SYMBOL_IDS:
+            symbol_data = fetcher.fetch_symbol_data(str(sym_id))
+            contract_info_by_id[sym_id] = {
+                'symbol': str(symbol_data.at[0, 'SYMBOL']),
+                'sec_type': str(symbol_data.at[0, 'SEC_TYPE']),
+                'exchange': str(symbol_data.at[0, 'EXCHANGE']),
+                'currency': str(symbol_data.at[0, 'CURRENCY']),
+                'symbol_name': str(symbol_data.at[0, 'SYMBOL_NAME'])
+            }
+            print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
         fetcher.close()
 
-        app = TradingApp(symbol, sec_type, currency, exchange)
+        app = TradingApp(contract_info_by_id)
         app.connect("127.0.0.1", 7497, clientId=5)
         threading.Thread(target=app.run, daemon=True).start()
         time.sleep(3)
@@ -44,11 +59,20 @@ def sync():
 
         while app.isConnected():
             fetcher = IbDbDataFetcher(db_config)
-            data_to_process_from_db = fetcher.fetch_created_data(symbol_id=SYMBOL_ID,limit=DB_LIMIT)
+            data_to_process_from_db = pd.DataFrame()
+            created_data_list = []
+            for sym_id in SYMBOL_IDS:
+                df_temp = fetcher.fetch_created_data(symbol_id=sym_id,limit=DB_LIMIT)
+                created_data_list.append(df_temp)
+
+            data_to_process_from_db = pd.concat(created_data_list, ignore_index=True)
             fetcher.close()
 
             results = []
             start_time = time.time()
+
+            if len(data_to_process_from_db) == 0:
+                continue
 
             for index, row in data_to_process_from_db.iterrows():
                 if not app.isConnected():
@@ -57,9 +81,10 @@ def sync():
                 try:
                     date_from = row['DATE_FROM'].strftime('%Y%m%d-%H:%M:%S')
                     date_to   = row['DATE_TO'].strftime('%Y%m%d-%H:%M:%S')
-
+                    symbol_id = int(row['SYMBOL_ID'])
                     df_filtered_1min = pd.DataFrame()  # vaciamos antes por las dudas
-                    df_filtered_1min = app.get_ticks_per_bar(date_from, date_to)
+
+                    df_filtered_1min = app.get_ticks_per_bar(date_from, date_to, symbol_id=symbol_id)
 
                     if not app.req_made:
                         raise KeyError("No se recibió respuesta válida de TWS")
@@ -94,7 +119,7 @@ def sync():
                     data_to_process_from_db = data_to_process_from_db.drop(index)
                     results.append(str(row['ID']))
 
-                print(f"Progreso {index + 1}/{DB_LIMIT} - ID: {row['ID']} - Fecha: {row['DATE_FROM']}")
+                print(f"Progreso {index + 1}/{DB_LIMIT} - ID: {row['ID']} - SYMBOL {row['SYMBOL_ID']} - Fecha: {row['DATE_FROM']}")
 
             time.sleep(0.5)
             fetcher = IbDbDataFetcher(db_config)

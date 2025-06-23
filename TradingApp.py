@@ -14,11 +14,8 @@ from ibapi.common import *
 from enum import Enum
 class TradingApp(EClient, EWrapper):
 
-    def __init__(self, symbol, sec_type, currency, exchange) -> None:
-        self.symbol   = symbol  # 'EUR'
-        self.sec_type = sec_type
-        self.exchange = exchange
-        self.currency = currency
+    def __init__(self, contract_info_by_id: Dict[int, Dict]) -> None:
+        self.contract_info_by_id = contract_info_by_id
         EClient.__init__(self, self)
         self.last_tick_count = 0
         self.req_made = False
@@ -90,17 +87,14 @@ class TradingApp(EClient, EWrapper):
         contract.exchange = "SMART"
         contract.currency = "USD"
         return contract
-    def get_forex_contract(self) -> Contract:
-        """
-        Devuelve un contrato de tipo CASH para operar en Forex.
-
-        Ejemplo: pair='EURUSD'
-        """
+    def get_forex_contract(self, symbol_id: int) -> Contract:
+        info = self.contract_info_by_id[symbol_id]
         contract = Contract()
-        contract.symbol = self.symbol  # 'EUR'
-        contract.secType = self.sec_type
-        contract.exchange = self.exchange
-        contract.currency = self.currency
+        contract.symbol = info['symbol']
+        contract.secType = info['sec_type']
+        contract.exchange = info['exchange']
+        contract.currency = info['currency']
+
         return contract
 
     def place_order(self, contract: Contract, action: str, order_type: str, quantity: int) -> None:
@@ -144,21 +138,21 @@ class TradingApp(EClient, EWrapper):
 
         return self.data
 
-    def get_ticks_per_bar(self, start_time : str, end_time : str):
-        contract_eurusd = self.get_forex_contract()
+    def get_ticks_per_bar(self, start_time : str, end_time : str, symbol_id: int):
+        contract_by_symbol = self.get_forex_contract(symbol_id)
         stop_time = end_time
         stop_time_dt = pd.to_datetime(stop_time, utc=True)
         start_time_dt = pd.to_datetime(start_time, utc=True)
         boolean = True
         count = 0
         self.req_made = False
-        df = self.get_historical_data_by_tick(contract_eurusd, start_time, end_time)
+        df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
 
         # while True:  # Le pegamos a TWS hasta que devuelva algo
         #     count+=1
         #     if len(df) > 0 or count > 4:
         #         break
-        #     df = self.get_historical_data_by_tick(contract_eurusd, start_time, end_time)
+        #     df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
         self.last_tick_count = len(df)
         if len(df) == 0: #Si no anduvo, lo marcamos
             return self.df_empty
@@ -192,14 +186,14 @@ class TradingApp(EClient, EWrapper):
             rounded_seconds = seconds
             new_start_time_rounded = max_time.replace(second=rounded_seconds, microsecond=0).strftime('%Y%m%d-%H:%M:%S')
             df_temp = self.df_empty
-            df_temp = self.get_historical_data_by_tick(contract_eurusd, new_start_time_rounded, end_time)
+            df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
 
             # while True:  # Le pegamos a TWS hasta que devuelva algo
             #     count += 1
             #     if len(df_temp) > 0 or count > 4:
             #         count = 0
             #         break
-            #     df_temp = self.get_historical_data_by_tick(contract_eurusd, new_start_time_rounded, end_time)
+            #     df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
 
             try:
                 df_temp['TimeFormatted'] = pd.to_datetime(df_temp['Time'], unit='s', utc=True)
