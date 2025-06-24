@@ -179,6 +179,7 @@ class TradingApp(EClient, EWrapper):
             df = df[df['TimeFormatted'] < max_time]
 
         count = 0
+        last_new_start_time_rounded = ''
         while max_time < pd_end_time and count < 7:
             self.req_made = False
             begin_of_chunk = max_time
@@ -186,9 +187,13 @@ class TradingApp(EClient, EWrapper):
             seconds = max_time.second
             rounded_seconds = seconds
             new_start_time_rounded = max_time.replace(second=rounded_seconds, microsecond=0).strftime('%Y%m%d-%H:%M:%S')
+            if new_start_time_rounded == last_new_start_time_rounded:
+                print("[WARN] Muy pocos ticks no se esta pudiendo completar 1 seg]")
+                self.req_made = False
+                return self.df_empty
             df_temp = self.df_empty
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
-
+            last_new_start_time_rounded = new_start_time_rounded
             # while True:  # Le pegamos a TWS hasta que devuelva algo
             #     count += 1
             #     if len(df_temp) > 0 or count > 4:
