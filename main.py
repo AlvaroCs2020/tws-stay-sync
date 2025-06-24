@@ -1,32 +1,42 @@
 import time
 import subprocess
+import signal
+import os
 from ibStaySync import sync
+
 def main():
-    while True:
-        process = None
-        try:
-            print("Intentamos conectarnos")
+    process = None
 
-            # Ejecutar el archivo .bat
-            process = subprocess.Popen(["cmd.exe", "/c", "C:\IBC\StartTWS.bat"])
+    def kill_process():
+        nonlocal process
+        if process and process.poll() is None:
+            print("[INFO] Terminando subproceso...")
+            os.killpg(os.getpgid(process.pid), signal.SIGTERM)  # Mata a todo el grupo
 
-            # Tu lógica principal
-            # Por ejemplo:
-            time.sleep(60)  # Reemplazá esto por tu `sync()` u otra lógica
-            sync()
-            # Terminar el proceso si sigue corriendo
-            if process and process.poll() is None:
-                process.terminate()
-                print("[INFO] Subproceso .bat terminado correctamente")
+    try:
+        while True:
+            try:
+                print("Intentamos conectarnos")
+                # Iniciar .bat en nuevo grupo de procesos
+                process = subprocess.Popen(
+                    ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
+                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+                )
 
-        except Exception as e:
-            print(f"[ERROR] Fallo general: {e}")
-            if process and process.poll() is None:
-                process.terminate()
-                print("[WARN] Subproceso .bat terminado por excepción")
+                time.sleep(60)  # o reemplazá por sync()
+                sync()
 
-        print("Reintentamos en 5 segundos...\n")
-        time.sleep(5)
+            except Exception as e:
+                print(f"[ERROR] Fallo durante la ejecución: {e}")
+            finally:
+                kill_process()
+
+            print("Reintentamos en 5 segundos...\n")
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("\n[INTERRUPT] Ctrl+C recibido. Cerrando todo...")
+        kill_process()
 
 if __name__ == "__main__":
     main()

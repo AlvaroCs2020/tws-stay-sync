@@ -55,15 +55,15 @@ class IbDbDataFetcher:
             print(f"[ERROR] fetch_created_data: {e}")
             return pd.DataFrame()
 
-    def fetch_symbol_data(self, symbol_id=1):
+    def fetch_symbol_data(self, symbol_id):
         query = f''' 
                 SELECT *
                 FROM abby."IbIntegration_symbols"
-                WHERE "ID" = %s
+                WHERE "ID" = {symbol_id}
                 LIMIT 1;
                 '''
         with self.conn.cursor() as cur:
-            cur.execute(query, symbol_id)
+            cur.execute(query)
             rows = cur.fetchall()
             colnames = [desc[0] for desc in cur.description]
         return pd.DataFrame(rows, columns=colnames)

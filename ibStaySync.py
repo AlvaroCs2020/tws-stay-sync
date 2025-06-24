@@ -5,10 +5,10 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-SYMBOL_IDS = [7, 1]  # por ejemplo
+SYMBOL_IDS = [10,11]  # por ejemplo
 
 STACK_SIZE = 5
-DB_LIMIT = 3
+DB_LIMIT = 6
 
 db_config = {
     "dbname": "abbyTrader",
@@ -21,16 +21,6 @@ db_config = {
 def sync():
     app = None  # Inicializamos app para que exista incluso si hay error antes
     try:
-        # #Obtenemos los detalles del contrato, por
-        # fetcher = IbDbDataFetcher(db_config)
-        # symbol_data = fetcher.fetch_symbol_data(str(SYMBOL_ID))
-        # symbol   = str(symbol_data.at[0, 'SYMBOL'])
-        # sec_type = str(symbol_data.at[0, 'SEC_TYPE'])
-        # exchange = str(symbol_data.at[0, 'EXCHANGE'])
-        # currency = str(symbol_data.at[0, 'CURRENCY'])
-        # print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
-        # fetcher.close()
-        # Diccionario con la info de cada symbol
         contract_info_by_id = {}
 
         fetcher = IbDbDataFetcher(db_config)

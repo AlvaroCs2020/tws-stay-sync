@@ -163,7 +163,7 @@ class TradingApp(EClient, EWrapper):
             print("Volvio a pasar el error de verga este")
             return self.df_empty
         #te clavas 2 segundos
-        if(len(df) < 500):
+        if(len(df) < 80):
             print("[WARN] Muy pocos ticks se saltara esta barra para intentarla luego]")
             self.req_made = False
             return self.df_empty
