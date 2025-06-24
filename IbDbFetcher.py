@@ -36,7 +36,7 @@ class IbDbDataFetcher:
     def fetch_created_data(self, symbol_id, limit=10):
         self.ensure_connection()
         query = '''
-        SELECT *
+        SELECT DISTINCT ON ("DATE_FROM", "DATE_TO", "SYMBOL_ID") *
         FROM abby."IbIntegration_data"
         WHERE ("STATUS" = 'CREATED')
           AND "SYMBOL_ID" = %s
@@ -98,6 +98,17 @@ class IbDbDataFetcher:
                                 int(row['COUNT_TICK']), str(row['DIFF_LEVEL_ENUM']), str(row['STATUS']),
                                 str(row['UPDATED_AT']), str(row['RETRY_COUNT']), str(row['DOW']), str(row['NW_DAY']),
                                 str(row['ID'])
+                            ))
+                            ##Eliminamos duplicados si es que los hay
+
+                            cur.execute('''
+                                DELETE FROM abby."IbIntegration_data"
+                                WHERE "DATE_FROM" = %s
+                                  AND "DATE_TO" = %s
+                                  AND "SYMBOL_ID" = %s
+                                  AND "ID" <> %s;
+                            ''', (
+                                str(row['DATE_FROM']), str(row['DATE_TO']), int(row['SYMBOL_ID']), int(row['ID'])
                             ))
                             break
                         except Exception as e:
