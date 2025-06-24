@@ -53,7 +53,8 @@ def sync():
             created_data_list = []
             for sym_id in SYMBOL_IDS:
                 df_temp = fetcher.fetch_created_data(symbol_id=sym_id,limit=DB_LIMIT)
-                created_data_list.append(df_temp)
+                if len(created_data_list) > 0:
+                    created_data_list.append(df_temp)
 
             data_to_process_from_db = pd.concat(created_data_list, ignore_index=True)
             fetcher.close()
