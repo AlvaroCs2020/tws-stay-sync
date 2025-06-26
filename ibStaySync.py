@@ -5,7 +5,10 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-SYMBOL_IDS = [10,11]  # por ejemplo
+
+from dotenv import load_dotenv
+import os
+
 
 STACK_SIZE = 5
 DB_LIMIT = 6
@@ -19,6 +22,14 @@ db_config = {
 }
 
 def sync():
+    # Cargar variables desde el archivo .env
+    load_dotenv()
+
+    # Obtener la variable como string
+    valores_str = os.getenv("VALORES", "")
+    # Convertir la cadena a lista de enteros
+    SYMBOL_IDS = [int(v.strip()) for v in valores_str.split(",") if v.strip()]
+
     app = None  # Inicializamos app para que exista incluso si hay error antes
     try:
         contract_info_by_id = {}
