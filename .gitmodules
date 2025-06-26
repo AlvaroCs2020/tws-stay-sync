@@ -1,0 +1,3 @@
+[submodule "IBCAutomation"]
+	path = IBCAutomation
+	url = https://github.com/IbcAlpha/IBC.git
