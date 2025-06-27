@@ -241,11 +241,13 @@ class TradingApp(EClient, EWrapper):
         return diff_level
     @staticmethod
     def format_int_to_string(num):
+        def fmt(n):
+            return f"{n:.1f}".rstrip("0").rstrip(".")  # Ej: 109.0 -> 109, 109.50 -> 109.5
         if num >= 1_000_000_000:
-            return f"{num / 1_000_000_000:.3f} B"
+            return f"{fmt(num / 1_000_000_000)} B"
         elif num >= 1_000_000:
-            return f"{num / 1_000_000:.3f} M"
+            return f"{fmt(num / 1_000_000)} M"
         elif num >= 1_000:
-            return f"{num / 1_000:.3f} K"
+            return f"{fmt(num / 1_000)} K"
         else:
             return str(num)
