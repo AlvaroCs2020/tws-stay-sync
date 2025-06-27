@@ -91,6 +91,9 @@ def sync():
                     elif app.req_made and app.last_tick_count == 0:
                         raise KeyError(f"No estan llegando ticks {date_from}")
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
+
+                    if app.req_made and sum_ask == 0:
+                        raise KeyError(f"Da 0 esta pija  {len(df_filtered_1min)}")
                     sum_bid = df_filtered_1min['SizeBid'].sum()
                     difference = sum_bid - sum_ask
                     count_tick = len(df_filtered_1min)

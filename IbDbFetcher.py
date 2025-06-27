@@ -35,13 +35,14 @@ class IbDbDataFetcher:
 
     def fetch_created_data(self, symbol_id, limit=10):
         self.ensure_connection()
+          #
         query = '''
         SELECT DISTINCT ON ("DATE_FROM", "DATE_TO", "SYMBOL_ID") *
         FROM abby."IbIntegration_data"
-        WHERE ("STATUS" = 'CREATED')
+        WHERE ("STATUS" = 'CREATED' OR "SUM_ASK" = 0)
           AND "SYMBOL_ID" = %s
-          AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-05-01 00:00:00+00:00'
           AND "NW_DAY" = False
+          AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-05-01 00:00:00+00:00'
         ORDER BY "DATE_FROM" DESC
         LIMIT %s;
         '''

@@ -162,11 +162,6 @@ class TradingApp(EClient, EWrapper):
         except KeyError:
             print("Volvio a pasar el error de verga este")
             return self.df_empty
-        #te clavas 2 segundos
-        if(len(df) < 80):
-            print("[WARN] Muy pocos ticks se saltara esta barra para intentarla luego]")
-            self.req_made = False
-            return self.df_empty
 
         pd_end_time=pd.to_datetime(end_time, utc=True)
 
@@ -208,8 +203,7 @@ class TradingApp(EClient, EWrapper):
             except KeyError:
                 print("Volvia a pasar el error de verga este " + str(count))
                 return self.df_empty
-        if not_done:
-            return self.df_empty
+
         df_filtered_1min = pd.concat(list_of_chunks, ignore_index=True)
         df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] < stop_time_dt]
         df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] >= start_time_dt]
