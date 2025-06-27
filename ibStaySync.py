@@ -9,9 +9,7 @@ from TradingApp import TradingApp
 from dotenv import load_dotenv
 import os
 
-
-STACK_SIZE = 5
-DB_LIMIT = 6
+DB_LIMIT = 3
 
 db_config = {
     "dbname": "abbyTrader",
@@ -24,9 +22,9 @@ db_config = {
 def sync():
     # Cargar variables desde el archivo .env
     load_dotenv()
-
+    DB_LIMIT = os.getenv("DB_LIMIT")
     # Obtener la variable como string
-    valores_str = os.getenv("VALORES", "")
+    valores_str = os.getenv("SYMBOLS", "")
     # Convertir la cadena a lista de enteros
     SYMBOL_IDS = [int(v.strip()) for v in valores_str.split(",") if v.strip()]
 

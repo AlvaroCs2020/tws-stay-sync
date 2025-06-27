@@ -211,6 +211,10 @@ class TradingApp(EClient, EWrapper):
                 max_time = new_max
                 df_temp = df_temp[df_temp['TimeFormatted'] >= begin_of_chunk]  # le recortamos los que este antes del inicio y guardamos
                 list_of_chunks.append(df_temp)
+
+                if new_max > pd_end_time:
+                    break
+
             except KeyError:
                 print("Volvia a pasar el error de verga este " + str(count))
                 return self.df_empty

@@ -1,3 +1,4 @@
 pandas
 ibapi
 psycopg2
+dotenv

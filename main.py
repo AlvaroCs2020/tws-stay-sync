@@ -11,6 +11,7 @@ def main():
         nonlocal process
         if process and process.poll() is None:
             print("[INFO] Terminando subproceso...")
+            os.kill(process.pid, signal.SIGTERM)
             os.killpg(os.getpgid(process.pid), signal.SIGTERM)  # Mata a todo el grupo
 
     try:
