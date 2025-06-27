@@ -180,7 +180,7 @@ class TradingApp(EClient, EWrapper):
 
         count = 0
         last_new_start_time_rounded = ''
-        while max_time < pd_end_time and count < 7:
+        while max_time < pd_end_time:
             self.req_made = False
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
@@ -194,20 +194,10 @@ class TradingApp(EClient, EWrapper):
             df_temp = self.df_empty
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
             last_new_start_time_rounded = new_start_time_rounded
-            # while True:  # Le pegamos a TWS hasta que devuelva algo
-            #     count += 1
-            #     if len(df_temp) > 0 or count > 4:
-            #         count = 0
-            #         break
-            #     df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
-
             try:
                 df_temp['TimeFormatted'] = pd.to_datetime(df_temp['Time'], unit='s', utc=True)
                 new_max = df_temp['TimeFormatted'].max()
-                if new_max < pd_end_time: #Este no va a ser el ultimo tramo de ticks que conformen la vela, lo recortamos y actualizamos el max
-                    df_temp = df_temp[df_temp['TimeFormatted'] < new_max]
-                else:
-                    not_done = False
+                df_temp = df_temp[df_temp['TimeFormatted'] < new_max]
                 max_time = new_max
                 df_temp = df_temp[df_temp['TimeFormatted'] >= begin_of_chunk]  # le recortamos los que este antes del inicio y guardamos
                 list_of_chunks.append(df_temp)
