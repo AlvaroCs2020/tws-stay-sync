@@ -232,12 +232,16 @@ class TradingApp(EClient, EWrapper):
     @staticmethod
     def format_int_to_string(num):
         def fmt(n):
-            return f"{n:.1f}".rstrip("0").rstrip(".")  # Ej: 109.0 -> 109, 109.50 -> 109.5
-        if num >= 1_000_000_000:
-            return f"{fmt(num / 1_000_000_000)} B"
-        elif num >= 1_000_000:
-            return f"{fmt(num / 1_000_000)} M"
-        elif num >= 1_000:
-            return f"{fmt(num / 1_000)} K"
+            return f"{n:.1f}".rstrip("0").rstrip(".")  # Ej: -109.0 -> -109, -109.50 -> -109.5
+
+        abs_num = abs(num)
+        sign = "-" if num < 0 else ""
+
+        if abs_num >= 1_000_000_000:
+            return f"{sign}{fmt(abs_num / 1_000_000_000)} B"
+        elif abs_num >= 1_000_000:
+            return f"{sign}{fmt(abs_num / 1_000_000)} M"
+        elif abs_num >= 1_000:
+            return f"{sign}{fmt(abs_num / 1_000)} K"
         else:
-            return str(num)
+            return f"{num}"
