@@ -14,7 +14,7 @@ def main():
         working_dir = r"C:\IBC"
 
         subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
-        time.sleep(10)
+        time.sleep(5)
     try:
         while True:
             try:
@@ -25,7 +25,7 @@ def main():
                     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
                 )
 
-                time.sleep(40)  # o reemplazá por sync()
+                time.sleep(60)  # o reemplazá por sync()
                 sync()
 
             except Exception as e:

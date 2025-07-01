@@ -5,11 +5,14 @@ import pandas as pd
 
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
-
+from WatchDog import Watchdog
 from dotenv import load_dotenv
 import os
+from WatchDog import raise_in_main_thread, WatchdogTimeout
 
-DB_LIMIT = 3
+from TelegramBot import TelegramBot
+import signal
+DB_LIMIT = 1000 #Esto lo va a pisar el .env
 
 db_config = {
     "dbname": "abbyTrader",
@@ -20,11 +23,24 @@ db_config = {
 }
 
 def sync():
-    # Cargar variables desde el archivo .env
     load_dotenv()
+    def on_timeout(): ##CallBack del watch dog
+        print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
+        raise_in_main_thread(WatchdogTimeout)
+        valores_str = os.getenv("SYMBOLS", "")
+        TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}*")
+        #Informar por telegram?
+        #os._exit(1)  # o lanzar una excepción, o lo que necesites
+        #raise KeyboardInterrupt #eso NO anda
+
+    # Arrancamos el watch dog
+    watchdog = Watchdog(timeout=900, callback=on_timeout) #15min
+    watchdog.start()
+    # Cargar variables desde el archivo .env
     DB_LIMIT = os.getenv("DB_LIMIT")
     # Obtener la variable como string
     valores_str = os.getenv("SYMBOLS", "")
+    TelegramBot.send_message(f"*[WARN]* Se inicio el proceso de sync para los simbolos: *{valores_str}* en caso de ser este el ultimo mensaje *TODO OK*")
     # Convertir la cadena a lista de enteros
     SYMBOL_IDS = [int(v.strip()) for v in valores_str.split(",") if v.strip()]
 
@@ -94,7 +110,7 @@ def sync():
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
 
                     if app.req_made and sum_ask == 0:
-                        raise KeyError(f"Da 0 esta pija  {len(df_filtered_1min)}")
+                        raise KeyError(f"registro sum 0 {len(df_filtered_1min)}")
                     sum_bid = df_filtered_1min['SizeBid'].sum()
                     difference = sum_bid - sum_ask
                     count_tick = len(df_filtered_1min)
@@ -118,6 +134,10 @@ def sync():
                     print(f"[WARN] {e}, ID: {row['ID']}")
                     data_to_process_from_db = data_to_process_from_db.drop(index)
                     results.append(str(row['ID']))
+                except WatchdogTimeout:
+                    print(f"[ERROR] Ladro el perro")
+
+                    app.disconnect()
                 except Exception as e:
                     print(f"[ERROR] Fallo inesperado en el procesamiento del ID {row['ID']}: {e}")
                     data_to_process_from_db = data_to_process_from_db.drop(index)
@@ -135,16 +155,25 @@ def sync():
             print("Tiempo en update DB:", db_end - db_start)
             print("No se pudieron obtener:", len(results), results)
             print("Tiempo total del ciclo:", time.time() - start_time)
-
+            ##ACA SE Deberia reiniciar el timer del watch dog
+            watchdog.reset()
         app.disconnect()
 
     except KeyboardInterrupt:
         print("\n[INFO] Interrupción por teclado. Cerrando conexión.")
         app.disconnect()
+        watchdog.stop()
         exit(-2)
+    except WatchdogTimeout:
+        print(f"[ERROR] Ladro el perro:")
+        watchdog.stop()
+        app.disconnect()
     except Exception as e:
         print(f"[ERROR] Excepción general: {e}")
+        watchdog.stop()
         app.disconnect()
+
     finally:
+        watchdog.stop()
         if app and app.isConnected():
             app.disconnect()
