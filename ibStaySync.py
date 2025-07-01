@@ -85,6 +85,7 @@ def sync():
                     df_filtered_1min = pd.DataFrame()  # vaciamos antes por las dudas
 
                     df_filtered_1min = app.get_ticks_per_bar(date_from, date_to, symbol_id=symbol_id)
+                    # aca podria, instaciar un sub process e ir cargando la liquidez por segundo
 
                     if not app.req_made:
                         raise KeyError("No se recibió respuesta válida de TWS")

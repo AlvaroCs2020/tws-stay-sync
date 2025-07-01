@@ -8,12 +8,13 @@ def main():
     process = None
 
     def kill_process():
-        nonlocal process
-        if process and process.poll() is None:
-            print("[INFO] Terminando subproceso...")
-            os.kill(process.pid, signal.SIGTERM)
-            os.killpg(os.getpgid(process.pid), signal.SIGTERM)  # Mata a todo el grupo
+        print("[WARN] Se decidio cerrar TWS")
 
+        send_command_path = r"C:\IBC\SendCommand.bat"
+        working_dir = r"C:\IBC"
+
+        subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
+        time.sleep(10)
     try:
         while True:
             try:
@@ -24,7 +25,7 @@ def main():
                     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
                 )
 
-                time.sleep(60)  # o reemplazá por sync()
+                time.sleep(40)  # o reemplazá por sync()
                 sync()
 
             except Exception as e:
