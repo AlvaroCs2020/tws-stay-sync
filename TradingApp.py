@@ -124,8 +124,12 @@ class TradingApp(EClient, EWrapper):
                         parsed[key] = value  # por si hay strings
             parsed_list.append(parsed)
         df = pd.DataFrame(parsed_list)
-        max_time = str( pd.to_datetime(df['Time'].max(), unit='s', utc=True))
-        min_time = str( pd.to_datetime(df['Time'].min(), unit='s', utc=True))
+        try:
+            max_time = str( pd.to_datetime(df['Time'].max(), unit='s', utc=True))
+            min_time = str( pd.to_datetime(df['Time'].min(), unit='s', utc=True))
+        except KeyError:
+            self.data = pd.DataFrame()
+            return
         print("ticks bid ask: " + str(len(ticks)) +" : "+ str(done) + " : " +str(reqId) + f" from {min_time} to {max_time}")
         self.req_made = True
         self.data = df
