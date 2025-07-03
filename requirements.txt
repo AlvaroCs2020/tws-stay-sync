@@ -3,3 +3,4 @@ ibapi
 psycopg2
 dotenv
 requests
+supabase

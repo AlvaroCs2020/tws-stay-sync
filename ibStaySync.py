@@ -136,7 +136,7 @@ def sync():
                     results.append(str(row['ID']))
                 except WatchdogTimeout:
                     print(f"[ERROR] Ladro el perro")
-
+                    TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog*")
                     app.disconnect()
                 except Exception as e:
                     print(f"[ERROR] Fallo inesperado en el procesamiento del ID {row['ID']}: {e}")
@@ -161,6 +161,7 @@ def sync():
 
     except KeyboardInterrupt:
         print("\n[INFO] Interrupción por teclado. Cerrando conexión.")
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *KeyboardInterrupt*")
         app.disconnect()
         watchdog.stop()
         exit(-2)
@@ -168,10 +169,12 @@ def sync():
         print(f"[ERROR] Ladro el perro:")
         watchdog.stop()
         app.disconnect()
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout*")
     except Exception as e:
         print(f"[ERROR] Excepción general: {e}")
         watchdog.stop()
         app.disconnect()
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *{e}*")
 
     finally:
         watchdog.stop()
