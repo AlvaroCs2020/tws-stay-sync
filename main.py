@@ -13,19 +13,19 @@ def main():
         send_command_path = r"C:\IBC\SendCommand.bat"
         working_dir = r"C:\IBC"
 
-        subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
+        #subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
         time.sleep(5)
     try:
         while True:
             try:
                 print("Intentamos conectarnos")
                 # Iniciar .bat en nuevo grupo de procesos
-                process = subprocess.Popen(
-                    ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
-                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
-                )
-
-                time.sleep(60)  # o reemplazá por sync()
+                # process = subprocess.Popen(
+                #     ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
+                #     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+                # )
+                #
+                # time.sleep(60)  # o reemplazá por sync()
                 sync()
 
             except Exception as e:
