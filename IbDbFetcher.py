@@ -39,10 +39,9 @@ class IbDbDataFetcher:
         query = '''
         SELECT DISTINCT ON ("DATE_FROM", "DATE_TO", "SYMBOL_ID") *
         FROM abby."IbIntegration_data"
-        WHERE ("STATUS" = 'CREATED' OR "SUM_ASK" = 0)
+        WHERE ("STATUS" = 'CREATED')
           AND "SYMBOL_ID" = %s
           AND "NW_DAY" = False
-          AND "DATE_FROM" > TIMESTAMP WITH TIME ZONE '2025-05-01 00:00:00+00:00'
         ORDER BY "DATE_FROM" DESC
         LIMIT %s;
         '''
