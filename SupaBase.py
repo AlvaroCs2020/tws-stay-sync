@@ -3,6 +3,7 @@ import time
 from dotenv import load_dotenv
 import os
 import psycopg2
+import sys
 from psycopg2.extras import execute_values
 from supabase import create_client, Client
 from datetime import datetime
@@ -10,6 +11,7 @@ from datetime import datetime
 class SupaBase:
     def __init__(self):
         self.data_to_save = []
+        self.data_to_save_currency_status = []
         self.df_empty = pd.DataFrame(columns=[
             'Time', 'TickAttriBidAsk', 'AskPastHigh', 'PriceBid',
             'PriceAsk', 'SizeBid', 'SizeAsk', 'TimeFormatted'
@@ -22,6 +24,11 @@ class SupaBase:
         self.max_retries = 5
         self.retry_wait = 2
         self.curr = self.conn.cursor()
+
+    def __debug_this_thread(self):
+        pass
+        # import pydevd_pycharm
+        # pydevd_pycharm.settrace(suspend=True, trace_only_current_thread=True)
     def __connect(self):
         try:
             self.conn = psycopg2.connect(self.db_url,)
@@ -50,10 +57,65 @@ class SupaBase:
                 date_id, symbol_id, updated_at, sum_ask, sum_bid,
                 difference, count_tick, price_bid, price_ask, boolean
             ) VALUES %s
+            ON CONFLICT (date_id, symbol_id)
+            DO NOTHING
         """
-        execute_values(self.curr, sql,self.data_to_save)
-        self.conn.commit()
-    def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int):
+        try:
+            values = []
+            for row in self.data_to_save:
+                values.append((
+                    row["date_id"],
+                    row["symbol_id"],
+                    datetime.utcnow(),  # updated_at
+                    row["sum_ask"],
+                    row["sum_bid"],
+                    row["difference"],
+                    row["count_tick"],
+                    row["price_bid"],
+                    row["price_ask"],
+                    False  # boolean
+                ))
+            execute_values(self.curr, sql, values)
+            self.conn.commit()
+        except Exception as e:
+            print(f"[ERROR] Falló el insert: {e}")
+            self.conn.rollback()
+    def __update_currency_status(self):
+        self.__ensure_connection()
+        failed_ids = []
+        try:
+            with self.conn.cursor() as cur:
+                for row in self.data_to_save_currency_status: #esto
+                    for attempt in range(2):
+                        try:
+                            cur.execute('''
+                                UPDATE "CURRENCYSTATUS"
+                                SET "status" = True 
+                                WHERE "symbol_id" = %s;
+                                  AND "date_from" = %s;
+                                  AND "date_to" = %s;
+                            ''', ( int(row['symbol_id']), str(row['date_from']), str(row['date_to'])
+                            ))
+                            ##Eliminamos duplicados si es que los hay
+                            break
+                        except Exception as e:
+                            print(f"[WARN] Falla actualización ID {str(row['symbol_id'])} {str(row['date_from'])} (intento {attempt+1}): {e}")
+                            if attempt != 0:
+                                time.sleep(1)
+            self.conn.commit()
+            print("[INFO] Actualización completada.")
+            if failed_ids:
+                print(f"[WARN] IDs fallidos luego de 2 intentos: {failed_ids}")
+            return 0
+        except Exception as e:
+            try:
+                if self.conn and not self.conn.closed:
+                    self.conn.rollback()
+            except Exception as rollback_error:
+                print(f"[ERROR] Fallo el rollback: {rollback_error}")
+            print(f"[ERROR] update_data: {e}")
+            return -1
+    def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to):
         chunks_by_second = data.groupby('Time') #error handling
         for second, chunk in chunks_by_second:
             sum_ask = chunk['SizeAsk'].sum()
@@ -61,7 +123,7 @@ class SupaBase:
             difference = sum_bid - sum_ask
             count_tick = len(chunk)
             last = chunk.loc[chunk.index[-1]]
-            price_bid = last['PriceBid'] #Si o si el ultimo precio? un promedio, algo de eso, pensar!!
+            price_bid = last['PriceBid'] #Si o si el ultimo precio? un promedio, algo de eso,TODO pensar!!
             price_ask = last['PriceAsk']
             date_id =  pd.to_datetime(chunk['Time'].max(), unit='s', utc=True)
 
@@ -74,30 +136,50 @@ class SupaBase:
                        "price_bid"  :float(price_bid),
                        "price_ask"  :float(price_ask)} #falta algo?
 
+            new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
             self.data_to_save.append(new_row)
+            self.data_to_save_currency_status.append(new_row_currency_status)
 
+    def fetch_created_data(self, symbol_id, limit=10):
+        self.__ensure_connection()
+        query = '''
+        SELECT DISTINCT ON ("date_from", "date_to", "symbol_id") *
+        FROM "CURRENCYSTATUS"
+        WHERE "status" = False
+          AND "symbol_id" = %s
+        ORDER BY "date_from" DESC
+        LIMIT %s;
+        '''
+        try:
+            with self.conn.cursor() as cur:
+                cur.execute(query, (symbol_id, limit))
+                rows = cur.fetchall()
+                colnames = [desc[0] for desc in cur.description]
+                return pd.DataFrame(rows, columns=colnames)
+        except Exception as e:
+            print(f"[ERROR] fetch_created_data: {e}")
+            return pd.DataFrame()
 
-    def save_data_to_supabase(self):
+    def save_data_to_supabase(self, symbol_id : int):
+        self.__debug_this_thread()
         if len(self.data_to_save) == 0:
             return
         print("++++++++++++++++++++++++++++++++++++++++++++")
         print(f"TOTAL AL GUARDAR {len(self.data_to_save)}")
         print("++++++++++++++++++++++++++++++++++++++++++++")
         self.__ensure_connection()
-        self.__insert_new_values()
-        # for new_row in self.data_to_save:
-        #     text = f"""
-        #     # date_id    :{new_row["DATE_ID"]}
-        #     # symbol_id  :{new_row["SYMBOL_ID"]}
-        #     # sum_ask    :{new_row["SUM_ASK"]}
-        #     # sum_bid    :{new_row["SUM_BID"]}
-        #     # difference :{new_row["DIFFERENCE"]}
-        #     # count_tick :{new_row["COUNT_TICK"]}
-        #     # price_bid  :{new_row["PRICE_BID"]}
-        #     # price_ask  :{new_row["PRICE_ASK"]}              """
-        #     print(text)
-        #     print("++++++++++++++++++++++++++++++++++++++++++++")
+        self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
+        self.__update_currency_status()
 
         self.data_to_save = []
+        self.data_to_save_currency_status = []
     def __del__(self):
         print("MURIO ESTA INSTANCIA")
+        try:
+            if self.curr:
+                self.curr.close()
+            if self.conn:
+                self.conn.close()
+        except Exception as e:
+            print(f"[WARN] Error al cerrar recursos: {e}")
+

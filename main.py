@@ -3,6 +3,7 @@ import subprocess
 import signal
 import os
 from ibStaySync import sync
+from ibStaySync import get_sync
 
 def main():
     process = None
@@ -26,7 +27,8 @@ def main():
                 # )
                 #
                 # time.sleep(60)  # o reemplazá por sync()
-                sync()
+                #sync()
+                get_sync()
 
             except Exception as e:
                 print(f"[ERROR] Fallo durante la ejecución: {e}")

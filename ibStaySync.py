@@ -13,6 +13,7 @@ from TelegramBot import TelegramBot
 from SupaBase import SupaBase
 import signal
 DB_LIMIT = 1000 #Esto lo va a pisar el .env
+GET_SYNC = 0
 DEBUG = "*DEBUG*"
 db_config = {
     "dbname": "abbyTrader",
@@ -21,7 +22,6 @@ db_config = {
     "host": "200.58.123.179",
     "port": 6432
 }
-
 def sync():
     load_dotenv()
     def on_timeout(): ##CallBack del watch dog
@@ -50,7 +50,7 @@ def sync():
     try:
         contract_info_by_id = {}
 
-        fetcher = IbDbDataFetcher(db_config)
+        fetcher = IbDbDataFetcher(db_config) #Esto queda igual pero deberiamos
         for sym_id in SYMBOL_IDS:
             symbol_data = fetcher.fetch_symbol_data(str(sym_id))
             contract_info_by_id[sym_id] = {
@@ -80,12 +80,12 @@ def sync():
             fetcher = IbDbDataFetcher(db_config)
             data_to_process_from_db = pd.DataFrame()
             created_data_list = []
-            for sym_id in SYMBOL_IDS:
-                df_temp = fetcher.fetch_created_data(symbol_id=sym_id,limit=DB_LIMIT)
+            for sym_id in SYMBOL_IDS: #Vamos a ir a buscar los created, lo que puede variar dependiendo del get sync,
 
+                df_temp = fetcher.fetch_created_data(symbol_id=sym_id,limit=DB_LIMIT)
                 created_data_list.append(df_temp)
 
-            data_to_process_from_db = pd.concat(created_data_list, ignore_index=True)
+            data_to_process_from_db = pd.concat(created_data_list, ignore_index=True) #Si vamos a laburar la liquidez nueva, cambiamos la fuente de datos
             fetcher.close()
 
             results = []
@@ -191,6 +191,161 @@ def sync():
         watchdog.stop()
         app.disconnect()
         TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout* {DEBUG}")
+    except Exception as e:
+        print(f"[ERROR] Excepción general: {e}")
+        watchdog.stop()
+        app.disconnect()
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *{e}* {DEBUG}")
+
+    finally:
+        watchdog.stop()
+        if app and app.isConnected():
+            app.disconnect()
+
+
+def get_sync():
+    load_dotenv()
+
+    def on_timeout():  ##CallBack del watch dog
+        print("[WATCHDOG] Se colgó getsync. Matamos el proceso.")
+        raise_in_main_thread(WatchdogTimeout)
+        valores_str = os.getenv("SYMBOLS", "")
+        TelegramBot.send_message(
+            f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos *getsync*: *{valores_str}* {DEBUG}")
+
+    # Arrancamos el watch dog
+    watchdog = Watchdog(timeout=900, callback=on_timeout)  # 15min
+    watchdog.start()
+
+    last_thread_process = threading.Thread(target=lambda: None)
+    last_thread_process.start()
+    last_thread_process.join()
+
+    # Cargar variables desde el archivo .env
+    DB_LIMIT = os.getenv("DB_LIMIT")
+    # Obtener la variable como string
+    valores_str = os.getenv("SYMBOLS", "")
+    TelegramBot.send_message(
+        f"*[WARN]* Se inicio el proceso de getsync para los simbolos: *{valores_str}* en caso de ser este el ultimo mensaje *TODO OK* {DEBUG}")
+    # Convertir la cadena a lista de enteros
+    SYMBOL_IDS = [int(v.strip()) for v in valores_str.split(",") if v.strip()]
+
+    app = None  # Inicializamos app para que exista incluso si hay error antes
+    try:
+        contract_info_by_id = {}
+
+        fetcher = IbDbDataFetcher(db_config)  # TODO mudar a supabase
+        for sym_id in SYMBOL_IDS:
+            symbol_data = fetcher.fetch_symbol_data(str(sym_id))
+            contract_info_by_id[sym_id] = {
+                'symbol': str(symbol_data.at[0, 'SYMBOL']),
+                'sec_type': str(symbol_data.at[0, 'SEC_TYPE']),
+                'exchange': str(symbol_data.at[0, 'EXCHANGE']),
+                'currency': str(symbol_data.at[0, 'CURRENCY']),
+                'symbol_name': str(symbol_data.at[0, 'SYMBOL_NAME'])
+            }
+            print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
+        fetcher.close()
+
+        app = TradingApp(contract_info_by_id)
+        app.connect("127.0.0.1", 7497, clientId=5)
+        threading.Thread(target=app.run, daemon=True).start()
+        time.sleep(3)
+
+        if not app.isConnected():
+            print("connection failed")
+            app.disconnect()
+            return
+        print("connected")
+
+        while app.isConnected():
+            supa_base_processor = SupaBase()
+
+            fetcher = IbDbDataFetcher(db_config)
+            data_to_process_from_db = pd.DataFrame()
+            created_data_list = []
+            for sym_id in SYMBOL_IDS:  # Vamos a ir a buscar los created, lo que puede variar dependiendo del get sync,
+
+                df_temp = supa_base_processor.fetch_created_data(symbol_id=sym_id, limit=DB_LIMIT)
+                created_data_list.append(df_temp)
+
+            data_to_process_from_db = pd.concat(created_data_list,
+                                                ignore_index=True)  # Si vamos a laburar la liquidez nueva, cambiamos la fuente de datos
+#            fetcher.close()
+
+            results = []
+            start_time = time.time()
+
+            if len(data_to_process_from_db) == 0:
+                continue
+
+            for index, row in data_to_process_from_db.iterrows():
+                if not app.isConnected():
+                    return
+
+                try:
+                    date_from = row['date_from'].strftime('%Y%m%d-%H:%M:%S')
+                    date_to = row['date_to'].strftime('%Y%m%d-%H:%M:%S')
+                    symbol_id = int(row['symbol_id'])
+
+                    df_filtered_1min = pd.DataFrame()  # vaciamos antes por las dudas
+                    df_filtered_1min = app.get_ticks_per_bar(date_from, date_to, symbol_id=symbol_id)
+
+                    #Chequeos por las dudas
+
+                    if not app.req_made:
+                        raise KeyError("No se recibió respuesta válida de TWS")
+                    elif app.req_made and app.last_tick_count == 0:
+                        raise KeyError(f"No estan llegando ticks {date_from}")
+                    sum_ask = df_filtered_1min['SizeAsk'].sum()
+                    if app.req_made and sum_ask == 0:
+                        raise KeyError(f"registro sum 0 {len(df_filtered_1min)}")
+                    # ya tengo la linea lista, ahora. Quiero procesarla
+                    supa_base_processor.receive_and_process_data(df_filtered_1min, symbol_id, row['date_from'], row['date_to'])
+                except KeyError as e:
+                    print(f"[WARN] {e}, ID: {symbol_id}")
+                    data_to_process_from_db = data_to_process_from_db.drop(index)
+
+                except WatchdogTimeout:
+                    print(f"[ERROR] Ladro el perro")
+                    TelegramBot.send_message(
+                        f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog* {DEBUG}")
+                    app.disconnect()
+                except Exception as e:
+                    print(f"[ERROR] Fallo inesperado en el procesamiento del ID {e}")
+                    data_to_process_from_db = data_to_process_from_db.drop(index)
+                    results.append(str(row['ID']))
+
+                print(
+                    f"Progreso {index + 1}/{DB_LIMIT} - SYMBOL {row['symbol_id']} - Fecha: {row['date_from']}")
+
+            # time.sleep(0.5)
+            # fetcher = IbDbDataFetcher(db_config)
+            db_start = time.time()
+            # fetcher.update_data(data_to_process_from_db) COMENTADO POR TEST
+            supa_base_processor.save_data_to_supabase(symbol_id=symbol_id)
+            # ya tengo las nuevas lineas, ahora. Quiero guardarlas
+            db_end = time.time()
+            print("Tiempo en update DB:", db_end - db_start)
+            print("No se pudieron obtener:", len(results), results)
+            print("Tiempo total del ciclo:", time.time() - start_time)
+            ##ACA SE Deberia reiniciar el timer del watch dog
+            watchdog.reset()
+        app.disconnect()
+
+    except KeyboardInterrupt:
+        print("\n[INFO] Interrupción por teclado. Cerrando conexión.")
+        TelegramBot.send_message(
+            f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *KeyboardInterrupt* {DEBUG}")
+        app.disconnect()
+        watchdog.stop()
+        exit(-2)
+    except WatchdogTimeout:
+        print(f"[ERROR] Ladro el perro:")
+        watchdog.stop()
+        app.disconnect()
+        TelegramBot.send_message(
+            f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout* {DEBUG}")
     except Exception as e:
         print(f"[ERROR] Excepción general: {e}")
         watchdog.stop()
