@@ -27,8 +27,8 @@ def main():
                 # )
                 #
                 # time.sleep(60)  # o reemplazá por sync()
-                #sync()
-                get_sync()
+                sync()
+                # get_sync()
 
             except Exception as e:
                 print(f"[ERROR] Fallo durante la ejecución: {e}")

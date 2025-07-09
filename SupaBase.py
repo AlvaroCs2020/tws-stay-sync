@@ -91,17 +91,17 @@ class SupaBase:
                             cur.execute('''
                                 UPDATE "CURRENCYSTATUS"
                                 SET "status" = True 
-                                WHERE "symbol_id" = %s;
-                                  AND "date_from" = %s;
+                                WHERE "symbol_id" = %s
+                                  AND "date_from" = %s
                                   AND "date_to" = %s;
                             ''', ( int(row['symbol_id']), str(row['date_from']), str(row['date_to'])
                             ))
-                            ##Eliminamos duplicados si es que los hay
                             break
                         except Exception as e:
                             print(f"[WARN] Falla actualización ID {str(row['symbol_id'])} {str(row['date_from'])} (intento {attempt+1}): {e}")
-                            if attempt != 0:
+                            if attempt != 1:
                                 time.sleep(1)
+
             self.conn.commit()
             print("[INFO] Actualización completada.")
             if failed_ids:

@@ -37,7 +37,7 @@ def sync():
     last_thread_process = threading.Thread(target=lambda: None)
     last_thread_process.start()
     last_thread_process.join()
-
+    supa_base_processor = SupaBase()
     # Cargar variables desde el archivo .env
     DB_LIMIT = os.getenv("DB_LIMIT")
     # Obtener la variable como string
@@ -75,7 +75,7 @@ def sync():
         print("connected")
 
         while app.isConnected():
-            supa_base_processor = SupaBase()
+
 
             fetcher = IbDbDataFetcher(db_config)
             data_to_process_from_db = pd.DataFrame()
@@ -140,7 +140,7 @@ def sync():
 
                     #ya tengo la linea lista, ahora. Quiero procesarla
                     thread_process = threading.Thread(target=supa_base_processor.receive_and_process_data,
-                                              args=(df_filtered_1min,symbol_id,))
+                                              args=(df_filtered_1min,symbol_id,row['DATE_FROM'],row['DATE_TO'],))
                     thread_process.start()
 
                     last_thread_process = thread_process
@@ -162,14 +162,14 @@ def sync():
             time.sleep(0.5)
             fetcher = IbDbDataFetcher(db_config)
             db_start = time.time()
-            #fetcher.update_data(data_to_process_from_db) COMENTADO POR TEST
+            fetcher.update_data(data_to_process_from_db)
             if last_thread_process.is_alive():
                 print("Esperandooo a que termine el proceso anterior...")
                 last_thread_process.join()
             # ya tengo las nuevas lineas, ahora. Quiero guardarlas
             print("SE EJECUTA EL save ")
             thread_save = threading.Thread(target=supa_base_processor.save_data_to_supabase,
-                                              args=())
+                                              args=(symbol_id,))
             thread_save.start()
             fetcher.close()
             db_end = time.time()
