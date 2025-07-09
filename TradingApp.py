@@ -191,7 +191,8 @@ class TradingApp(EClient, EWrapper):
                 self.req_made = False
                 return self.df_empty
             df_temp = self.df_empty
-            if new_start_time >= pd_end_time:
+            pd_new_start_time = pd.to_datetime(new_start_time, utc=True)
+            if pd_new_start_time > pd_end_time:
                 break
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
             last_new_start_time_rounded = new_start_time_rounded
