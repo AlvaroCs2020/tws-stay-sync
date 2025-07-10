@@ -7,7 +7,7 @@ import sys
 from psycopg2.extras import execute_values
 from supabase import create_client, Client
 from datetime import datetime
-
+from time import *
 class SupaBase:
     def __init__(self):
         self.data_to_save = []
@@ -66,7 +66,7 @@ class SupaBase:
                 values.append((
                     row["date_id"],
                     row["symbol_id"],
-                    datetime.utcnow(),  # updated_at
+                    datetime.now(),  # updated_at
                     row["sum_ask"],
                     row["sum_bid"],
                     row["difference"],
@@ -136,9 +136,9 @@ class SupaBase:
                        "price_bid"  :float(price_bid),
                        "price_ask"  :float(price_ask)} #falta algo?
 
-            new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
             self.data_to_save.append(new_row)
-            self.data_to_save_currency_status.append(new_row_currency_status)
+        new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
+        self.data_to_save_currency_status.append(new_row_currency_status)
 
     def fetch_created_data(self, symbol_id, limit=10):
         self.__ensure_connection()

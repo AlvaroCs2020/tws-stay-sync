@@ -152,11 +152,6 @@ class TradingApp(EClient, EWrapper):
         self.req_made = False
         df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
 
-        # while True:  # Le pegamos a TWS hasta que devuelva algo
-        #     count+=1
-        #     if len(df) > 0 or count > 4:
-        #         break
-        #     df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
         self.last_tick_count = len(df)
         if len(df) == 0: #Si no anduvo, lo marcamos
             return self.df_empty
@@ -180,7 +175,7 @@ class TradingApp(EClient, EWrapper):
         count = 0
         last_new_start_time_rounded = ''
         while max_time < pd_end_time:
-            self.req_made = False
+
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             seconds = max_time.second
@@ -191,6 +186,11 @@ class TradingApp(EClient, EWrapper):
                 self.req_made = False
                 return self.df_empty
             df_temp = self.df_empty
+
+            pd_new_start_time_rounded = new_start_time_rounded
+            if pd_new_start_time_rounded>pd.to_datetime(pd_end_time, utc=True):
+                break
+            self.req_made = False
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
             last_new_start_time_rounded = new_start_time_rounded
             try:
@@ -205,7 +205,7 @@ class TradingApp(EClient, EWrapper):
                     break
 
             except KeyError:
-                print("Volvia a pasar el error de verga este " + str(count))
+                print("Volvia a pasar el error de verga este ")
                 return self.df_empty
 
         df_filtered_1min = pd.concat(list_of_chunks, ignore_index=True)

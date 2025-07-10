@@ -22,18 +22,8 @@ db_config = {
     "host": "200.58.123.179",
     "port": 6432
 }
-def sync():
+def sync(watchdog):
     load_dotenv()
-    def on_timeout(): ##CallBack del watch dog
-        print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
-        raise_in_main_thread(WatchdogTimeout)
-        valores_str = os.getenv("SYMBOLS", "")
-        TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}* {DEBUG}")
-
-    # Arrancamos el watch dog
-    watchdog = Watchdog(timeout=900, callback=on_timeout) #15min
-    watchdog.start()
-
     last_thread_process = threading.Thread(target=lambda: None)
     last_thread_process.start()
     last_thread_process.join()
@@ -133,17 +123,17 @@ def sync():
                     data_to_process_from_db.loc[index, 'UPDATED_AT']      = updated_at
                     data_to_process_from_db.loc[index, 'DIFF_LEVEL_ENUM'] = diff_str
                     data_to_process_from_db.loc[index, 'RETRY_COUNT']     = 0
-                    #Si el hilo anterior sigue vivo, esperá que termine
-                    if last_thread_process.is_alive():
-                        print("Esperando a que termine el proceso anterior...")
-                        last_thread_process.join()
-
+                    # #Si el hilo anterior sigue vivo, esperá que termine
+                    # if last_thread_process.is_alive():
+                    #     print("Esperando a que termine el proceso anterior...")
+                    #     last_thread_process.join()
+                    supa_base_processor.receive_and_process_data(df_filtered_1min,symbol_id,row['DATE_FROM'],row['DATE_TO'])
                     #ya tengo la linea lista, ahora. Quiero procesarla
-                    thread_process = threading.Thread(target=supa_base_processor.receive_and_process_data,
-                                              args=(df_filtered_1min,symbol_id,row['DATE_FROM'],row['DATE_TO'],))
-                    thread_process.start()
-
-                    last_thread_process = thread_process
+                    # thread_process = threading.Thread(target=supa_base_processor.receive_and_process_data,
+                    #                           args=(df_filtered_1min,symbol_id,row['DATE_FROM'],row['DATE_TO'],))
+                    # thread_process.start()
+                    #
+                    # last_thread_process = thread_process
                 except KeyError as e:
                     print(f"[WARN] {e}, ID: {row['ID']}")
                     data_to_process_from_db = data_to_process_from_db.drop(index)
@@ -168,10 +158,11 @@ def sync():
                 last_thread_process.join()
             # ya tengo las nuevas lineas, ahora. Quiero guardarlas
             print("SE EJECUTA EL save ")
-            thread_save = threading.Thread(target=supa_base_processor.save_data_to_supabase,
-                                              args=(symbol_id,))
-            thread_save.start()
-            fetcher.close()
+            supa_base_processor.save_data_to_supabase(symbol_id)
+            # thread_save = threading.Thread(target=supa_base_processor.save_data_to_supabase,
+            #                                   args=(symbol_id,))
+            # thread_save.start()
+            # fetcher.close()
             db_end = time.time()
             print("Tiempo en update DB:", db_end - db_start)
             print("No se pudieron obtener:", len(results), results)
@@ -356,3 +347,49 @@ def get_sync():
         watchdog.stop()
         if app and app.isConnected():
             app.disconnect()
+def main():
+    process = None
+    def on_timeout(): ##CallBack del watch dog
+        print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
+        raise_in_main_thread(WatchdogTimeout)
+        valores_str = os.getenv("SYMBOLS", "")
+        TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}* {DEBUG}")
+    # Arrancamos el watch dog
+    watchdog = Watchdog(timeout=900, callback=on_timeout) #15min
+    watchdog.start()
+    def kill_process():
+        print("[WARN] Se decidio cerrar TWS")
+
+        send_command_path = r"C:\IBC\SendCommand.bat"
+        working_dir = r"C:\IBC"
+
+        #subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
+        time.sleep(5)
+    try:
+        while True:
+            try:
+                print("Intentamos conectarnos")
+                # Iniciar .bat en nuevo grupo de procesos
+                # process = subprocess.Popen(
+                #     ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
+                #     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+                # )
+                #
+                # time.sleep(60)  # o reemplazá por sync()
+                sync(watchdog)
+                #get_sync()
+
+            except Exception as e:
+                print(f"[ERROR] Fallo durante la ejecución: {e}")
+            finally:
+                kill_process()
+
+            print("Reintentamos en 5 segundos...\n")
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("\n[INTERRUPT] Ctrl+C recibido. Cerrando todo...")
+        kill_process()
+
+if __name__ == "__main__":
+    main()
