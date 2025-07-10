@@ -39,6 +39,7 @@ def main():
     except KeyboardInterrupt:
         print("\n[INTERRUPT] Ctrl+C recibido. Cerrando todo...")
         kill_process()
+        exit()
 
 if __name__ == "__main__":
     main()
