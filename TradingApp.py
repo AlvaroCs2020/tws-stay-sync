@@ -152,11 +152,6 @@ class TradingApp(EClient, EWrapper):
         self.req_made = False
         df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
 
-        # while True:  # Le pegamos a TWS hasta que devuelva algo
-        #     count+=1
-        #     if len(df) > 0 or count > 4:
-        #         break
-        #     df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
         self.last_tick_count = len(df)
         if len(df) == 0: #Si no anduvo, lo marcamos
             return self.df_empty
@@ -164,7 +159,7 @@ class TradingApp(EClient, EWrapper):
             df['TimeFormatted'] = pd.to_datetime(df['Time'], unit='s', utc=True)
             max_time = df['TimeFormatted'].max()
         except KeyError:
-            print("Volvio a pasar el error de verga este")
+            print("Volvio a pasar el error de verga este, se murio en la primer consulta")
             return self.df_empty
 
         pd_end_time=pd.to_datetime(end_time, utc=True)
@@ -180,7 +175,7 @@ class TradingApp(EClient, EWrapper):
         count = 0
         last_new_start_time_rounded = ''
         while max_time < pd_end_time:
-            self.req_made = False
+
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             seconds = max_time.second
@@ -194,6 +189,7 @@ class TradingApp(EClient, EWrapper):
             pd_new_start_time = pd.to_datetime(new_start_time, utc=True)
             if pd_new_start_time > pd_end_time:
                 break
+            self.req_made = False
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
             last_new_start_time_rounded = new_start_time_rounded
             try:
