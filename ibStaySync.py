@@ -188,7 +188,7 @@ def main():
         TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}*")
 
     # Arrancamos el watch dog
-    watchdog = Watchdog(timeout=120, callback=on_timeout) #15min
+    watchdog = Watchdog(timeout=600, callback=on_timeout) #15min
 
     try:
         while True:
