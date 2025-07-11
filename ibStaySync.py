@@ -12,7 +12,7 @@ from WatchDog import raise_in_main_thread, WatchdogTimeout
 import subprocess
 from TelegramBot import TelegramBot
 import signal
-DB_LIMIT = 1000 #Esto lo va a pisar el .env
+DB_LIMIT = 3 #Esto lo va a pisar el .env
 
 db_config = {
     "dbname": "abbyTrader",
