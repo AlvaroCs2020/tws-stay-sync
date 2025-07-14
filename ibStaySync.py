@@ -136,16 +136,18 @@ def sync(watchdog):
                     # last_thread_process = thread_process
                 except KeyError as e:
                     print(f"[WARN] {e}, ID: {row['ID']}")
-                    data_to_process_from_db = data_to_process_from_db.drop(index)
+                    data_to_process_from_db = data_to_process_from_db.iloc[:index]
                     results.append(str(row['ID']))
+                    break
                 except WatchdogTimeout:
                     print(f"[ERROR] Ladro el perro")
                     TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog* {DEBUG}")
                     app.disconnect()
                 except Exception as e:
                     print(f"[ERROR] Fallo inesperado en el procesamiento del ID {row['ID']}: {e}")
-                    data_to_process_from_db = data_to_process_from_db.drop(index)
+                    data_to_process_from_db = data_to_process_from_db.iloc[:index]
                     results.append(str(row['ID']))
+                    break
 
                 print(f"Progreso {index + 1}/{DB_LIMIT} - ID: {row['ID']} - SYMBOL {row['SYMBOL_ID']} - Fecha: {row['DATE_FROM']}")
 
@@ -194,23 +196,12 @@ def sync(watchdog):
             app.disconnect()
 
 
-def get_sync():
+def get_sync(watchdog):
     load_dotenv()
 
-    def on_timeout():  ##CallBack del watch dog
-        print("[WATCHDOG] Se colgó getsync. Matamos el proceso.")
-        raise_in_main_thread(WatchdogTimeout)
-        valores_str = os.getenv("SYMBOLS", "")
-        TelegramBot.send_message(
-            f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos *getsync*: *{valores_str}* {DEBUG}")
-
-    # Arrancamos el watch dog
-    watchdog = Watchdog(timeout=900, callback=on_timeout)  # 15min
-    watchdog.start()
-
-    last_thread_process = threading.Thread(target=lambda: None)
-    last_thread_process.start()
-    last_thread_process.join()
+    # last_thread_process = threading.Thread(target=lambda: None)
+    # last_thread_process.start()
+    # last_thread_process.join()
 
     # Cargar variables desde el archivo .env
     DB_LIMIT = os.getenv("DB_LIMIT")
@@ -283,7 +274,6 @@ def get_sync():
                     df_filtered_1min = app.get_ticks_per_bar(date_from, date_to, symbol_id=symbol_id)
 
                     #Chequeos por las dudas
-
                     if not app.req_made:
                         raise KeyError("No se recibió respuesta válida de TWS")
                     elif app.req_made and app.last_tick_count == 0:
@@ -315,6 +305,8 @@ def get_sync():
             db_start = time.time()
             # fetcher.update_data(data_to_process_from_db) COMENTADO POR TEST
             supa_base_processor.save_data_to_supabase(symbol_id=symbol_id)
+            # print("Se acaba de guardar todo...")
+            # input("Presioná Enter para continuar.")
             # ya tengo las nuevas lineas, ahora. Quiero guardarlas
             db_end = time.time()
             print("Tiempo en update DB:", db_end - db_start)
@@ -376,8 +368,8 @@ def main():
                 # )
                 #
                 # time.sleep(60)  # o reemplazá por sync()
-                sync(watchdog)
-                #get_sync()
+                #sync(watchdog)
+                get_sync(watchdog)
 
             except Exception as e:
                 print(f"[ERROR] Fallo durante la ejecución: {e}")
