@@ -98,7 +98,7 @@ def sync(watchdog):
                         raise KeyError(f"No estan llegando ticks {date_from}")
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
 
-                    if not app.req_made and sum_ask == 0:
+                    if app.req_made and sum_ask == 0:
                         raise KeyError(f"registro sum 0 {len(df_filtered_1min)}")
                     sum_bid = df_filtered_1min['SizeBid'].sum()
                     difference = sum_bid - sum_ask
