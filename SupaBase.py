@@ -51,69 +51,69 @@ class SupaBase:
                     print(f"[ERROR] Reintento {attempt+1} fallido: {e}")
                     time.sleep(self.retry_wait)
             raise Exception("No se pudo restablecer la conexión a la base de datos.")
-    # def __insert_new_values(self): INSERT EN BATCH
-    #     sql = """
-    #         INSERT INTO "LIQUIDEZTEST" (
-    #             date_id, symbol_id, updated_at, sum_ask, sum_bid,
-    #             difference, count_tick, price_bid, price_ask, boolean
-    #         ) VALUES %s
-    #         ON CONFLICT (date_id, symbol_id)
-    #         DO NOTHING
-    #     """
-    #     try:
-    #         values = []
-    #         for row in self.data_to_save:
-    #             values.append((
-    #                 row["date_id"],
-    #                 row["symbol_id"],
-    #                 datetime.now(),  # updated_at
-    #                 row["sum_ask"],
-    #                 row["sum_bid"],
-    #                 row["difference"],
-    #                 row["count_tick"],
-    #                 row["price_bid"],
-    #                 row["price_ask"],
-    #                 False  # boolean
-    #             ))
-    #         execute_values(self.curr, sql, values)
-    #         self.conn.commit()
-    #     except Exception as e:
-    #         print(f"[ERROR] Falló el insert: {e}")
-    #         self.conn.rollback()
-
     def __insert_new_values(self):
-        insert_sql = """
-                INSERT INTO "LIQUIDEZTEST" (
-                    date_id, symbol_id, updated_at, sum_ask, sum_bid,
-                    difference, count_tick, price_bid, price_ask, boolean
-                )
-                VALUES (
-                    %(date_id)s, %(symbol_id)s, %(updated_at)s, %(sum_ask)s, %(sum_bid)s,
-                    %(difference)s, %(count_tick)s, %(price_bid)s, %(price_ask)s, %(boolean)s
-                )
-                ON CONFLICT (date_id, symbol_id) DO NOTHING
-            """
+        sql = """
+            INSERT INTO "LIQUIDEZTEST" (
+                date_id, symbol_id, updated_at, sum_ask, sum_bid,
+                difference, count_tick, price_bid, price_ask, boolean
+            ) VALUES %s
+            ON CONFLICT (date_id, symbol_id)
+            DO NOTHING
+        """
         try:
+            values = []
             for row in self.data_to_save:
-                self.curr.execute(
-                    insert_sql,
-                    {
-                        "date_id": row["date_id"],
-                        "symbol_id": row["symbol_id"],
-                        "updated_at": datetime.now(),
-                        "sum_ask": row["sum_ask"],
-                        "sum_bid": row["sum_bid"],
-                        "difference": row["difference"],
-                        "count_tick": row["count_tick"],
-                        "price_bid": row["price_bid"],
-                        "price_ask": row["price_ask"],
-                        "boolean": False
-                    }
-                )
+                values.append((
+                    row["date_id"],
+                    row["symbol_id"],
+                    datetime.now(),  # updated_at
+                    row["sum_ask"],
+                    row["sum_bid"],
+                    row["difference"],
+                    row["count_tick"],
+                    row["price_bid"],
+                    row["price_ask"],
+                    False  # boolean
+                ))
+            execute_values(self.curr, sql, values)
             self.conn.commit()
         except Exception as e:
+            print(f"[ERROR] Falló el insert: {e}")
             self.conn.rollback()
-            raise
+
+    # def __insert_new_values(self):
+    #     insert_sql = """
+    #             INSERT INTO "LIQUIDEZTEST" (
+    #                 date_id, symbol_id, updated_at, sum_ask, sum_bid,
+    #                 difference, count_tick, price_bid, price_ask, boolean
+    #             )
+    #             VALUES (
+    #                 %(date_id)s, %(symbol_id)s, %(updated_at)s, %(sum_ask)s, %(sum_bid)s,
+    #                 %(difference)s, %(count_tick)s, %(price_bid)s, %(price_ask)s, %(boolean)s
+    #             )
+    #             ON CONFLICT (date_id, symbol_id) DO NOTHING
+    #         """
+    #     try:
+    #         for row in self.data_to_save:
+    #             self.curr.execute(
+    #                 insert_sql,
+    #                 {
+    #                     "date_id": row["date_id"],
+    #                     "symbol_id": row["symbol_id"],
+    #                     "updated_at": datetime.now(),
+    #                     "sum_ask": row["sum_ask"],
+    #                     "sum_bid": row["sum_bid"],
+    #                     "difference": row["difference"],
+    #                     "count_tick": row["count_tick"],
+    #                     "price_bid": row["price_bid"],
+    #                     "price_ask": row["price_ask"],
+    #                     "boolean": False
+    #                 }
+    #             )
+    #         self.conn.commit()
+    #     except Exception as e:
+    #         self.conn.rollback()
+    #         raise
     def __update_currency_status(self):
         self.__ensure_connection()
         failed_ids = []
@@ -181,7 +181,7 @@ class SupaBase:
         FROM "CURRENCYSTATUS"
         WHERE "status" = False
           AND "symbol_id" = %s
-          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-14 12:30:00+00:00' AND "date_from" < TIMESTAMP WITH TIME ZONE '2025-07-14 13:00:00+00:00'
+          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-14 12:00:00+00:00' AND "date_from" < TIMESTAMP WITH TIME ZONE '2025-07-14 12:30:00+00:00'
         ORDER BY "date_from" ASC
         LIMIT %s;
         '''
