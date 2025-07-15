@@ -1,9 +1,22 @@
 import pandas as pd
 import psycopg2
 import matplotlib.pyplot as plt
-import matplotlib
+plt.ion()  # Modo interactivo
+def format_int_to_string(num):
+    def fmt(n):
+        return f"{n:.1f}".rstrip("0").rstrip(".")  # Ej: -109.0 -> -109, -109.50 -> -109.5
 
-matplotlib.use("TkAgg")  # o "Qt5Agg" si tenés Qt instalado
+    abs_num = abs(num)
+    sign = "-" if num < 0 else ""
+
+    if abs_num >= 1_000_000_000:
+        return f"{sign}{fmt(abs_num / 1_000_000_000)} B"
+    elif abs_num >= 1_000_000:
+        return f"{sign}{fmt(abs_num / 1_000_000)} M"
+    elif abs_num >= 1_000:
+        return f"{sign}{fmt(abs_num / 1_000)} K"
+    else:
+        return f"{num}"
 conn = psycopg2.connect(
     "postgresql://postgres:Asdqwerty_09@db.ikdkhversotaizbhvwyh.supabase.co:5432/postgres"
 )
@@ -18,7 +31,7 @@ with conn.cursor() as cur:
     colnames = [desc[0] for desc in cur.description]
 
 df = pd.DataFrame(rows, columns=colnames)
-
+count_tick = df["count_tick"].sum()
 # Ordenar por fecha y resetear índice
 df_sorted = df.sort_values("date_id").reset_index(drop=True)
 
@@ -36,20 +49,26 @@ plt.plot(x, y, label="Precio Bid", color="blue", zorder=1)
 
 # Puntos rojos
 plt.scatter(x[mask], y[mask], color="red", marker="o", s=20,
-            label="Evento (boolean=False)", zorder=3)
+            label="Liquidez sin saldar", zorder=3)
 
 # Líneas horizontales a la derecha
 for xi, yi in zip(x[mask], y[mask]):
-    plt.hlines(yi, xi, xi + (len(x)-xi) +20, colors="red", linewidth=1.5,linestyles='dashed', zorder=2)
+    plt.hlines(yi, xi, len(x) + 50, colors="red", linewidth=1.5, zorder=2)
 
-sum_ticks = df['count_tick'].sum()
+    # Obtener el valor de sum_ask para esa fila
+    sum_ask_val = df_sorted.loc[xi, "sum_ask"]
+    sum_bid_val = df_sorted.loc[xi, "sum_bid"]
+    diff = sum_bid_val - sum_ask_val
+    diff_str = format_int_to_string(diff)
+    # Mostrar texto al final de la línea horizontal (pequeño offset para que no se superponga)
+    plt.text(len(x) + 52, yi, f"{diff_str}", color="red", fontsize=10, va="center")
+
 # Estética
 plt.xlabel("Registro")
 plt.ylabel("Price Bid")
-plt.title(f"Liquidez limpia 12:00-12:30 - 14/07/2025 - cantidad de ticks: {sum_ticks} - sample: 1seg ")
+plt.title(f"Evolución de Price Bid con liquidez limpia - 30min - ticks: {count_tick} ")
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
-plt.ion()  # Modo interactivo
 plt.show()
-input("Enter para cerrar")
+input("presiona enter")
