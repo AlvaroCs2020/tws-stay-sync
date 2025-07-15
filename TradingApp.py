@@ -159,7 +159,7 @@ class TradingApp(EClient, EWrapper):
             df['TimeFormatted'] = pd.to_datetime(df['Time'], unit='s', utc=True)
             max_time = df['TimeFormatted'].max()
         except KeyError:
-            print("Volvio a pasar el error de verga este")
+            print("Volvio a pasar el error de verga este, se murio en la primer consulta")
             return self.df_empty
 
         pd_end_time=pd.to_datetime(end_time, utc=True)
@@ -186,9 +186,8 @@ class TradingApp(EClient, EWrapper):
                 self.req_made = False
                 return self.df_empty
             df_temp = self.df_empty
-
-            pd_new_start_time_rounded = pd.to_datetime(new_start_time_rounded, utc=True)
-            if pd_new_start_time_rounded>pd_end_time:
+            pd_new_start_time = pd.to_datetime(new_start_time, utc=True)
+            if pd_new_start_time > stop_time_dt:
                 break
             self.req_made = False
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
@@ -213,16 +212,18 @@ class TradingApp(EClient, EWrapper):
         df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] >= start_time_dt]
 
         return df_filtered_1min
-    def convert_values_to_str(self, sum_ask,sum_bid):
+
+    @staticmethod
+    def convert_values_to_str(sum_ask,sum_bid):
         difference = sum_bid - sum_ask
 
-        if(difference == 0):
+        if difference == 0:
             diff_level = "NONE"
-        elif (abs(difference) < 30 * 1000000):
+        elif abs(difference) < 30 * 1000000:
             diff_level = "LOW"
-        elif (abs(difference) < 60 * 1000000):
+        elif abs(difference) < 60 * 1000000:
             diff_level = "MEDIUM"
-        elif (abs(difference) < 1500 * 1000000):
+        elif abs(difference) < 1500 * 1000000:
             diff_level = "HIGH"
         else:
             diff_level = "SUPER_HIGH"

@@ -3,7 +3,7 @@ import threading
 import sys
 import time
 import os
-
+HEARTBEAT_FILE = "heartbeat.txt"
 class Watchdog:
     def __init__(self, timeout, callback):
         self.timeout = timeout
@@ -25,6 +25,11 @@ class Watchdog:
             self._reset_timer()
 
     def reset(self):
+        try:
+            if os.path.exists(HEARTBEAT_FILE):
+                os.remove(HEARTBEAT_FILE)
+        except Exception as e:
+            print(f"No se pudo borrar heartbeat: {e}")
         with self._lock:
             if not self._stopped:
                 self._reset_timer()

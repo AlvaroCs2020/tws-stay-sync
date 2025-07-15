@@ -9,12 +9,12 @@ from WatchDog import Watchdog
 from dotenv import load_dotenv
 import os
 from WatchDog import raise_in_main_thread, WatchdogTimeout
+import subprocess
 from TelegramBot import TelegramBot
 from SupaBase import SupaBase
 import signal
 DB_LIMIT = 1000 #Esto lo va a pisar el .env
-GET_SYNC = 0
-DEBUG = "*DEBUG*"
+
 db_config = {
     "dbname": "abbyTrader",
     "user": "postgres",
@@ -22,17 +22,15 @@ db_config = {
     "host": "200.58.123.179",
     "port": 6432
 }
+
 def sync(watchdog):
     load_dotenv()
-    last_thread_process = threading.Thread(target=lambda: None)
-    last_thread_process.start()
-    last_thread_process.join()
-    supa_base_processor = SupaBase()
+
     # Cargar variables desde el archivo .env
     DB_LIMIT = os.getenv("DB_LIMIT")
     # Obtener la variable como string
     valores_str = os.getenv("SYMBOLS", "")
-    TelegramBot.send_message(f"*[WARN]* Se inicio el proceso de sync para los simbolos: *{valores_str}* en caso de ser este el ultimo mensaje *TODO OK* {DEBUG}")
+    TelegramBot.send_message(f"*[WARN]* Se inicio el proceso de sync para los simbolos: *{valores_str}* en caso de ser este el ultimo mensaje *TODO OK*")
     # Convertir la cadena a lista de enteros
     SYMBOL_IDS = [int(v.strip()) for v in valores_str.split(",") if v.strip()]
 
@@ -40,7 +38,7 @@ def sync(watchdog):
     try:
         contract_info_by_id = {}
 
-        fetcher = IbDbDataFetcher(db_config) #Esto queda igual pero deberiamos
+        fetcher = IbDbDataFetcher(db_config)
         for sym_id in SYMBOL_IDS:
             symbol_data = fetcher.fetch_symbol_data(str(sym_id))
             contract_info_by_id[sym_id] = {
@@ -65,17 +63,15 @@ def sync(watchdog):
         print("connected")
 
         while app.isConnected():
-
-
             fetcher = IbDbDataFetcher(db_config)
             data_to_process_from_db = pd.DataFrame()
             created_data_list = []
-            for sym_id in SYMBOL_IDS: #Vamos a ir a buscar los created, lo que puede variar dependiendo del get sync,
-
+            for sym_id in SYMBOL_IDS:
                 df_temp = fetcher.fetch_created_data(symbol_id=sym_id,limit=DB_LIMIT)
+
                 created_data_list.append(df_temp)
 
-            data_to_process_from_db = pd.concat(created_data_list, ignore_index=True) #Si vamos a laburar la liquidez nueva, cambiamos la fuente de datos
+            data_to_process_from_db = pd.concat(created_data_list, ignore_index=True)
             fetcher.close()
 
             results = []
@@ -123,31 +119,19 @@ def sync(watchdog):
                     data_to_process_from_db.loc[index, 'UPDATED_AT']      = updated_at
                     data_to_process_from_db.loc[index, 'DIFF_LEVEL_ENUM'] = diff_str
                     data_to_process_from_db.loc[index, 'RETRY_COUNT']     = 0
-                    # #Si el hilo anterior sigue vivo, esperá que termine
-                    # if last_thread_process.is_alive():
-                    #     print("Esperando a que termine el proceso anterior...")
-                    #     last_thread_process.join()
-                    supa_base_processor.receive_and_process_data(df_filtered_1min,symbol_id,row['DATE_FROM'],row['DATE_TO'])
-                    #ya tengo la linea lista, ahora. Quiero procesarla
-                    # thread_process = threading.Thread(target=supa_base_processor.receive_and_process_data,
-                    #                           args=(df_filtered_1min,symbol_id,row['DATE_FROM'],row['DATE_TO'],))
-                    # thread_process.start()
-                    #
-                    # last_thread_process = thread_process
+
                 except KeyError as e:
                     print(f"[WARN] {e}, ID: {row['ID']}")
-                    data_to_process_from_db = data_to_process_from_db.iloc[:index]
+                    data_to_process_from_db = data_to_process_from_db.drop(index)
                     results.append(str(row['ID']))
-                    break
                 except WatchdogTimeout:
                     print(f"[ERROR] Ladro el perro")
-                    TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog* {DEBUG}")
+                    TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog*")
                     app.disconnect()
                 except Exception as e:
                     print(f"[ERROR] Fallo inesperado en el procesamiento del ID {row['ID']}: {e}")
-                    data_to_process_from_db = data_to_process_from_db.iloc[:index]
+                    data_to_process_from_db = data_to_process_from_db.drop(index)
                     results.append(str(row['ID']))
-                    break
 
                 print(f"Progreso {index + 1}/{DB_LIMIT} - ID: {row['ID']} - SYMBOL {row['SYMBOL_ID']} - Fecha: {row['DATE_FROM']}")
 
@@ -155,17 +139,9 @@ def sync(watchdog):
             fetcher = IbDbDataFetcher(db_config)
             db_start = time.time()
             fetcher.update_data(data_to_process_from_db)
-            if last_thread_process.is_alive():
-                print("Esperandooo a que termine el proceso anterior...")
-                last_thread_process.join()
-            # ya tengo las nuevas lineas, ahora. Quiero guardarlas
-            print("SE EJECUTA EL save ")
-            supa_base_processor.save_data_to_supabase(symbol_id)
-            # thread_save = threading.Thread(target=supa_base_processor.save_data_to_supabase,
-            #                                   args=(symbol_id,))
-            # thread_save.start()
-            # fetcher.close()
+            fetcher.close()
             db_end = time.time()
+
             print("Tiempo en update DB:", db_end - db_start)
             print("No se pudieron obtener:", len(results), results)
             print("Tiempo total del ciclo:", time.time() - start_time)
@@ -175,7 +151,7 @@ def sync(watchdog):
 
     except KeyboardInterrupt:
         print("\n[INFO] Interrupción por teclado. Cerrando conexión.")
-        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *KeyboardInterrupt* {DEBUG}")
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *KeyboardInterrupt*")
         app.disconnect()
         watchdog.stop()
         exit(-2)
@@ -183,19 +159,18 @@ def sync(watchdog):
         print(f"[ERROR] Ladro el perro:")
         watchdog.stop()
         app.disconnect()
-        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout* {DEBUG}")
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout*")
+        return
     except Exception as e:
         print(f"[ERROR] Excepción general: {e}")
         watchdog.stop()
         app.disconnect()
-        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *{e}* {DEBUG}")
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *{e}*")
 
     finally:
         watchdog.stop()
         if app and app.isConnected():
             app.disconnect()
-
-
 def get_sync(watchdog):
     load_dotenv()
 
@@ -208,7 +183,7 @@ def get_sync(watchdog):
     # Obtener la variable como string
     valores_str = os.getenv("SYMBOLS", "")
     TelegramBot.send_message(
-        f"*[WARN]* Se inicio el proceso de getsync para los simbolos: *{valores_str}* en caso de ser este el ultimo mensaje *TODO OK* {DEBUG}")
+        f"*[WARN]* Se inicio el proceso de getsync para los simbolos: *{valores_str}* en caso de ser este el ultimo mensaje *TODO OK*")
     # Convertir la cadena a lista de enteros
     SYMBOL_IDS = [int(v.strip()) for v in valores_str.split(",") if v.strip()]
 
@@ -290,7 +265,7 @@ def get_sync(watchdog):
                 except WatchdogTimeout:
                     print(f"[ERROR] Ladro el perro")
                     TelegramBot.send_message(
-                        f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog* {DEBUG}")
+                        f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchDog*")
                     app.disconnect()
                 except Exception as e:
                     print(f"[ERROR] Fallo inesperado en el procesamiento del ID {e}")
@@ -319,7 +294,7 @@ def get_sync(watchdog):
     except KeyboardInterrupt:
         print("\n[INFO] Interrupción por teclado. Cerrando conexión.")
         TelegramBot.send_message(
-            f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *KeyboardInterrupt* {DEBUG}")
+            f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *KeyboardInterrupt*")
         app.disconnect()
         watchdog.stop()
         exit(-2)
@@ -328,12 +303,12 @@ def get_sync(watchdog):
         watchdog.stop()
         app.disconnect()
         TelegramBot.send_message(
-            f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout* {DEBUG}")
+            f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *WatchdogTimeout* ")
     except Exception as e:
         print(f"[ERROR] Excepción general: {e}")
         watchdog.stop()
         app.disconnect()
-        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *{e}* {DEBUG}")
+        TelegramBot.send_message(f"*[WARN]* Se desconecto TWS para los simbolos: *{valores_str}* *{e}* ")
 
     finally:
         watchdog.stop()
@@ -341,35 +316,37 @@ def get_sync(watchdog):
             app.disconnect()
 def main():
     process = None
-    def on_timeout(): ##CallBack del watch dog
-        print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
-        raise_in_main_thread(WatchdogTimeout)
-        valores_str = os.getenv("SYMBOLS", "")
-        TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}* {DEBUG}")
-    # Arrancamos el watch dog
-    watchdog = Watchdog(timeout=900, callback=on_timeout) #15min
-    watchdog.start()
+
     def kill_process():
         print("[WARN] Se decidio cerrar TWS")
 
         send_command_path = r"C:\IBC\SendCommand.bat"
         working_dir = r"C:\IBC"
 
-        #subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
+        subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
         time.sleep(5)
+    def on_timeout(): ##CallBack del watch dog
+        print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
+        raise_in_main_thread(WatchdogTimeout)
+        valores_str = os.getenv("SYMBOLS", "")
+        TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}*")
+
+    # Arrancamos el watch dog
+    watchdog = Watchdog(timeout=600, callback=on_timeout) #15min
+
     try:
         while True:
             try:
+                watchdog.start()
                 print("Intentamos conectarnos")
                 # Iniciar .bat en nuevo grupo de procesos
-                # process = subprocess.Popen(
-                #     ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
-                #     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
-                # )
-                #
-                # time.sleep(60)  # o reemplazá por sync()
-                #sync(watchdog)
-                get_sync(watchdog)
+                process = subprocess.Popen(
+                    ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
+                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+                )
+
+                time.sleep(60)  # o reemplazá por sync()
+                sync(watchdog)
 
             except Exception as e:
                 print(f"[ERROR] Fallo durante la ejecución: {e}")
