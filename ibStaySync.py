@@ -1,8 +1,5 @@
-import time
 import threading
-from datetime import datetime, timezone
 import pandas as pd
-
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
 from WatchDog import Watchdog
@@ -12,6 +9,11 @@ from WatchDog import raise_in_main_thread, WatchdogTimeout
 import subprocess
 from TelegramBot import TelegramBot
 from SupaBase import SupaBase
+from datetime import time
+import time
+from time import sleep
+from datetime import timezone
+from datetime import datetime
 import signal
 DB_LIMIT = 1000 #Esto lo va a pisar el .env
 
@@ -54,7 +56,7 @@ def sync(watchdog):
         app = TradingApp(contract_info_by_id)
         app.connect("127.0.0.1", 7497, clientId=5)
         threading.Thread(target=app.run, daemon=True).start()
-        time.sleep(3)
+        sleep(3)
 
         if not app.isConnected():
             print("connection failed")
@@ -75,7 +77,7 @@ def sync(watchdog):
             fetcher.close()
 
             results = []
-            start_time = time.time()
+            start_time = datetime.now()
 
             if len(data_to_process_from_db) == 0:
                 continue
@@ -93,9 +95,12 @@ def sync(watchdog):
                     df_filtered_1min = app.get_ticks_per_bar(date_from, date_to, symbol_id=symbol_id)
                     # aca podria, instaciar un sub process e ir cargando la liquidez por segundo
 
-                    if not app.req_made:
-                        raise KeyError("No se recibió respuesta válida de TWS")
-                    elif app.req_made and app.last_tick_count == 0:
+                    while not app.req_made:
+                        print(f"[INFO] no se obtuvieron ticks, esperamos 10 seg y vamos de nuevo {date_from}-{date_to}")
+                        sleep(40)
+                        df_filtered_1min = app.get_ticks_per_bar(date_from, date_to, symbol_id=symbol_id)
+
+                    if app.req_made and app.last_tick_count == 0:
                         raise KeyError(f"No estan llegando ticks {date_from}")
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
 
@@ -135,16 +140,15 @@ def sync(watchdog):
 
                 print(f"Progreso {index + 1}/{DB_LIMIT} - ID: {row['ID']} - SYMBOL {row['SYMBOL_ID']} - Fecha: {row['DATE_FROM']}")
 
-            time.sleep(0.5)
+            sleep(0.5)
             fetcher = IbDbDataFetcher(db_config)
-            db_start = time.time()
+            db_start = datetime.now()
             fetcher.update_data(data_to_process_from_db)
             fetcher.close()
-            db_end = time.time()
+            db_end = datetime.now()
 
             print("Tiempo en update DB:", db_end - db_start)
-            print("No se pudieron obtener:", len(results), results)
-            print("Tiempo total del ciclo:", time.time() - start_time)
+            print("Tiempo total del ciclo:", datetime.now() - start_time)
             ##ACA SE Deberia reiniciar el timer del watch dog
             watchdog.reset()
         app.disconnect()
@@ -173,11 +177,8 @@ def sync(watchdog):
             app.disconnect()
 def get_sync(watchdog):
     load_dotenv()
-
-    # last_thread_process = threading.Thread(target=lambda: None)
-    # last_thread_process.start()
-    # last_thread_process.join()
-
+    supa_base_processor = SupaBase()
+    db_limit = 1 #siempre debe ser 1 por que yo me quiero asegurar de que este siempre en orden
     # Cargar variables desde el archivo .env
     DB_LIMIT = os.getenv("DB_LIMIT")
     # Obtener la variable como string
@@ -193,21 +194,22 @@ def get_sync(watchdog):
 
         fetcher = IbDbDataFetcher(db_config)  # TODO mudar a supabase
         for sym_id in SYMBOL_IDS:
-            symbol_data = fetcher.fetch_symbol_data(str(sym_id))
+            symbol_data = supa_base_processor.fetch_symbol_data(str(sym_id))
             contract_info_by_id[sym_id] = {
-                'symbol': str(symbol_data.at[0, 'SYMBOL']),
-                'sec_type': str(symbol_data.at[0, 'SEC_TYPE']),
-                'exchange': str(symbol_data.at[0, 'EXCHANGE']),
-                'currency': str(symbol_data.at[0, 'CURRENCY']),
-                'symbol_name': str(symbol_data.at[0, 'SYMBOL_NAME'])
+                'symbol': str(symbol_data.at[0, 'symbol']),
+                'sec_type': str(symbol_data.at[0, 'sec_type']),
+                'exchange': str(symbol_data.at[0, 'exchange']),
+                'currency': str(symbol_data.at[0, 'currency']),
+                'symbol_name': str(symbol_data.at[0, 'symbol_name']),
+                'close_hour': str(symbol_data.at[0, 'close_hour'])
             }
-            print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
+            print("SYMBOL: " + str(symbol_data.at[0, 'symbol_name']))
         fetcher.close()
 
         app = TradingApp(contract_info_by_id)
         app.connect("127.0.0.1", 7497, clientId=5)
         threading.Thread(target=app.run, daemon=True).start()
-        time.sleep(3)
+        sleep(3)
 
         if not app.isConnected():
             print("connection failed")
@@ -216,14 +218,11 @@ def get_sync(watchdog):
         print("connected")
 
         while app.isConnected():
-            supa_base_processor = SupaBase()
-
-            fetcher = IbDbDataFetcher(db_config)
             data_to_process_from_db = pd.DataFrame()
             created_data_list = []
             for sym_id in SYMBOL_IDS:  # Vamos a ir a buscar los created, lo que puede variar dependiendo del get sync,
 
-                df_temp = supa_base_processor.fetch_created_data(symbol_id=sym_id, limit=DB_LIMIT)
+                df_temp = supa_base_processor.fetch_created_data(symbol_id=sym_id, limit=1)
                 created_data_list.append(df_temp)
 
             data_to_process_from_db = pd.concat(created_data_list,
@@ -231,7 +230,7 @@ def get_sync(watchdog):
 #            fetcher.close()
 
             results = []
-            start_time = time.time()
+            start_time = datetime.now()
 
             if len(data_to_process_from_db) == 0:
                 continue
@@ -239,7 +238,7 @@ def get_sync(watchdog):
             for index, row in data_to_process_from_db.iterrows():
                 if not app.isConnected():
                     return
-
+                symbol_id = 0
                 try:
                     date_from = row['date_from'].strftime('%Y%m%d-%H:%M:%S')
                     date_to = row['date_to'].strftime('%Y%m%d-%H:%M:%S')
@@ -250,11 +249,14 @@ def get_sync(watchdog):
 
                     #Chequeos por las dudas
                     if not app.req_made:
+                        sleep(60)
+                        app.change_id()
                         raise KeyError("No se recibió respuesta válida de TWS")
                     elif app.req_made and app.last_tick_count == 0:
                         raise KeyError(f"No estan llegando ticks {date_from}")
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
-                    if app.req_made and sum_ask == 0:
+
+                    if app.req_made and sum_ask == 0 and not TradingApp.market_is_closing(row['date_from'], int(symbol_id)):
                         raise KeyError(f"registro sum 0 {len(df_filtered_1min)}")
                     # ya tengo la linea lista, ahora. Quiero procesarla
                     supa_base_processor.receive_and_process_data(df_filtered_1min, symbol_id, row['date_from'], row['date_to'])
@@ -275,19 +277,16 @@ def get_sync(watchdog):
                 print(
                     f"Progreso {index + 1}/{DB_LIMIT} - SYMBOL {row['symbol_id']} - Fecha: {row['date_from']}")
 
-            # time.sleep(0.5)
-            # fetcher = IbDbDataFetcher(db_config)
-            db_start = time.time()
-            # fetcher.update_data(data_to_process_from_db) COMENTADO POR TEST
+
+            db_start = datetime.now()
+
             supa_base_processor.save_data_to_supabase(symbol_id=symbol_id)
-            # print("Se acaba de guardar todo...")
-            # input("Presioná Enter para continuar.")
-            # ya tengo las nuevas lineas, ahora. Quiero guardarlas
-            db_end = time.time()
+
+            db_end = datetime.now()
             print("Tiempo en update DB:", db_end - db_start)
             print("No se pudieron obtener:", len(results), results)
-            print("Tiempo total del ciclo:", time.time() - start_time)
-            ##ACA SE Deberia reiniciar el timer del watch dog
+            print("Tiempo total del ciclo:", datetime.now() - start_time)
+
             watchdog.reset()
         app.disconnect()
 
@@ -324,7 +323,7 @@ def main():
         working_dir = r"C:\IBC"
 
         subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
-        time.sleep(5)
+        sleep(5)
     def on_timeout(): ##CallBack del watch dog
         print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
         raise_in_main_thread(WatchdogTimeout)
@@ -345,8 +344,8 @@ def main():
                     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
                 )
 
-                time.sleep(60)  # o reemplazá por sync()
-                sync(watchdog)
+                sleep(60)  # o reemplazá por sync()
+                get_sync(watchdog)
 
             except Exception as e:
                 print(f"[ERROR] Fallo durante la ejecución: {e}")
@@ -354,7 +353,7 @@ def main():
                 kill_process()
 
             print("Reintentamos en 5 segundos...\n")
-            time.sleep(5)
+            sleep(5)
 
     except KeyboardInterrupt:
         print("\n[INTERRUPT] Ctrl+C recibido. Cerrando todo...")

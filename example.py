@@ -1,7 +1,7 @@
 import pandas as pd
 import psycopg2
 import matplotlib.pyplot as plt
-plt.ion()  # Modo interactivo
+# plt.ion()  # Modo interactivo
 def format_int_to_string(num):
     def fmt(n):
         return f"{n:.1f}".rstrip("0").rstrip(".")  # Ej: -109.0 -> -109, -109.50 -> -109.5
@@ -34,39 +34,47 @@ df = pd.DataFrame(rows, columns=colnames)
 count_tick = df["count_tick"].sum()
 # Ordenar por fecha y resetear índice
 df_sorted = df.sort_values("date_id").reset_index(drop=True)
-
+max_time = df_sorted["date_id"].max()
+min_time = df_sorted["date_id"].min()
 # X = índice simple, Y = price_bid
 x = df_sorted.index
+x_date = df_sorted["date_id"]
 y = df_sorted["price_bid"]
 
 # Puntos donde boolean es False
 mask = ~df_sorted["boolean"].astype(bool)
 
-plt.figure(figsize=(10, 4))
+plt.figure(figsize=(15, 6))
 
 # Línea azul
-plt.plot(x, y, label="Precio Bid", color="blue", zorder=1)
+plt.plot(x_date, y, label="Precio Bid", color="blue", zorder=1)
 
 # Puntos rojos
-plt.scatter(x[mask], y[mask], color="red", marker="o", s=20,
+plt.scatter(x[mask], y[mask], color="red", marker="o", s=5,
             label="Liquidez sin saldar", zorder=3)
 
 # Líneas horizontales a la derecha
 for xi, yi in zip(x[mask], y[mask]):
-    plt.hlines(yi, xi, len(x) + 50, colors="red", linewidth=1.5, zorder=2)
 
     # Obtener el valor de sum_ask para esa fila
-    sum_ask_val = df_sorted.loc[xi, "sum_ask"]
-    sum_bid_val = df_sorted.loc[xi, "sum_bid"]
-    diff = sum_bid_val - sum_ask_val
+
+    diff = df_sorted.loc[xi, "difference"]
+
     diff_str = format_int_to_string(diff)
+
+    if diff > 0:
+        color = "red"
+    else:
+        color = "green"
     # Mostrar texto al final de la línea horizontal (pequeño offset para que no se superponga)
-    plt.text(len(x) + 52, yi, f"{diff_str}", color="red", fontsize=10, va="center")
+    plt.hlines(yi, xi, len(x) + 50, colors=color, linewidth=1.5, zorder=2)
+    #no mostramos el texto por que se va t0do al choto
+    #plt.text(len(x) + 52, yi, f"{diff_str}", color=color, fontsize=10, va="center")
 
 # Estética
-plt.xlabel("Registro")
+plt.xlabel("Tiempo [s]")
 plt.ylabel("Price Bid")
-plt.title(f"Evolución de Price Bid con liquidez limpia - 30min - ticks: {count_tick} ")
+plt.title(f"Curva Price Bid - sample: MAX 1seg - {min_time} to {max_time} - ticks: {count_tick} - registros: {len(df_sorted)} ")
 plt.grid(True)
 plt.legend()
 plt.tight_layout()

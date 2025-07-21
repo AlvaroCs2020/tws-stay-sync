@@ -7,7 +7,9 @@ import sys
 from psycopg2.extras import execute_values
 from supabase import create_client, Client
 from datetime import datetime
+from datetime import time
 from time import *
+from TradingApp import TradingApp
 class SupaBase:
     def __init__(self):
         self.data_to_save = []
@@ -150,6 +152,11 @@ class SupaBase:
             print(f"[ERROR] update_data: {e}")
             return -1
     def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to):
+        if TradingApp.market_is_closing(date_from, int(symbol_id)) and len(data) == 0: #no me vino nada y el mercado se esta cerrando, esta bien!!
+            print("[INFO] SE ESTA GUARDANDO UNA VELA VACIA, NADA EN LIQUIDEZ, SI EN CURRENCY STATUS.")
+            new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
+            self.data_to_save_currency_status.append(new_row_currency_status)
+            return
         chunks_by_second = data.groupby('Time') #error handling
         for second, chunk in chunks_by_second:
             sum_ask = chunk['SizeAsk'].sum()
@@ -181,7 +188,7 @@ class SupaBase:
         FROM "CURRENCYSTATUS"
         WHERE "status" = False
           AND "symbol_id" = %s
-          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-14 12:00:00+00:00' AND "date_from" < TIMESTAMP WITH TIME ZONE '2025-07-14 12:30:00+00:00'
+          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-07 00:00:00+00:00'
         ORDER BY "date_from" ASC
         LIMIT %s;
         '''
@@ -194,16 +201,31 @@ class SupaBase:
         except Exception as e:
             print(f"[ERROR] fetch_created_data: {e}")
             return pd.DataFrame()
+    def fetch_symbol_data(self, symbol_id,):
+        self.__ensure_connection()
+        query = '''
+        SELECT *
+        FROM "SYMBOLS"
+        WHERE "symbol_id" = %s
+        LIMIT 1;
+        '''
+        try:
+            with self.conn.cursor() as cur:
+                cur.execute(query, symbol_id)
+                rows = cur.fetchall()
+                colnames = [desc[0] for desc in cur.description]
+                return pd.DataFrame(rows, columns=colnames)
+        except Exception as e:
+            print(f"[ERROR] fetch_symbol_data: {e}")
+            return pd.DataFrame()
 
     def save_data_to_supabase(self, symbol_id : int):
-        self.__debug_this_thread()
-        if len(self.data_to_save) == 0:
-            return
         print("++++++++++++++++++++++++++++++++++++++++++++")
         print(f"TOTAL AL GUARDAR {len(self.data_to_save)}")
         print("++++++++++++++++++++++++++++++++++++++++++++")
         self.__ensure_connection()
-        self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
+        if len(self.data_to_save) != 0:
+            self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
         self.__update_currency_status()
 
         self.data_to_save = []
