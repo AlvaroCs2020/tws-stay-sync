@@ -47,7 +47,7 @@ mask = ~df_sorted["boolean"].astype(bool)
 plt.figure(figsize=(15, 6))
 
 # Línea azul
-plt.plot(x_date, y, label="Precio Bid", color="blue", zorder=1)
+plt.plot(x, y, label="Precio Bid", color="blue", zorder=1)
 
 # Puntos rojos
 plt.scatter(x[mask], y[mask], color="red", marker="o", s=5,
