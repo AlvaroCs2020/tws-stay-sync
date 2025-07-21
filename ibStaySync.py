@@ -1,8 +1,5 @@
-import time
 import threading
-from datetime import datetime, timezone
 import pandas as pd
-
 from IbDbFetcher import IbDbDataFetcher
 from TradingApp import TradingApp
 from WatchDog import Watchdog
@@ -11,6 +8,12 @@ import os
 from WatchDog import raise_in_main_thread, WatchdogTimeout
 import subprocess
 from TelegramBot import TelegramBot
+from SupaBase import SupaBase
+from datetime import time
+import time
+from time import sleep
+from datetime import timezone
+from datetime import datetime
 import signal
 DB_LIMIT = 3 #Esto lo va a pisar el .env
 
@@ -24,7 +27,7 @@ db_config = {
 
 def sync(watchdog):
     load_dotenv()
-
+    supa_base_processor = SupaBase()
     # Cargar variables desde el archivo .env
     DB_LIMIT = os.getenv("DB_LIMIT")
     # Obtener la variable como string
@@ -39,13 +42,15 @@ def sync(watchdog):
 
         fetcher = IbDbDataFetcher(db_config)
         for sym_id in SYMBOL_IDS:
+            symbol_data_supa_base = supa_base_processor.fetch_symbol_data(str(sym_id))
             symbol_data = fetcher.fetch_symbol_data(str(sym_id))
             contract_info_by_id[sym_id] = {
                 'symbol': str(symbol_data.at[0, 'SYMBOL']),
                 'sec_type': str(symbol_data.at[0, 'SEC_TYPE']),
                 'exchange': str(symbol_data.at[0, 'EXCHANGE']),
                 'currency': str(symbol_data.at[0, 'CURRENCY']),
-                'symbol_name': str(symbol_data.at[0, 'SYMBOL_NAME'])
+                'symbol_name': str(symbol_data.at[0, 'SYMBOL_NAME']),
+                'close_hour': str(symbol_data_supa_base.at[0, 'close_hour'])
             }
             print("SYMBOL: " + str(symbol_data.at[0, 'SYMBOL_NAME']))
         fetcher.close()
@@ -98,8 +103,10 @@ def sync(watchdog):
                         raise KeyError(f"No estan llegando ticks {date_from}")
                     sum_ask = df_filtered_1min['SizeAsk'].sum()
 
-                    if app.req_made and sum_ask == 0:
+                    if app.req_made and sum_ask == 0 and not TradingApp.market_is_closing(row['DATE_FROM'], int(symbol_id)):
                         raise KeyError(f"registro sum 0 {len(df_filtered_1min)}")
+                    if sum_ask == 0 and TradingApp.market_is_closing(row['DATE_FROM'], int(symbol_id)):
+                        print("[INFO] se guardara un registro sin ticks, ya que es un horario de cierre de mercado")
                     sum_bid = df_filtered_1min['SizeBid'].sum()
                     difference = sum_bid - sum_ask
                     count_tick = len(df_filtered_1min)
