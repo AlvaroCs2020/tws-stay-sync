@@ -203,15 +203,15 @@ class SupaBase:
             return pd.DataFrame()
     def fetch_symbol_data(self, symbol_id,):
         self.__ensure_connection()
-        query = '''
+        query = f'''
         SELECT *
         FROM "SYMBOLS"
-        WHERE "symbol_id" = %s
+        WHERE "symbol_id" = {symbol_id}
         LIMIT 1;
         '''
         try:
             with self.conn.cursor() as cur:
-                cur.execute(query, symbol_id)
+                cur.execute(query)
                 rows = cur.fetchall()
                 colnames = [desc[0] for desc in cur.description]
                 return pd.DataFrame(rows, columns=colnames)
