@@ -79,9 +79,14 @@ class SupaBase:
                 ))
             execute_values(self.curr, sql, values)
             self.conn.commit()
+            return 0
         except Exception as e:
             print(f"[ERROR] Falló el insert: {e}")
             self.conn.rollback()
+            time.sleep(10)
+            self.__ensure_connection()
+            return -1
+
 
     # def __insert_new_values(self):
     #     insert_sql = """
@@ -224,9 +229,10 @@ class SupaBase:
         print(f"TOTAL AL GUARDAR {len(self.data_to_save)}")
         print("++++++++++++++++++++++++++++++++++++++++++++")
         self.__ensure_connection()
+        insert_result  = -1
         if len(self.data_to_save) != 0:
-            self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
-        self.__update_currency_status()
+            insert_result = self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
+        if insert_result == 0: self.__update_currency_status()
 
         self.data_to_save = []
         self.data_to_save_currency_status = []
