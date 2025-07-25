@@ -177,38 +177,42 @@ def sync(watchdog):
         watchdog.stop()
         if app and app.isConnected():
             app.disconnect()
+# Rutas a los scripts de Linux
+START_SCRIPT = "/opt/ibc/twsstart.sh"
+STOP_SCRIPT  = "/opt/ibc/stop.sh"
+
+def kill_process():
+    print("[WARN] Se decidió cerrar TWS")
+    subprocess.run([STOP_SCRIPT], shell=True)
+    time.sleep(5)
+
 def main():
     process = None
 
-    def kill_process():
-        print("[WARN] Se decidio cerrar TWS")
-
-        send_command_path = r"C:\IBC\SendCommand.bat"
-        working_dir = r"C:\IBC"
-
-        subprocess.run([send_command_path, "STOP"], cwd=working_dir, shell=True)
-        time.sleep(5)
-    def on_timeout(): ##CallBack del watch dog
+    def on_timeout():  # Callback del watchdog
         print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
         raise_in_main_thread(WatchdogTimeout)
         valores_str = os.getenv("SYMBOLS", "")
-        TelegramBot.send_message(f"*[WARN]* se ejecuto el watch dog para la instancia de TWS que se encarga de los simbolos: *{valores_str}*")
+        TelegramBot.send_message(
+            f"*[WARN]* se ejecutó el watchdog para la instancia de TWS que se encarga de los símbolos: *{valores_str}*"
+        )
 
-    # Arrancamos el watch dog
-    watchdog = Watchdog(timeout=600, callback=on_timeout) #15min
+    watchdog = Watchdog(timeout=600, callback=on_timeout)
 
     try:
         while True:
             try:
                 watchdog.start()
                 print("Intentamos conectarnos")
-                # Iniciar .bat en nuevo grupo de procesos
+
+                # Inicia el script en nuevo grupo de procesos (como CREATE_NEW_PROCESS_GROUP en Linux)
                 process = subprocess.Popen(
-                    ["cmd.exe", "/c", "C:\\IBC\\StartTWS.bat"],
-                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+                    [START_SCRIPT],
+                    shell=True,
+                    preexec_fn=os.setsid
                 )
 
-                time.sleep(60)  # o reemplazá por sync()
+                time.sleep(60)  # espera a que TWS se levante o directamente llamá a sync()
                 sync(watchdog)
 
             except Exception as e:

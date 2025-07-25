@@ -1,0 +1,2270 @@
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 10:41:13
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=oEIro8KY
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=oEIro8KY ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 10:41:14:046 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = oEIro8KY
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 10:41:14:049 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 10:41:14:049 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 10:41:14:049 IBC: using default main window manager
+2025-07-25 10:41:14:049 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 10:41:14:050 IBC: using default config dialog manager
+2025-07-25 10:41:14:052 IBC: CommandServer is not started because the port is not configured
+2025-07-25 10:41:14:103 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 10:41:14:103 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 10:41:14:108 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 10:41:14:108 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 10:41:14:108 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 10:41:14:109 IBC: Can't find setting: [Logon]/displayedproxymsg=1
+2025-07-25 10:41:14:109 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 10:41:14:109 IBC: Can't find setting: [IBGateway]/ApiOnly=true
+2025-07-25 10:41:14:109 IBC: Missing lines in /home/alvaro/Jts/jts.ini
+2025-07-25 10:41:14:109 IBC: Rewriting existing /home/alvaro/Jts/jts.ini
+2025-07-25 10:41:14:109 IBC:     jts.ini: [Logon]
+2025-07-25 10:41:14:109 IBC:     jts.ini: useRemoteSettings=true
+2025-07-25 10:41:14:109 IBC:     jts.ini: UserNameToDirectory=glbmnjchjckpnamfimjcpadpkgbnhiaofohggili,caeedbeifkhgomianinoednghdnmpecjgkcnboii
+2025-07-25 10:41:14:109 IBC:     jts.ini: TimeZone=America/Argentina/Cordoba
+2025-07-25 10:41:14:109 IBC:     jts.ini: Individual=1
+2025-07-25 10:41:14:109 IBC:     jts.ini: FontSize=16
+2025-07-25 10:41:14:109 IBC:     jts.ini: tradingMode=p
+2025-07-25 10:41:14:110 IBC:     jts.ini: colorPalletName=dark
+2025-07-25 10:41:14:110 IBC:     jts.ini: Steps=13
+2025-07-25 10:41:14:110 IBC:     jts.ini: Locale=en
+2025-07-25 10:41:14:110 IBC:     jts.ini: os_titlebar=false
+2025-07-25 10:41:14:110 IBC:     jts.ini: SupportsSSL=ndc1.ibllc.com:4000,true,20250725,false;cdc1.ibllc.com:4000,true,20250725,false
+2025-07-25 10:41:14:110 IBC:     jts.ini: UseSSL=true
+2025-07-25 10:41:14:110 IBC:     jts.ini: screenHeight=1080
+2025-07-25 10:41:14:110 IBC:     jts.ini: s3store=true
+2025-07-25 10:41:14:110 IBC:     jts.ini: ibkrBranding=pro
+2025-07-25 10:41:14:110 IBC:     jts.ini: 
+2025-07-25 10:41:14:110 IBC:     jts.ini: displayedproxymsg=1
+2025-07-25 10:41:14:110 IBC:     jts.ini: [Communication]
+2025-07-25 10:41:14:110 IBC:     jts.ini: Peer=cdc1.ibllc.com:4001
+2025-07-25 10:41:14:110 IBC:     jts.ini: Region=us
+2025-07-25 10:41:14:110 IBC:     jts.ini: 
+2025-07-25 10:41:14:110 IBC:     jts.ini: [settings]
+2025-07-25 10:41:14:110 IBC:     jts.ini: caeedbeifkhgomianinoednghdnmpecjgkcnboii=1753450753251
+2025-07-25 10:41:14:110 IBC:     jts.ini: 
+2025-07-25 10:41:14:114 IBC:     jts.ini: [IBGateway]
+2025-07-25 10:41:14:114 IBC:     jts.ini: ApiOnly=true
+2025-07-25 10:41:14:115 IBC: Starting TWS
+2025-07-25 10:41:17:181 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 10:41:17:183 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 10:41:17:183 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 10:41:17:183 IBC: Setting Trading mode = paper
+2025-07-25 10:41:17:255 IBC: Setting user name
+2025-07-25 10:41:17:255 IBC: Setting password
+2025-07-25 10:41:17:256 IBC: Login attempt: 1
+2025-07-25 10:41:17:256 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 10:41:17:259 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 10:41:17:299 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 10:41:17:320 IBC: Click button: Paper Log In
+2025-07-25 10:41:17:413 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+2025-07-25 10:41:27:692 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 10:41:27:693 IBC: detected frame entitled: Login; event=Deactivated
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 10:41:28:798 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 10:41:28:798 IBC: Found TWS main window
+2025-07-25 10:41:28:798 IBC: Login has completed
+2025-07-25 10:41:28:800 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 10:41:28:844 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 10:41:29:032 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 10:41:29:032 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 10:41:29:032 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 10:41:29:032 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 10:41:29:032 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 10:41:29:032 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 10:41:30:641 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 10:41:30:642 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 10:41:31:027 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 10:41:31:029 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 10:41:31:306 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 10:41:31:584 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 10:41:31:585 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 10:41:31:586 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 10:41:31:588 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 10:41:31:630 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 10:41:31:631 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 10:41:31:773 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 10:41:31:773 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 10:41:33:088 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 10:41:33:089 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 10:41:33:089 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 10:41:33:101 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 10:41:33:135 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 10:41:34:271 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 10:41:34:272 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 10:41:59:819 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 10:41:59:821 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 10:42:52:057 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 10:42:52:058 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 10:46:17:308 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 10:46:17:310 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 10:46:17:928 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 10:46:17:928 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 11:15:00
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=R2suMdtm
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=R2suMdtm ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 11:15:00:528 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = R2suMdtm
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 11:15:00:530 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 11:15:00:530 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 11:15:00:531 IBC: using default main window manager
+2025-07-25 11:15:00:531 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 11:15:00:531 IBC: using default config dialog manager
+2025-07-25 11:15:00:534 IBC: CommandServer is not started because the port is not configured
+2025-07-25 11:15:00:590 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 11:15:00:591 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 11:15:00:597 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 11:15:00:597 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 11:15:00:597 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 11:15:00:597 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 11:15:00:597 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 11:15:00:597 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 11:15:00:597 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 11:15:00:597 IBC: Starting TWS
+2025-07-25 11:15:03:049 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 11:15:03:050 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 11:15:03:050 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 11:15:03:051 IBC: Setting Trading mode = paper
+2025-07-25 11:15:03:122 IBC: Setting user name
+2025-07-25 11:15:03:123 IBC: Setting password
+2025-07-25 11:15:03:124 IBC: Login attempt: 1
+2025-07-25 11:15:03:124 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 11:15:03:124 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 11:15:03:164 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 11:15:03:181 IBC: Click button: Paper Log In
+2025-07-25 11:15:03:275 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 11:15:13:749 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 11:15:13:750 IBC: Found TWS main window
+2025-07-25 11:15:13:750 IBC: Login has completed
+2025-07-25 11:15:13:751 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 11:15:13:751 IBC: detected frame entitled: Login; event=Deactivated
+2025-07-25 11:15:13:751 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 11:15:13:788 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 11:15:13:792 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 11:15:13:793 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 11:15:17:029 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 11:15:18:892 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 11:15:18:893 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 11:15:18:966 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 11:15:19:004 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 11:15:19:064 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 11:15:19:065 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 11:15:19:065 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 11:15:19:066 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 11:15:19:068 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 11:15:21:047 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=State changed
+2025-07-25 11:15:22:021 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 11:15:22:022 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 11:15:45:570 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 11:15:45:572 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 11:15:47:571 IBC: detected window: type=javax.swing.Popup$HeavyWeightWindow; event=Opened
+2025-07-25 11:15:48:841 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 11:15:48:841 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 11:25:27
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=j4v7jOh8
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=j4v7jOh8 ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 11:25:27:659 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = j4v7jOh8
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 11:25:27:660 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 11:25:27:661 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 11:25:27:661 IBC: using default main window manager
+2025-07-25 11:25:27:661 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 11:25:27:661 IBC: using default config dialog manager
+2025-07-25 11:25:27:663 IBC: CommandServer is not started because the port is not configured
+2025-07-25 11:25:27:707 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 11:25:27:708 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 11:25:27:712 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 11:25:27:712 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 11:25:27:712 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 11:25:27:712 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 11:25:27:712 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 11:25:27:712 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 11:25:27:712 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 11:25:27:712 IBC: Starting TWS
+2025-07-25 11:25:29:862 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 11:25:29:863 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 11:25:29:863 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 11:25:29:863 IBC: Setting Trading mode = paper
+2025-07-25 11:25:29:936 IBC: Setting user name
+2025-07-25 11:25:29:936 IBC: Setting password
+2025-07-25 11:25:29:937 IBC: Login attempt: 1
+2025-07-25 11:25:29:937 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 11:25:29:937 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 11:25:29:971 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 11:25:29:991 IBC: Click button: Paper Log In
+2025-07-25 11:25:30:089 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+2025-07-25 11:25:40:110 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 11:25:40:110 IBC: Found TWS main window
+2025-07-25 11:25:40:110 IBC: Login has completed
+2025-07-25 11:25:40:111 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 11:25:40:112 IBC: detected frame entitled: Login; event=Deactivated
+2025-07-25 11:25:40:112 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 11:25:40:146 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 11:25:40:944 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 11:25:40:944 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 11:25:42:696 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Iconified
+2025-07-25 11:25:42:697 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=State changed
+2025-07-25 11:25:42:698 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 11:25:42:698 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 11:25:42:837 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 11:25:42:839 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deiconified
+2025-07-25 11:25:42:839 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=State changed
+2025-07-25 11:26:26:056 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 11:26:26:094 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 11:26:26:139 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 11:26:26:140 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 11:26:26:141 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 11:26:26:144 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 11:26:26:146 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 11:26:26:938 IBC: detected frame entitled: ; event=Closed
+2025-07-25 11:26:28:832 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 11:26:28:832 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 11:26:45:160 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 11:26:45:162 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 11:26:46:848 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Iconified
+2025-07-25 11:26:46:849 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=State changed
+2025-07-25 11:26:46:851 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 11:26:46:851 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 12:19:01
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=yHOzJli6
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=yHOzJli6 ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 12:19:02:120 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = yHOzJli6
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 12:19:02:123 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 12:19:02:124 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 12:19:02:124 IBC: using default main window manager
+2025-07-25 12:19:02:124 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 12:19:02:125 IBC: using default config dialog manager
+2025-07-25 12:19:02:132 IBC: CommandServer is not started because the port is not configured
+2025-07-25 12:19:02:192 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 12:19:02:192 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 12:19:02:198 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:19:02:199 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 12:19:02:199 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 12:19:02:199 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 12:19:02:199 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 12:19:02:199 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 12:19:02:199 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:19:02:199 IBC: Starting TWS
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 12:20:51
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=a0JwBUPr
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=a0JwBUPr ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 12:20:51:569 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = a0JwBUPr
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 12:20:51:573 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 12:20:51:573 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 12:20:51:573 IBC: using default main window manager
+2025-07-25 12:20:51:573 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 12:20:51:574 IBC: using default config dialog manager
+2025-07-25 12:20:51:578 IBC: CommandServer is not started because the port is not configured
+2025-07-25 12:20:51:669 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 12:20:51:669 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 12:20:51:677 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:20:51:678 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 12:20:51:678 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 12:20:51:678 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 12:20:51:678 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 12:20:51:678 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 12:20:51:678 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:20:51:678 IBC: Starting TWS
+2025-07-25 12:20:55:739 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 12:20:55:741 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 12:20:55:742 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 12:20:55:742 IBC: Setting Trading mode = paper
+2025-07-25 12:20:55:818 IBC: Setting user name
+2025-07-25 12:20:55:820 IBC: Setting password
+2025-07-25 12:20:55:821 IBC: Login attempt: 1
+2025-07-25 12:20:55:821 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 12:20:55:822 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 12:20:55:889 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 12:20:55:920 IBC: Click button: Paper Log In
+2025-07-25 12:20:56:047 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 12:21:14:028 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 12:21:14:029 IBC: Found TWS main window
+2025-07-25 12:21:14:029 IBC: Login has completed
+2025-07-25 12:21:14:031 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 12:21:14:034 IBC: detected frame entitled: Login; event=Deactivated
+2025-07-25 12:21:14:034 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:21:14:091 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:21:14:201 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 12:21:14:201 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 12:21:17:375 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 12:21:56:666 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:21:56:667 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 12:22:00:914 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 12:22:00:971 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 12:22:01:022 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 12:22:01:024 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 12:22:01:025 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 12:22:01:033 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:22:01:035 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:22:02:274 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:22:02:275 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 12:25:47
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=hfH6cF29
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=hfH6cF29 ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 12:25:47:868 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = hfH6cF29
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 12:25:47:872 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 12:25:47:872 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 12:25:47:872 IBC: using default main window manager
+2025-07-25 12:25:47:872 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 12:25:47:873 IBC: using default config dialog manager
+2025-07-25 12:25:47:879 IBC: CommandServer is not started because the port is not configured
+2025-07-25 12:25:47:940 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 12:25:47:940 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 12:25:47:949 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:25:47:949 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 12:25:47:949 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 12:25:47:949 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 12:25:47:950 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 12:25:47:950 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 12:25:47:950 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:25:47:950 IBC: Starting TWS
+2025-07-25 12:25:51:756 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 12:25:51:758 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 12:25:51:758 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 12:25:51:758 IBC: Setting Trading mode = paper
+2025-07-25 12:25:51:832 IBC: Setting user name
+2025-07-25 12:25:51:834 IBC: Setting password
+2025-07-25 12:25:51:834 IBC: Login attempt: 1
+2025-07-25 12:25:51:835 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 12:25:51:836 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 12:25:51:893 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 12:25:51:920 IBC: Click button: Paper Log In
+2025-07-25 12:25:52:048 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 12:26:08:367 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 12:26:08:368 IBC: Found TWS main window
+2025-07-25 12:26:08:368 IBC: Login has completed
+2025-07-25 12:26:08:866 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 12:26:08:866 IBC: detected frame entitled: Login; event=Deactivated
+2025-07-25 12:26:08:866 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:26:08:924 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:26:08:978 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 12:26:08:978 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 12:26:11:272 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 12:27:53:620 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:27:53:621 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 12:27:53:622 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 12:27:53:673 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 12:27:53:695 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 12:27:53:696 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 12:27:53:697 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 12:27:53:698 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:27:53:700 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:27:56:113 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:27:56:114 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 12:40:58
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=cDr7wGvV
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=cDr7wGvV ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 12:40:58:466 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = cDr7wGvV
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 12:40:58:469 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 12:40:58:469 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 12:40:58:469 IBC: using default main window manager
+2025-07-25 12:40:58:469 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 12:40:58:470 IBC: using default config dialog manager
+2025-07-25 12:40:58:473 IBC: CommandServer is not started because the port is not configured
+2025-07-25 12:40:58:535 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 12:40:58:535 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 12:40:58:542 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:40:58:542 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 12:40:58:542 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 12:40:58:542 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 12:40:58:542 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 12:40:58:542 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 12:40:58:543 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 12:40:58:543 IBC: Starting TWS
+2025-07-25 12:41:02:454 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 12:41:02:455 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 12:41:02:456 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 12:41:02:456 IBC: Setting Trading mode = paper
+2025-07-25 12:41:02:529 IBC: Setting user name
+2025-07-25 12:41:02:531 IBC: Setting password
+2025-07-25 12:41:02:531 IBC: Login attempt: 1
+2025-07-25 12:41:02:532 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 12:41:02:532 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 12:41:02:587 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 12:41:02:620 IBC: Click button: Paper Log In
+2025-07-25 12:41:02:741 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 12:41:19:336 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 12:41:19:336 IBC: Found TWS main window
+2025-07-25 12:41:19:337 IBC: Login has completed
+2025-07-25 12:41:19:338 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 12:41:19:338 IBC: detected frame entitled: Login; event=Deactivated
+2025-07-25 12:41:19:338 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:41:19:401 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:41:19:403 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 12:41:19:403 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 12:41:21:744 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 12:41:25:965 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:41:25:968 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 12:41:25:969 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 12:41:26:026 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 12:41:26:069 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 12:41:26:070 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 12:41:26:071 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 12:41:26:074 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:41:26:075 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:41:29:351 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Closing
+2025-07-25 12:41:29:490 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Opened
+2025-07-25 12:41:29:610 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:41:29:612 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 12:41:29:612 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Activated
+2025-07-25 12:41:29:676 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Focused
+2025-07-25 12:41:32:070 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Lost focus
+2025-07-25 12:41:32:070 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Deactivated
+2025-07-25 12:41:32:070 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Closed
+2025-07-25 12:41:32:070 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 12:41:32:073 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 12:41:32:189 IBC: detected dialog entitled: Shutdown progress; event=Opened
+2025-07-25 12:41:32:316 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 12:41:32:317 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 12:41:32:318 IBC: detected dialog entitled: Shutdown progress; event=Activated
+2025-07-25 12:41:32:384 IBC: detected dialog entitled: Shutdown progress; event=Focused
+2025-07-25 12:41:33,690 JTS-ShutdownTask-Shutdown_IA-143 ERROR Attempted to append to non-started appender d
+2025-07-25 12:41:33,691 JTS-ShutdownTask-Shutdown_IA-143 ERROR Attempted to append to non-started appender d
+2025-07-25 12:41:33,692 NIA-Input-Queue-2 ERROR Attempted to append to non-started appender d
+2025-07-25 12:41:33,692 NIA-Input-Queue-2 ERROR Attempted to append to non-started appender d
+2025-07-25 12:41:33,890 pool-3-thread-1 ERROR Attempted to append to non-started appender f
+IBC returned exit status 0
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+TWS finished
+
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 13:49:43
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=xPO1M0Sl
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=xPO1M0Sl ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=0
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 13:49:43:614 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = xPO1M0Sl
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 13:49:43:618 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 13:49:43:618 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 13:49:43:618 IBC: using default main window manager
+2025-07-25 13:49:43:618 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 13:49:43:619 IBC: using default config dialog manager
+2025-07-25 13:49:43:622 IBC: CommandServer is not started because the port is not configured
+2025-07-25 13:49:43:683 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 13:49:43:684 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 13:49:43:690 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 13:49:43:690 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 13:49:43:690 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 13:49:43:690 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 13:49:43:691 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 13:49:43:691 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 13:49:43:691 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 13:49:43:691 IBC: Starting TWS
+2025-07-25 13:49:48:916 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 13:49:48:917 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 13:49:48:917 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 13:49:48:918 IBC: Setting Trading mode = paper
+2025-07-25 13:49:48:992 IBC: Setting user name
+2025-07-25 13:49:48:993 IBC: Setting password
+2025-07-25 13:49:48:993 IBC: Login attempt: 1
+2025-07-25 13:49:48:994 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 13:49:48:994 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 13:49:49:048 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 13:49:49:078 IBC: Click button: Paper Log In
+2025-07-25 13:49:49:187 IBC: Button now disabled: Paper Log In
+2025-07-25 13:49:49:201 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 13:49:49:202 IBC: detected frame entitled: Login; event=Deactivated
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 13:50:09:270 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 13:50:09:270 IBC: Found TWS main window
+2025-07-25 13:50:09:271 IBC: Login has completed
+2025-07-25 13:50:09:272 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 13:50:09:275 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 13:50:09:719 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 13:50:09:719 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 13:50:10:731 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 13:50:10:732 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 13:50:10:779 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 13:50:10:780 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 13:50:11:142 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 13:50:11:143 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 13:50:11:218 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 13:50:11:223 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 13:50:11:866 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 13:50:12:529 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 13:50:12:530 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 13:50:12:532 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 13:50:12:610 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 13:50:13:281 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 13:50:13:283 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 13:50:13:285 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 13:50:13:289 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 13:50:13:354 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 13:50:16:251 IBC: detected window: type=javax.swing.Popup$HeavyWeightWindow; event=Opened
+2025-07-25 13:50:18:512 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 13:50:18:513 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 13:50:40:105 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 13:50:40:108 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 13:50:44:477 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 13:50:44:478 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 14:01:50
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=JlAN6zmt
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=JlAN6zmt ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=7462
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 14:01:50:847 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = JlAN6zmt
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 14:01:50:850 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 14:01:50:851 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 14:01:50:851 IBC: using default main window manager
+2025-07-25 14:01:50:851 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 14:01:50:852 IBC: using default config dialog manager
+2025-07-25 14:01:50:855 IBC: CommandServer is starting with port 7462
+2025-07-25 14:01:50:862 IBC: CommandServer listening on addresses: fe80:0:0:0:d71:197c:35c9:9dd2%wlo1,2803:9800:a88b:8103:d107:72c3:bfa4:fd85%wlo1,2803:9800:a88b:8103:689:c9ec:7fdd:98e3%wlo1,192.168.100.150,0:0:0:0:0:0:0:1%lo,127.0.0.1; port: 7462
+2025-07-25 14:01:50:862 IBC: CommandServer started and is ready to accept commands
+2025-07-25 14:01:50:920 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 14:01:50:920 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 14:01:50:926 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 14:01:50:926 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 14:01:50:926 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 14:01:50:926 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 14:01:50:926 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 14:01:50:926 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 14:01:50:926 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 14:01:50:926 IBC: Starting TWS
+2025-07-25 14:01:54:401 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 14:01:54:403 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 14:01:54:404 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 14:01:54:404 IBC: Setting Trading mode = paper
+2025-07-25 14:01:54:477 IBC: Setting user name
+2025-07-25 14:01:54:478 IBC: Setting password
+2025-07-25 14:01:54:479 IBC: Login attempt: 1
+2025-07-25 14:01:54:479 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 14:01:54:480 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 14:01:54:550 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 14:01:54:580 IBC: Click button: Paper Log In
+2025-07-25 14:01:54:691 IBC: Button now disabled: Paper Log In
+2025-07-25 14:01:55:985 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 14:01:55:985 IBC: detected frame entitled: Login; event=Deactivated
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 14:02:10:901 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 14:02:10:902 IBC: Found TWS main window
+2025-07-25 14:02:10:902 IBC: Login has completed
+2025-07-25 14:02:11:144 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:02:11:202 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:02:11:213 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 14:02:11:213 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 14:02:14:068 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 14:02:14:546 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:02:14:547 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:02:14:548 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 14:02:14:603 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 14:02:42:227 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 14:02:42:228 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 14:02:42:229 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:02:42:230 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:05:45:033 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:05:45:034 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:05:45:034 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 14:05:45:038 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 14:05:45:253 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 14:05:45:254 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 14:05:45:255 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 14:05:45:256 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:05:45:257 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:05:46:220 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:05:46:221 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:05:56:164 IBC: CommandServer: ControlFrom setting = 
+2025-07-25 14:05:56:165 IBC: CommandServer accepted connection from: /127.0.0.1
+2025-07-25 14:05:56:169 IBC: CommandServer received command: STOP
+2025-07-25 14:05:56:170 IBC: Closing command channel
+2025-07-25 14:05:56:171 IBC: Login has completed: exiting via [File, Exit] menu
+2025-07-25 14:05:56:171 IBC: Getting main window
+2025-07-25 14:05:56:172 IBC: Main window already found
+2025-07-25 14:05:56:298 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Opened
+2025-07-25 14:05:56:299 IBC: Click button: Yes
+2025-07-25 14:05:56:445 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Activated
+2025-07-25 14:05:56:446 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Focused
+2025-07-25 14:05:56:483 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Lost focus
+2025-07-25 14:05:56:483 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Deactivated
+2025-07-25 14:05:56:483 IBC: detected dialog entitled: DUM304644 IBKR Trader Workstation (Simulated Trading); event=Closed
+2025-07-25 14:05:56:484 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:05:56:485 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:05:56:649 IBC: detected dialog entitled: Shutdown progress; event=Opened
+2025-07-25 14:05:56:650 IBC: CommandServer closing
+2025-07-25 14:05:56:651 IBC: CommandServer is shutdown
+2025-07-25 14:05:56:767 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:05:56:768 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:05:56:769 IBC: detected dialog entitled: Shutdown progress; event=Activated
+2025-07-25 14:05:56:831 IBC: detected dialog entitled: Shutdown progress; event=Focused
+2025-07-25 14:05:58,168 JTS-ShutdownTask-Shutdown_IA-148 ERROR Attempted to append to non-started appender d
+2025-07-25 14:05:58,169 JTS-ShutdownTask-Shutdown_IA-148 ERROR Attempted to append to non-started appender d
+2025-07-25 14:05:58,171 NIA-Input-Queue-2 ERROR Attempted to append to non-started appender d
+2025-07-25 14:05:58,172 NIA-Input-Queue-2 ERROR Attempted to append to non-started appender d
+2025-07-25 14:05:58,372 pool-3-thread-1 ERROR Attempted to append to non-started appender f
+IBC returned exit status 0
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+TWS finished
+
+Parsing arguments
+
+================================================================================
+
+Starting IBC version 3.23.0 on 2025-07-25 at 14:07:00
+
+Operating system: Linux alpaco-pc 6.11.0-29-generic #29~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jun 26 14:16:59 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Arguments:
+
+TWS version = 1030
+Program = TWS
+Entry point = ibcalpha.ibc.IbcTws
+--tws-path = /home/alvaro/Jts
+--tws-settings-path = 
+--ibc-path = /opt/ibc
+--ibc-ini = /home/alvaro/ibc/config.ini
+--mode = 
+--java-path = 
+--user =
+--pw =
+
+=================================
+Generating the classpath
+Classpath=/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+
+Generating the JAVA VM options
+Java VM Options=-Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=TlguIN7t
+Finding autorestart file
+autorestart file not found: full authentication will be required
+
+
+Determining the location of java executable
+Location of java executable=/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin
+
+Renaming IB's TWS or Gateway start script to prevent restart without IBC
+
+Starting TWS with this command:
+"/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/bin/java"  -cp "/home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar" -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=20 -XX:ConcGCThreads=5 -XX:InitiatingHeapOccupancyPercent=70 -Dtwslaunch.autoupdate.serviceImpl=com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService -Dchannel=latest -Dexe4j.isInstall4j=true -Dinstall4jType=standalone -DjtsConfigDir=/home/alvaro/Jts -Dibcsessionid=TlguIN7t ibcalpha.ibc.IbcTws "/home/alvaro/ibc/config.ini"  
+
+IBC Settings:
+    AcceptBidAskLastSizeDisplayUpdateNotification=
+    AcceptIncomingConnectionAction=manual
+    AcceptNonBrokerageAccountWarning=no
+    AllowBlindTrading=no
+    AutoLogoffTime=
+    AutoRestartTime=
+    BindAddress=
+    BypassBondWarning=
+    BypassCalledBondWarning=
+    BypassNegativeYieldToWorstConfirmation=
+    BypassNoOverfillProtectionPrecaution=
+    BypassOrderPrecautions=
+    BypassPriceBasedVolatilityRiskWarning=
+    BypassRedirectOrderWarning=
+    BypassSameActionPairTradeWarning=
+    BypassUSStocksMarketDataInSharesWarning=
+    ClosedownAt=
+    ColdRestartTime=
+    CommandPrompt=
+    CommandServerPort=7462
+    ConfirmCryptoCurrencyOrders=manual
+    ConfirmOrderIdReset=
+    ControlFrom=
+    DismissNSEComplianceNotice=yes
+    DismissPasswordExpiryWarning=no
+    ExistingSessionDetectedAction=manual
+    ExitAfterSecondFactorAuthenticationTimeout=no
+    FIX=no
+    FIXLoginId=***
+    FIXPassword=***
+    IbDir=
+    IbLoginId=***
+    IbPassword=***
+    IncludeStackTraceForExceptions=
+    LogStructureScope=known
+    LogStructureWhen=never
+    LoginDialogDisplayTimeout=60
+    MinimizeMainWindow=no
+    OverrideTwsApiPort=
+    OverrideTwsMasterClientID=
+    ReadOnlyApi=
+    ReadOnlyLogin=no
+    ReloginAfterSecondFactorAuthenticationTimeout=no
+    ResetOrderIdsAtStart=
+    SaveTwsSettingsAt=
+    SecondFactorAuthenticationExitInterval=
+    SecondFactorAuthenticationTimeout=180
+    SecondFactorDevice=
+    SendMarketDataInLotsForUSstocks=
+    StoreSettingsOnServer=
+    SuppressInfoMessages=yes
+    TradingMode=paper
+    TrustedTwsApiClientIPs=
+End IBC Settings
+
+2025-07-25 14:07:01:095 IBC: version: 3.23.0
+System Properties
+------------------------------------------------------------
+jtsConfigDir = /home/alvaro/Jts
+java.runtime.name = Java(TM) SE Runtime Environment
+sun.boot.library.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/amd64
+java.vm.version = 25.202-b08
+java.vm.vendor = Oracle Corporation
+java.vendor.url = http://java.oracle.com/
+path.separator = :
+java.vm.name = Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg = sun.io
+user.country = US
+sun.java.launcher = SUN_STANDARD
+sun.os.patch.level = unknown
+java.vm.specification.name = Java Virtual Machine Specification
+user.dir = /home/alvaro/Jts
+java.runtime.version = 1.8.0_202-b08
+ibcsessionid = TlguIN7t
+java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/endorsed
+os.arch = amd64
+java.io.tmpdir = /tmp
+line.separator = 
+
+java.vm.specification.vendor = Oracle Corporation
+os.name = Linux
+sun.jnu.encoding = UTF-8
+java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+java.specification.name = Java Platform API Specification
+java.class.version = 52.0
+sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+exe4j.isInstall4j = true
+os.version = 6.11.0-29-generic
+user.home = /home/alvaro
+user.timezone = America/Argentina/Cordoba
+java.awt.printerjob = sun.print.PSPrinterJob
+file.encoding = UTF-8
+java.specification.version = 1.8
+java.class.path = /home/alvaro/Jts/1030/jars/batik-all-1.16.jar:/home/alvaro/Jts/1030/jars/commons-io-2.11.0.jar:/home/alvaro/Jts/1030/jars/fop-2.8.jar:/home/alvaro/Jts/1030/jars/jackson-annotations-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-core-2.12.3.jar:/home/alvaro/Jts/1030/jars/jackson-databind-2.12.3.jar:/home/alvaro/Jts/1030/jars/jts4launch-1030.jar:/home/alvaro/Jts/1030/jars/jxbrowser-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-linux64-7.41.3.jar:/home/alvaro/Jts/1030/jars/jxbrowser-swing-7.41.3.jar:/home/alvaro/Jts/1030/jars/locales.jar:/home/alvaro/Jts/1030/jars/log4j-api-2.17.1.jar:/home/alvaro/Jts/1030/jars/log4j-core-2.17.1.jar:/home/alvaro/Jts/1030/jars/total-2023.jar:/home/alvaro/Jts/1030/jars/twslaunch-1030.jar:/home/alvaro/Jts/1030/jars/twslaunch-install4j-1.12.jar:/home/alvaro/Jts/1030/jars/xmlgraphics-commons-2.8.jar:/home/alvaro/Jts/1030/.install4j/i4jruntime.jar:/opt/ibc/IBC.jar
+user.name = alvaro
+channel = latest
+java.vm.specification.version = 1.8
+sun.java.command = ibcalpha.ibc.IbcTws /home/alvaro/ibc/config.ini
+java.home = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64
+sun.arch.data.model = 64
+user.language = en
+java.specification.vendor = Oracle Corporation
+awt.toolkit = sun.awt.X11.XToolkit
+java.vm.info = mixed mode
+java.version = 1.8.0_202
+java.ext.dirs = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/ext:/usr/java/packages/lib/ext
+sun.boot.class.path = /home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/resources.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/rt.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/sunrsasign.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jsse.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jce.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/charsets.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/lib/jfr.jar:/home/alvaro/.local/share/i4j_jres/Oda-jK0QgTEmVssfllLP/1.8.0_202_64/classes
+java.vendor = Oracle Corporation
+file.separator = /
+twslaunch.autoupdate.serviceImpl = com.ib.tws.twslaunch.install4j.Install4jAutoUpdateService
+java.vendor.url.bug = http://bugreport.sun.com/bugreport/
+install4jType = standalone
+sun.io.unicode.encoding = UnicodeLittle
+sun.cpu.endian = little
+sun.desktop = gnome
+sun.cpu.isalist = 
+------------------------------------------------------------
+2025-07-25 14:07:01:099 IBC: using default settings provider: ini file is /home/alvaro/ibc/config.ini
+2025-07-25 14:07:01:099 IBC: using default login manager: will get username and password from settings; FIX username and password (if required) from settings
+2025-07-25 14:07:01:099 IBC: using default main window manager
+2025-07-25 14:07:01:099 IBC: using default trading mode manager: constructor parameter args but trading mode not present - will be taken from settings
+2025-07-25 14:07:01:100 IBC: using default config dialog manager
+2025-07-25 14:07:01:107 IBC: CommandServer is starting with port 7462
+2025-07-25 14:07:01:113 IBC: CommandServer listening on addresses: fe80:0:0:0:d71:197c:35c9:9dd2%wlo1,2803:9800:a88b:8103:d107:72c3:bfa4:fd85%wlo1,2803:9800:a88b:8103:689:c9ec:7fdd:98e3%wlo1,192.168.100.150,0:0:0:0:0:0:0:1%lo,127.0.0.1; port: 7462
+2025-07-25 14:07:01:114 IBC: CommandServer started and is ready to accept commands
+2025-07-25 14:07:01:174 IBC: TWS Settings directory is: /home/alvaro/Jts
+2025-07-25 14:07:01:174 IBC: Starting session: will exit if login dialog is not displayed within 60 seconds
+2025-07-25 14:07:01:179 IBC: Ensuring /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 14:07:01:179 IBC: Found setting: [Logon]/s3store=true
+2025-07-25 14:07:01:179 IBC: Found setting: [Logon]/Locale=en
+2025-07-25 14:07:01:179 IBC: Found setting: [Logon]/displayedproxymsg=1
+2025-07-25 14:07:01:179 IBC: Found setting: [Logon]/UseSSL=true
+2025-07-25 14:07:01:179 IBC: Found setting: [IBGateway]/ApiOnly=true
+2025-07-25 14:07:01:179 IBC: Confirmed /home/alvaro/Jts/jts.ini contains required minimal lines
+2025-07-25 14:07:01:179 IBC: Starting TWS
+2025-07-25 14:07:04:880 IBC: detected frame entitled: Login; event=Opened
+2025-07-25 14:07:04:882 IBC: Login dialog WINDOW_OPENED: LoginState is LOGGED_OUT
+2025-07-25 14:07:04:882 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 14:07:04:883 IBC: Setting Trading mode = paper
+2025-07-25 14:07:04:957 IBC: Setting user name
+2025-07-25 14:07:04:959 IBC: Setting password
+2025-07-25 14:07:04:959 IBC: Login attempt: 1
+2025-07-25 14:07:04:960 IBC: trading mode from settings: tradingMode=paper
+2025-07-25 14:07:04:961 IBC: detected frame entitled: Login; event=Activated
+2025-07-25 14:07:05:040 IBC: detected frame entitled: Login; event=Focused
+2025-07-25 14:07:05:076 IBC: Click button: Paper Log In
+2025-07-25 14:07:05:228 IBC: Button now disabled: Paper Log In
+LogModuleConfigurator-Init: Log4j Ver2.x found on classpath
+LogModuleConfigurator-Init: LogModuleConfigurator initialized with Log4j Verd.x
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+EVENT TRADER ALREADY PRESET
+2025-07-25 14:07:22:023 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Opened
+2025-07-25 14:07:22:024 IBC: Found TWS main window
+2025-07-25 14:07:22:024 IBC: Login has completed
+2025-07-25 14:07:22:026 IBC: detected frame entitled: Login; event=Lost focus
+2025-07-25 14:07:22:026 IBC: detected frame entitled: Login; event=Deactivated
+2025-07-25 14:07:22:026 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:07:22:088 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:07:22:140 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 14:07:22:140 IBC: detected frame entitled: Login; event=Closed
+2025-07-25 14:07:24:507 IBC: detected dialog entitled: API announcements; event=Opened
+2025-07-25 14:07:28:789 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:07:28:790 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:07:28:792 IBC: detected dialog entitled: API announcements; event=Activated
+2025-07-25 14:07:28:848 IBC: detected dialog entitled: API announcements; event=Focused
+2025-07-25 14:07:28:870 IBC: detected dialog entitled: API announcements; event=Lost focus
+2025-07-25 14:07:28:872 IBC: detected dialog entitled: API announcements; event=Deactivated
+2025-07-25 14:07:28:873 IBC: detected dialog entitled: API announcements; event=Closed
+2025-07-25 14:07:28:875 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:07:28:877 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:07:30:959 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:07:30:961 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:07:51:948 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:07:51:950 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:08:25:087 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:08:25:089 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated
+2025-07-25 14:17:23:593 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Activated
+2025-07-25 14:17:23:594 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Focused
+2025-07-25 14:17:24:837 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Lost focus
+2025-07-25 14:17:24:838 IBC: detected frame entitled: DUM304644 Interactive Brokers (Simulated Trading); event=Deactivated

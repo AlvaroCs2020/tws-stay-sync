@@ -33,7 +33,16 @@ class SupaBase:
         # pydevd_pycharm.settrace(suspend=True, trace_only_current_thread=True)
     def __connect(self):
         try:
-            self.conn = psycopg2.connect(self.db_url,)
+            
+            host = "aws-0-us-east-2.pooler.supabase.com"
+            self.conn = psycopg2.connect(
+                host=host,
+                port=6543,
+                user="postgres.ikdkhversotaizbhvwyh",
+                password="Asdqwerty_09",
+                dbname="postgres"
+            )
+            #self.conn = psycopg2.connect(self.db_url,)
             self.conn.autocommit = False
             print("[INFO] Conexión a la base de datos establecida.")
         except psycopg2.OperationalError as e:
@@ -83,39 +92,6 @@ class SupaBase:
             print(f"[ERROR] Falló el insert: {e}")
             self.conn.rollback()
 
-    # def __insert_new_values(self):
-    #     insert_sql = """
-    #             INSERT INTO "LIQUIDEZTEST" (
-    #                 date_id, symbol_id, updated_at, sum_ask, sum_bid,
-    #                 difference, count_tick, price_bid, price_ask, boolean
-    #             )
-    #             VALUES (
-    #                 %(date_id)s, %(symbol_id)s, %(updated_at)s, %(sum_ask)s, %(sum_bid)s,
-    #                 %(difference)s, %(count_tick)s, %(price_bid)s, %(price_ask)s, %(boolean)s
-    #             )
-    #             ON CONFLICT (date_id, symbol_id) DO NOTHING
-    #         """
-    #     try:
-    #         for row in self.data_to_save:
-    #             self.curr.execute(
-    #                 insert_sql,
-    #                 {
-    #                     "date_id": row["date_id"],
-    #                     "symbol_id": row["symbol_id"],
-    #                     "updated_at": datetime.now(),
-    #                     "sum_ask": row["sum_ask"],
-    #                     "sum_bid": row["sum_bid"],
-    #                     "difference": row["difference"],
-    #                     "count_tick": row["count_tick"],
-    #                     "price_bid": row["price_bid"],
-    #                     "price_ask": row["price_ask"],
-    #                     "boolean": False
-    #                 }
-    #             )
-    #         self.conn.commit()
-    #     except Exception as e:
-    #         self.conn.rollback()
-    #         raise
     def __update_currency_status(self):
         self.__ensure_connection()
         failed_ids = []
