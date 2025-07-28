@@ -143,6 +143,7 @@ class TradingApp(EClient, EWrapper):
             self.data = pd.DataFrame()
             return
         print("ticks bid ask: " + str(len(ticks)) + " : " + str(done) + " : " + str(reqId) + f" from {min_time} to {max_time}")
+        
         self.req_made = True
         self.data = df
 
@@ -151,6 +152,7 @@ class TradingApp(EClient, EWrapper):
         self.data = pd.DataFrame(columns=['Time', 'TickAttriBidAsk', 'AskPastHigh', 'PriceBid', 'PriceAsk', 'SizeBid', 'SizeAsk'])
         self.data.set_index("Time", inplace=True)
         sleep(3.5)
+        print(f"estamos pasando por aca {self.data['Time'].min()}{self.data['Time'].max()}")
         return self.data
 
     def get_ticks_per_bar(self, start_time: str, end_time: str, symbol_id: int):
@@ -158,6 +160,7 @@ class TradingApp(EClient, EWrapper):
         stop_time_dt = pd.to_datetime(end_time, utc=True)
         start_time_dt = pd.to_datetime(start_time, utc=True)
         self.req_made = False
+        print("Se hace consulta principal")
         df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
         self.last_tick_count = len(df)
         if self.last_tick_count == 0:
@@ -176,6 +179,7 @@ class TradingApp(EClient, EWrapper):
 
         last_new_start_time_rounded = ''
         while not_done:
+            print("Entro al ciclo de min not note")
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             rounded_seconds = max_time.second
@@ -187,9 +191,11 @@ class TradingApp(EClient, EWrapper):
             if pd.to_datetime(new_start_time, utc=True) > stop_time_dt:
                 break
             self.req_made = False
+            print(f"Se hace consulta desde el bucle de seg no completo {pd.to_datetime(new_start_time, utc=True)} {stop_time_dt}")
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
             last_new_start_time_rounded = new_start_time_rounded
             try:
+                print("Esto me sirve como punto de control")
                 df_temp['TimeFormatted'] = pd.to_datetime(df_temp['Time'], unit='s', utc=True)
                 new_max = df_temp['TimeFormatted'].max()
                 df_temp = df_temp[df_temp['TimeFormatted'] < new_max]
