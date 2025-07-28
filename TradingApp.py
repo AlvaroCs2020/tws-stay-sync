@@ -180,12 +180,14 @@ class TradingApp(EClient, EWrapper):
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             rounded_seconds = max_time.second
             new_start_time_rounded = max_time.replace(second=rounded_seconds, microsecond=0).strftime('%Y%m%d-%H:%M:%S')
-            if new_start_time_rounded == last_new_start_time_rounded:
-                print("[WARN] Muy pocos ticks no se esta pudiendo completar 1 seg]")
+
+            if pd.to_datetime(new_start_time, utc=True) > stop_time_dt or pd.to_datetime(new_start_time, utc=True).second >= 58:
+                print(f"[INFO] minuto {pd.to_datetime(new_start_time, utc=True).second}")
+                break
+            if new_start_time_rounded == last_new_start_time_rounded or pd.to_datetime(new_start_time, utc=True) < start_time_dt:
+                print(f"[WARN] Muy pocos ticks no se esta pudiendo completar 1 seg o se esta yendo el inicio {pd.to_datetime(new_start_time, utc=True) < start_time_dt}]")
                 self.req_made = False
                 return self.df_empty
-            if pd.to_datetime(new_start_time, utc=True) > stop_time_dt:
-                break
             self.req_made = False
             df_temp = self.get_historical_data_by_tick(contract_by_symbol, new_start_time_rounded, end_time)
             last_new_start_time_rounded = new_start_time_rounded

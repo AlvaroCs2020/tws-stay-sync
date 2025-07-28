@@ -249,7 +249,7 @@ def get_sync(watchdog):
 
                     #Chequeos por las dudas
                     if not app.req_made:
-                        sleep(60)
+                        sleep(10)
                         app.change_id()
                         raise KeyError("No se recibió respuesta válida de TWS")
                     elif app.req_made and app.last_tick_count == 0:

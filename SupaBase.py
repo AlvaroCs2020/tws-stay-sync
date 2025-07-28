@@ -232,7 +232,12 @@ class SupaBase:
         insert_result  = -1
         if len(self.data_to_save) != 0:
             insert_result = self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
-        if insert_result == 0: self.__update_currency_status()
+
+        update_currency_status_anyway = False
+        if len(self.data_to_save_currency_status) != 0:
+            update_currency_status_anyway = TradingApp.market_is_closing(self.data_to_save_currency_status[0].get("date_from"), int(symbol_id))
+
+        if insert_result == 0 or update_currency_status_anyway: self.__update_currency_status()
 
         self.data_to_save = []
         self.data_to_save_currency_status = []
