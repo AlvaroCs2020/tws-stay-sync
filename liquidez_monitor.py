@@ -3,7 +3,7 @@ import psycopg2
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
 from datetime import datetime
-print("Vamos a buscar la informacion a la DB. Cargando...")
+
 
 def format_int_to_string(num):
     def fmt(n):
@@ -20,12 +20,35 @@ def format_int_to_string(num):
     else:
         return f"{num}"
 
+symbol_id = int(input("-Ingresa 1 para traer datos de EURUSD o 7 para datos de XAUUSD (luego presionar ENTER): "))
+while symbol_id not in [1,7]:
+    print("+Me estas pidiendo una divisa que todavia no esta cargada!!! ingresa 7 o 1")
+    symbol_id = int(input("-Ingresa 1 para traer datos de EURUSD o 7 para datos de XAUUSD: "))
 
+limit_date = int(input("- la data en un rago de fechas especifico? De ser asi ingresa 1 (luego presionar ENTER):"))
+
+date_from = '2025-06-31 00:00:00'
+date_to = datetime.today()
+place_holder = ""
+if limit_date == 1:
+    print("+Vamos a acotar la informacion en el rango de fechas que necesitas, necesito que ingreses cuidadosamente el formato YYYY-MM-DD HH:MM:SS, EJEMPLO: 2025-06-31 00:00:00")
+    date_from = str(input("-Ingresa la fecha de inicio para tu analisis: "))
+    place_holder = str(input("-La fecha de fin para tu analisis SI QUERES HASTA HOY, SOLO TOCA ENTER: "))
+    print("+Okay, ahora el programa va a buscar data entre estas fechas, si las ingresaste mal vas a ver un error, cerra el programa e intenta de nuevo.")
+if place_holder != "":
+    date_to = place_holder
 # --- Conexión y datos
+
+host = "aws-0-us-east-2.pooler.supabase.com"
 conn = psycopg2.connect(
-    "postgresql://postgres:Asdqwerty_09@db.ikdkhversotaizbhvwyh.supabase.co:5432/postgres"
+    host=host,
+    port=6543,
+    user="postgres.ikdkhversotaizbhvwyh",
+    password="Asdqwerty_09",
+    dbname="postgres"
 )
-sql = """ SELECT * FROM "LIQUIDEZTEST" ORDER BY "date_id" DESC """
+sql = f""" SELECT * FROM "LIQUIDEZTEST" WHERE "symbol_id" = {symbol_id} AND "date_id" <= TIMESTAMP WITH TIME ZONE '{date_to}' AND "date_id" >= TIMESTAMP WITH TIME ZONE '{date_from}'  ORDER BY "date_id" DESC """
+print("Vamos a buscar la informacion a la DB. Cargando...")
 with conn.cursor() as cur:
     cur.execute(sql)
     rows = cur.fetchall()

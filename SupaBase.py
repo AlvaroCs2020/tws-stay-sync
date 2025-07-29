@@ -141,7 +141,7 @@ class SupaBase:
                         except Exception as e:
                             print(f"[WARN] Falla actualización ID {str(row['symbol_id'])} {str(row['date_from'])} (intento {attempt+1}): {e}")
                             if attempt != 1:
-                                time.sleep(1)
+                                time.sleep(5)
 
             self.conn.commit()
             print("[INFO] Actualización completada.")
@@ -193,7 +193,7 @@ class SupaBase:
         FROM "CURRENCYSTATUS"
         WHERE "status" = False
           AND "symbol_id" = %s
-          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-07 00:00:00+00:00'
+          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-06-30 00:00:00+00:00'
         ORDER BY "date_from" ASC
         LIMIT %s;
         '''
