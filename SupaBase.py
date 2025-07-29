@@ -33,7 +33,14 @@ class SupaBase:
         # pydevd_pycharm.settrace(suspend=True, trace_only_current_thread=True)
     def __connect(self):
         try:
-            self.conn = psycopg2.connect(self.db_url,)
+            host = "aws-0-us-east-2.pooler.supabase.com"
+            self.conn = psycopg2.connect(
+                host=host,
+                port=6543,
+                user="postgres.ikdkhversotaizbhvwyh",
+                password="Asdqwerty_09",
+                dbname="postgres"
+            )
             self.conn.autocommit = False
             print("[INFO] Conexión a la base de datos establecida.")
         except psycopg2.OperationalError as e:
