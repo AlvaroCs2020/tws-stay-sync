@@ -33,7 +33,15 @@ class SupaBase:
         # pydevd_pycharm.settrace(suspend=True, trace_only_current_thread=True)
     def __connect(self):
         try:
-            self.conn = psycopg2.connect(self.db_url,)
+            
+            host = "aws-0-us-east-2.pooler.supabase.com"
+            self.conn = psycopg2.connect(
+                host=host,
+                port=6543,
+                user="postgres.ikdkhversotaizbhvwyh",
+                password="Asdqwerty_09",
+                dbname="postgres"
+            )
             self.conn.autocommit = False
             print("[INFO] Conexión a la base de datos establecida.")
         except psycopg2.OperationalError as e:
@@ -87,40 +95,6 @@ class SupaBase:
             self.__ensure_connection()
             return -1
 
-
-    # def __insert_new_values(self):
-    #     insert_sql = """
-    #             INSERT INTO "LIQUIDEZTEST" (
-    #                 date_id, symbol_id, updated_at, sum_ask, sum_bid,
-    #                 difference, count_tick, price_bid, price_ask, boolean
-    #             )
-    #             VALUES (
-    #                 %(date_id)s, %(symbol_id)s, %(updated_at)s, %(sum_ask)s, %(sum_bid)s,
-    #                 %(difference)s, %(count_tick)s, %(price_bid)s, %(price_ask)s, %(boolean)s
-    #             )
-    #             ON CONFLICT (date_id, symbol_id) DO NOTHING
-    #         """
-    #     try:
-    #         for row in self.data_to_save:
-    #             self.curr.execute(
-    #                 insert_sql,
-    #                 {
-    #                     "date_id": row["date_id"],
-    #                     "symbol_id": row["symbol_id"],
-    #                     "updated_at": datetime.now(),
-    #                     "sum_ask": row["sum_ask"],
-    #                     "sum_bid": row["sum_bid"],
-    #                     "difference": row["difference"],
-    #                     "count_tick": row["count_tick"],
-    #                     "price_bid": row["price_bid"],
-    #                     "price_ask": row["price_ask"],
-    #                     "boolean": False
-    #                 }
-    #             )
-    #         self.conn.commit()
-    #     except Exception as e:
-    #         self.conn.rollback()
-    #         raise
     def __update_currency_status(self):
         self.__ensure_connection()
         failed_ids = []
@@ -188,18 +162,18 @@ class SupaBase:
 
     def fetch_created_data(self, symbol_id, limit=10):
         self.__ensure_connection()
-        query = '''
+        query = f'''
         SELECT DISTINCT ON ("date_from", "date_to", "symbol_id") *
         FROM "CURRENCYSTATUS"
         WHERE "status" = False
-          AND "symbol_id" = %s
+          AND "symbol_id" = {symbol_id}
           AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-07 00:00:00+00:00'
         ORDER BY "date_from" ASC
-        LIMIT %s;
+        LIMIT 1;
         '''
         try:
             with self.conn.cursor() as cur:
-                cur.execute(query, (symbol_id, limit))
+                cur.execute(query)
                 rows = cur.fetchall()
                 colnames = [desc[0] for desc in cur.description]
                 return pd.DataFrame(rows, columns=colnames)
@@ -208,15 +182,15 @@ class SupaBase:
             return pd.DataFrame()
     def fetch_symbol_data(self, symbol_id,):
         self.__ensure_connection()
-        query = '''
+        query = f'''
         SELECT *
         FROM "SYMBOLS"
-        WHERE "symbol_id" = %s
+        WHERE "symbol_id" = {symbol_id}
         LIMIT 1;
         '''
         try:
             with self.conn.cursor() as cur:
-                cur.execute(query, symbol_id)
+                cur.execute(query,)
                 rows = cur.fetchall()
                 colnames = [desc[0] for desc in cur.description]
                 return pd.DataFrame(rows, columns=colnames)

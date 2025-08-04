@@ -349,7 +349,7 @@ def main():
                 )
 
                 time.sleep(60)  # espera a que TWS se levante o directamente llamá a sync()
-                sync(watchdog)
+                get_sync(watchdog)
 
             except Exception as e:
                 print(f"[ERROR] Fallo durante la ejecución: {e}")
