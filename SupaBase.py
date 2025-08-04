@@ -136,7 +136,7 @@ class SupaBase:
                 for row in self.data_to_save_currency_status: #esto
                     for attempt in range(2):
                         try:
-                            cur.execute('''
+                            cur.execute(f'''
                                 UPDATE "CURRENCYSTATUS"
                                 SET "status" = True 
                                 WHERE "symbol_id" = %s
@@ -195,18 +195,18 @@ class SupaBase:
 
     def fetch_created_data(self, symbol_id, limit=10):
         self.__ensure_connection()
-        query = '''
+        query = f'''
         SELECT DISTINCT ON ("date_from", "date_to", "symbol_id") *
         FROM "CURRENCYSTATUS"
         WHERE "status" = False
-          AND "symbol_id" = %s
-          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-06-30 00:00:00+00:00'
+          AND "symbol_id" = {symbol_id}
+          AND "date_from" >= TIMESTAMP WITH TIME ZONE '2025-07-19 00:00:00+00:00'
         ORDER BY "date_from" ASC
-        LIMIT %s;
+        LIMIT 1;
         '''
         try:
             with self.conn.cursor() as cur:
-                cur.execute(query, (symbol_id, limit))
+                cur.execute(query, )
                 rows = cur.fetchall()
                 colnames = [desc[0] for desc in cur.description]
                 return pd.DataFrame(rows, columns=colnames)
@@ -215,10 +215,10 @@ class SupaBase:
             return pd.DataFrame()
     def fetch_symbol_data(self, symbol_id,):
         self.__ensure_connection()
-        query = '''
+        query = f'''
         SELECT *
         FROM "SYMBOLS"
-        WHERE "symbol_id" = %s
+        WHERE "symbol_id" = {symbol_id}
         LIMIT 1;
         '''
         try:
