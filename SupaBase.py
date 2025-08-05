@@ -94,40 +94,6 @@ class SupaBase:
             self.__ensure_connection()
             return -1
 
-
-    # def __insert_new_values(self):
-    #     insert_sql = """
-    #             INSERT INTO "LIQUIDEZTEST" (
-    #                 date_id, symbol_id, updated_at, sum_ask, sum_bid,
-    #                 difference, count_tick, price_bid, price_ask, boolean
-    #             )
-    #             VALUES (
-    #                 %(date_id)s, %(symbol_id)s, %(updated_at)s, %(sum_ask)s, %(sum_bid)s,
-    #                 %(difference)s, %(count_tick)s, %(price_bid)s, %(price_ask)s, %(boolean)s
-    #             )
-    #             ON CONFLICT (date_id, symbol_id) DO NOTHING
-    #         """
-    #     try:
-    #         for row in self.data_to_save:
-    #             self.curr.execute(
-    #                 insert_sql,
-    #                 {
-    #                     "date_id": row["date_id"],
-    #                     "symbol_id": row["symbol_id"],
-    #                     "updated_at": datetime.now(),
-    #                     "sum_ask": row["sum_ask"],
-    #                     "sum_bid": row["sum_bid"],
-    #                     "difference": row["difference"],
-    #                     "count_tick": row["count_tick"],
-    #                     "price_bid": row["price_bid"],
-    #                     "price_ask": row["price_ask"],
-    #                     "boolean": False
-    #                 }
-    #             )
-    #         self.conn.commit()
-    #     except Exception as e:
-    #         self.conn.rollback()
-    #         raise
     def __update_currency_status(self):
         self.__ensure_connection()
         failed_ids = []
@@ -136,7 +102,7 @@ class SupaBase:
                 for row in self.data_to_save_currency_status: #esto
                     for attempt in range(2):
                         try:
-                            cur.execute(f'''
+                            cur.execute('''
                                 UPDATE "CURRENCYSTATUS"
                                 SET "status" = True 
                                 WHERE "symbol_id" = %s
@@ -163,8 +129,8 @@ class SupaBase:
                 print(f"[ERROR] Fallo el rollback: {rollback_error}")
             print(f"[ERROR] update_data: {e}")
             return -1
-    def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to):
-        if TradingApp.market_is_closing(date_from, int(symbol_id)) and len(data) == 0: #no me vino nada y el mercado se esta cerrando, esta bien!!
+    def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to, no_ticks : bool):
+        if (TradingApp.market_is_closing(date_from, int(symbol_id)) or no_ticks ) and len(data) == 0 : #no me vino nada y el mercado se esta cerrando, esta bien!!
             print("[INFO] SE ESTA GUARDANDO UNA VELA VACIA, NADA EN LIQUIDEZ, SI EN CURRENCY STATUS.")
             new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
             self.data_to_save_currency_status.append(new_row_currency_status)

@@ -34,6 +34,7 @@ class TradingApp(EClient, EWrapper):
         self.contract_info_by_id = self._contract_info_by_id
         EClient.__init__(self, self)
         self.last_tick_count = 0
+        self.data_in_range = False
         self.req_made = False
         self.req_id = random.randint(1, 10000)
         self.df_empty = pd.DataFrame(columns=[
@@ -111,7 +112,7 @@ class TradingApp(EClient, EWrapper):
         t = ts.time()
         info = cls._contract_info_by_id[symbol_id]
         close_hour = int(info['close_hour'])
-        return time((close_hour-1), 59) <= t < time((close_hour+1), 00) or (ts.isoweekday() == 5 and time((close_hour-1), 59) <= t)
+        return time((close_hour-1), 59) <= t < time((close_hour+2), 59) or (ts.isoweekday() == 5 and time((close_hour-1), 59) <= t)
 
     def place_order(self, contract: Contract, action: str, order_type: str, quantity: int) -> None:
         order = Order()
@@ -157,6 +158,7 @@ class TradingApp(EClient, EWrapper):
         contract_by_symbol = self.get_forex_contract(symbol_id)
         stop_time_dt = pd.to_datetime(end_time, utc=True)
         start_time_dt = pd.to_datetime(start_time, utc=True)
+        self.data_in_range = False
         self.req_made = False
         df = self.get_historical_data_by_tick(contract_by_symbol, start_time, end_time)
         self.last_tick_count = len(df)
@@ -165,6 +167,10 @@ class TradingApp(EClient, EWrapper):
         try:
             df['TimeFormatted'] = pd.to_datetime(df['Time'], unit='s', utc=True)
             max_time = df['TimeFormatted'].max()
+            min_time = df['TimeFormatted'].min()
+            if max_time >= stop_time_dt and min_time <= start_time_dt:
+                self.data_in_range = True
+
         except KeyError:
             print("Volvio a pasar el error de verga este, se murio en la primer consulta")
             return self.df_empty
