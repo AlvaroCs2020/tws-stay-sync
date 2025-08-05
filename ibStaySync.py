@@ -260,7 +260,7 @@ def get_sync(watchdog):
                     if app.req_made and sum_ask == 0 and not TradingApp.market_is_closing(row['date_from'], int(symbol_id)) and not app.data_in_range:
                         raise KeyError(f"registro sum 0 {len(df_filtered_1min)}")
                     # ya tengo la linea lista, ahora. Quiero procesarla
-                    supa_base_processor.receive_and_process_data(df_filtered_1min, symbol_id, row['date_from'], row['date_to'], app.data_in_range)
+                    supa_base_processor.receive_and_process_data(df_filtered_1min, symbol_id, row['date_from'], row['date_to'], app.data_in_range, TradingApp.market_is_closing(row['date_from'], int(symbol_id)) and not app.data_in_range)
                 except KeyError as e:
                     print(f"[WARN] {e}, ID: {symbol_id}")
                     data_to_process_from_db = data_to_process_from_db.drop(index)

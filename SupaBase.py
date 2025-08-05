@@ -9,7 +9,6 @@ from supabase import create_client, Client
 from datetime import datetime
 from datetime import time
 from time import *
-from TradingApp import TradingApp
 class SupaBase:
     def __init__(self):
         self.data_to_save = []
@@ -61,9 +60,9 @@ class SupaBase:
                     print(f"[ERROR] Reintento {attempt+1} fallido: {e}")
                     time.sleep(self.retry_wait)
             raise Exception("No se pudo restablecer la conexión a la base de datos.")
-    def __insert_new_values(self):
-        sql = """
-            INSERT INTO "LIQUIDEZTEST" (
+    def insert_new_values(self, table_name = "LIQUIDEZTEST" ) :
+        sql = f"""
+            INSERT INTO "{table_name}" (
                 date_id, symbol_id, updated_at, sum_ask, sum_bid,
                 difference, count_tick, price_bid, price_ask, boolean
             ) VALUES %s
@@ -130,13 +129,13 @@ class SupaBase:
                 print(f"[ERROR] Fallo el rollback: {rollback_error}")
             print(f"[ERROR] update_data: {e}")
             return -1
-    def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to, no_ticks : bool):
+    def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to, no_ticks : bool, market_is_closing : bool):
 
-        if (TradingApp.market_is_closing(date_from, int(symbol_id)) or no_ticks ) and len(data) == 0 : #no me vino nada y el mercado se esta cerrando, esta bien!!
+        if (market_is_closing or no_ticks ) and len(data) == 0 : #no me vino nada y el mercado se esta cerrando, esta bien!!
             print("[INFO] SE ESTA GUARDANDO UNA VELA VACIA, NADA EN LIQUIDEZ, SI EN CURRENCY STATUS.")
             new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
             self.data_to_save_currency_status.append(new_row_currency_status)
-            self.update_anyway = ( TradingApp.market_is_closing(date_from, int(symbol_id)) or no_ticks ) and len(data) == 0
+            self.update_anyway = ( market_is_closing or no_ticks ) and len(data) == 0
             return
         chunks_by_second = data.groupby('Time') #error handling
         for second, chunk in chunks_by_second:
@@ -162,6 +161,29 @@ class SupaBase:
         new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
         self.data_to_save_currency_status.append(new_row_currency_status)
 
+    def receive_and_process_rt_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to):
+        self.data_to_save = []
+        chunks_by_second = data.groupby('Time') #error handling
+        for second, chunk in chunks_by_second:
+            sum_ask = chunk['SizeAsk'].sum()
+            sum_bid = chunk['SizeBid'].sum()
+            difference = sum_bid - sum_ask
+            count_tick = len(chunk)
+            last = chunk.loc[chunk.index[-1]]
+            price_bid = last['PriceBid'] #Si o si el ultimo precio? un promedio, algo de eso,TODO pensar!!
+            price_ask = last['PriceAsk']
+            date_id =  pd.to_datetime(chunk['Time'].max(), unit='s', utc=True)
+
+            new_row = {"date_id"    :date_id,
+                       "symbol_id"  :int(symbol_id),
+                       "sum_ask"    :int(sum_ask),
+                       "sum_bid"    :int(sum_bid),
+                       "difference" :int(difference),
+                       "count_tick" :int(count_tick),
+                       "price_bid"  :float(price_bid),
+                       "price_ask"  :float(price_ask)} #falta algo?
+
+            self.data_to_save.append(new_row)
     def fetch_created_data(self, symbol_id, limit=10):
         self.__ensure_connection()
         query = f'''
@@ -207,7 +229,7 @@ class SupaBase:
         self.__ensure_connection()
         insert_result  = -1
         if len(self.data_to_save) != 0:
-            insert_result = self.__insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
+            insert_result = self.insert_new_values()#CUANDO SE HACE EL SAVE TMB HAY QUE MARCAR CURRENCYSTATUS
 
         update_currency_status_anyway = False
         if len(self.data_to_save_currency_status) != 0:

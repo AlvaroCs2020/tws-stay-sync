@@ -13,7 +13,7 @@ from ibapi.order import Order
 from ibapi.common import *
 from enum import Enum
 from datetime import time
-
+from SupaBase import SupaBase
 
 class TradingApp(EClient, EWrapper):
     _instance = None
@@ -43,7 +43,7 @@ class TradingApp(EClient, EWrapper):
         ])
         self.data = self.df_empty
         self.nextOrderId: Optional[int] = None
-
+        self.supa_base_processor = SupaBase()
     def error(self, reqId: int, errorCode: int, errorString: str) -> None:
         print(f"Error: {reqId}, {errorCode}, {errorString}")
         if errorCode == 102:
@@ -182,6 +182,10 @@ class TradingApp(EClient, EWrapper):
 
         last_new_start_time_rounded = ''
         while not_done:
+            ## primero deberia mandar t0do lo que ya tenia
+            ##SUPA BASE COMMIT
+            self.supa_base_processor.receive_and_process_rt_data(df, symbol_id, start_time_dt, stop_time_dt)
+            self.supa_base_processor.insert_new_values("LIQUIDEZ_RT_LAST_MINUTE")
             begin_of_chunk = max_time
             new_start_time = max_time.strftime('%Y%m%d-%H:%M:%S')
             rounded_seconds = max_time.second
@@ -204,6 +208,9 @@ class TradingApp(EClient, EWrapper):
                 max_time = new_max
                 df_temp = df_temp[df_temp['TimeFormatted'] >= begin_of_chunk]
                 list_of_chunks.append(df_temp)
+                ##estamos loopeando dentro del minuto, HACEMOS EL COMMIT
+                self.supa_base_processor.receive_and_process_rt_data(df_temp, symbol_id, start_time_dt, stop_time_dt)
+                self.supa_base_processor.insert_new_values("LIQUIDEZ_RT_LAST_MINUTE")
                 if new_max > stop_time_dt:
                     break
             except KeyError:
@@ -211,7 +218,7 @@ class TradingApp(EClient, EWrapper):
                 return self.df_empty
 
         df_filtered_1min = pd.concat(list_of_chunks, ignore_index=True)
-        df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] < stop_time_dt]
+        df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] <= stop_time_dt]
         df_filtered_1min = df_filtered_1min[df_filtered_1min['TimeFormatted'] >= start_time_dt]
         return df_filtered_1min
 
