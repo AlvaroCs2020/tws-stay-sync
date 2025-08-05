@@ -13,6 +13,7 @@ from TradingApp import TradingApp
 class SupaBase:
     def __init__(self):
         self.data_to_save = []
+        self.update_anyway = False  ##REVISAR PARA VARIAS DIVISAS
         self.data_to_save_currency_status = []
         self.df_empty = pd.DataFrame(columns=[
             'Time', 'TickAttriBidAsk', 'AskPastHigh', 'PriceBid',
@@ -130,10 +131,12 @@ class SupaBase:
             print(f"[ERROR] update_data: {e}")
             return -1
     def receive_and_process_data(self, data : pd.DataFrame, symbol_id : int, date_from, date_to, no_ticks : bool):
+
         if (TradingApp.market_is_closing(date_from, int(symbol_id)) or no_ticks ) and len(data) == 0 : #no me vino nada y el mercado se esta cerrando, esta bien!!
             print("[INFO] SE ESTA GUARDANDO UNA VELA VACIA, NADA EN LIQUIDEZ, SI EN CURRENCY STATUS.")
             new_row_currency_status = {"symbol_id":symbol_id, "date_from":date_from, "date_to":date_to}
             self.data_to_save_currency_status.append(new_row_currency_status)
+            self.update_anyway = ( TradingApp.market_is_closing(date_from, int(symbol_id)) or no_ticks ) and len(data) == 0
             return
         chunks_by_second = data.groupby('Time') #error handling
         for second, chunk in chunks_by_second:
@@ -208,12 +211,13 @@ class SupaBase:
 
         update_currency_status_anyway = False
         if len(self.data_to_save_currency_status) != 0:
-            update_currency_status_anyway = TradingApp.market_is_closing(self.data_to_save_currency_status[0].get("date_from"), int(symbol_id))
+            update_currency_status_anyway = self.update_anyway
 
         if insert_result == 0 or update_currency_status_anyway: self.__update_currency_status()
 
         self.data_to_save = []
         self.data_to_save_currency_status = []
+        self.update_anyway = False  ##REVISAR PARA VARIAS DIVISAS
     def __del__(self):
         print("MURIO ESTA INSTANCIA")
         try:

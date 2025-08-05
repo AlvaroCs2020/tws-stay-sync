@@ -24,7 +24,8 @@ db_config = {
     "host": "200.58.123.179",
     "port": 6432
 }
-
+def is_windows():
+    return os.name == 'nt'
 def sync(watchdog):
     load_dotenv()
 
@@ -313,7 +314,7 @@ def get_sync(watchdog):
         watchdog.stop()
         if app and app.isConnected():
             app.disconnect()
-def main():
+def main_windows():
     process = None
 
     def kill_process():
@@ -359,5 +360,58 @@ def main():
         print("\n[INTERRUPT] Ctrl+C recibido. Cerrando todo...")
         kill_process()
 
+# Rutas a los scripts de Linux
+START_SCRIPT = "sudo /opt/ibc/twsstart.sh"
+STOP_SCRIPT  = "sudo /opt/ibc/stop.sh"
+
+def kill_process_linux():
+    print("[WARN] Se decidió cerrar TWS")
+    subprocess.run([STOP_SCRIPT], shell=True)
+    time.sleep(5)
+
+def main_linux():
+    process = None
+
+    def on_timeout():  # Callback del watchdog
+        print("[WATCHDOG] Se colgó sync. Matamos el proceso.")
+        raise_in_main_thread(WatchdogTimeout)
+        valores_str = os.getenv("SYMBOLS", "")
+        TelegramBot.send_message(
+            f"*[WARN]* se ejecutó el watchdog para la instancia de TWS que se encarga de los símbolos: *{valores_str}*"
+        )
+
+    watchdog = Watchdog(timeout=600, callback=on_timeout)
+
+    try:
+        while True:
+            try:
+                watchdog.start()
+                print("Intentamos conectarnos")
+
+                # Inicia el script en nuevo grupo de procesos (como CREATE_NEW_PROCESS_GROUP en Linux)
+                process = subprocess.Popen(
+                    [START_SCRIPT],
+                    shell=True,
+                    preexec_fn=os.setsid
+                )
+
+                time.sleep(60)  # espera a que TWS se levante o directamente llamá a sync()
+                get_sync(watchdog)
+
+            except Exception as e:
+                print(f"[ERROR] Fallo durante la ejecución: {e}")
+            finally:
+                kill_process_linux()
+
+            print("Reintentamos en 5 segundos...\n")
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("\n[INTERRUPT] Ctrl+C recibido. Cerrando todo...")
+        kill_process_linux()
+
 if __name__ == "__main__":
-    main()
+    if is_windows():
+        main_windows()
+    else:
+        main_linux()
